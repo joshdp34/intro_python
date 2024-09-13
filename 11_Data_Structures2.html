@@ -440,7 +440,7 @@ dict_items([('John', 88), ('David', 90)])</code></pre>
 <section id="iterating-over-key-value-pairs" class="level4">
 <h4 class="anchored" data-anchor-id="iterating-over-key-value-pairs">Iterating Over Key-Value Pairs</h4>
 <p>The <code>items()</code> method allows you to iterate over both keys and values simultaneously:</p>
-<pre class="hhzmhfmn"><code>for student, grade in grades.items():
+<pre class="xlfpwsnn"><code>for student, grade in grades.items():
     print(f"{student}: {grade}")</code></pre>
 </section>
 </section>
@@ -663,7 +663,7 @@ age: 20</code></pre>
 <span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fruits)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{1, 2, 3, 4, 5}
-{'cherry', 'banana', 'apple'}</code></pre>
+{'banana', 'cherry', 'apple'}</code></pre>
 </div>
 </div>
 </section>
@@ -701,8 +701,8 @@ age: 20</code></pre>
 <span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>fruits.add(<span class="st">"apple"</span>)</span>
 <span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fruits)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>{'cherry', 'banana', 'apple'}
-{'cherry', 'banana', 'apple'}</code></pre>
+<pre><code>{'banana', 'cherry', 'apple'}
+{'banana', 'cherry', 'apple'}</code></pre>
 </div>
 </div>
 </section>
@@ -922,7 +922,7 @@ True</code></pre>
 <span id="cb66-13"><a href="#cb66-13" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> unique_words(sentences)</span>
 <span id="cb66-14"><a href="#cb66-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result)  <span class="co"># Output: {'data': 2, 'science': 2, 'is': 2, 'great': 1, 'evolving': 1}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>{'science': 2, 'great': 1, 'is': 2, 'data': 2, 'evolving': 1}</code></pre>
+<pre><code>{'great': 1, 'is': 2, 'data': 2, 'science': 2, 'evolving': 1}</code></pre>
 </div>
 </div>
 <p>This function uses sets to ensure that each word in a sentence is only counted once per sentence and then stores the results in a dictionary.</p>
@@ -1026,123 +1026,6 @@ True</code></pre>
 <span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Expected Output:</p>
 <div class="sourceCode" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="dv">18</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="excersice-1-basic-list-operations" class="level4">
-<h4 class="anchored" data-anchor-id="excersice-1-basic-list-operations">Excersice 1: Basic List Operations</h4>
-<ol type="a">
-<li>Create a list named <code>fruits</code> with the values: “apple”, “banana”, “cherry”.<br>
-</li>
-<li>Add the fruit “orange” to the list.<br>
-</li>
-<li>Remove “banana” from the list.<br>
-</li>
-<li>Print the second fruit in the list.<br>
-</li>
-<li>Print the length of the list.</li>
-</ol>
-</section>
-<section id="excersice-2-modifying-lists" class="level4">
-<h4 class="anchored" data-anchor-id="excersice-2-modifying-lists">Excersice 2: Modifying Lists</h4>
-<ol type="a">
-<li>Create a list <code>numbers</code> containing the values 1, 2, 3, 4, and 5.<br>
-</li>
-<li>Replace the third element in the list with the value 10.<br>
-</li>
-<li>Add the number 6 to the end of the list.<br>
-</li>
-<li>Insert the number 0 at the beginning of the list.<br>
-</li>
-<li>Print the updated list.</li>
-</ol>
-</section>
-<section id="excersice-3-slicing-lists" class="level4">
-<h4 class="anchored" data-anchor-id="excersice-3-slicing-lists">Excersice 3: Slicing Lists</h4>
-<p>Given the list <code>colors = ["red", "green", "blue", "yellow", "purple"]</code>,<br>
-a. Slice and print the first three colors.<br>
-b. Slice and print the last two colors.<br>
-c.&nbsp;Slice and print every second color in the list.</p>
-</section>
-<section id="excersice-4-nested-lists" class="level4">
-<h4 class="anchored" data-anchor-id="excersice-4-nested-lists">Excersice 4: Nested Lists</h4>
-<p>Create a nested list <code>matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]</code>.<br>
-a. Print the element at the first row and second column.<br>
-b. Change the element at the second row and third column to 10.<br>
-c.&nbsp;Print the entire second row.</p>
-</section>
-<section id="excersice-5-basic-tuple-operations" class="level4">
-<h4 class="anchored" data-anchor-id="excersice-5-basic-tuple-operations">Excersice 5: Basic Tuple Operations</h4>
-<ol type="a">
-<li>Create a tuple <code>my_tuple</code> with values: 10, 20, 30, 40, 50.<br>
-</li>
-<li>Print the value at index 2.<br>
-</li>
-<li>Try to change the value at index 1 to 15 (what happens?).<br>
-</li>
-<li>Print the length of the tuple.</li>
-</ol>
-</section>
-<section id="excersice-6-tuple-unpacking" class="level4">
-<h4 class="anchored" data-anchor-id="excersice-6-tuple-unpacking">Excersice 6: Tuple Unpacking</h4>
-<ol type="a">
-<li>Create a tuple <code>dimensions = (1920, 1080)</code>.<br>
-</li>
-<li>Unpack the tuple into variables <code>width</code> and <code>height</code>.<br>
-</li>
-<li>Print the values of <code>width</code> and <code>height</code>.</li>
-</ol>
-</section>
-<section id="excersice-7-returning-tuples-from-functions" class="level4">
-<h4 class="anchored" data-anchor-id="excersice-7-returning-tuples-from-functions">Excersice 7: Returning Tuples from Functions</h4>
-<ol type="a">
-<li>Write a function <code>calculate_stats(numbers)</code> that takes a list of numbers and returns a tuple containing the sum and the average of the list.<br>
-</li>
-<li>Call the function with the list <code>[10, 20, 30, 40, 50]</code> and unpack the returned tuple into variables <code>total_sum</code> and <code>average</code>.<br>
-</li>
-<li>Print the values of <code>total_sum</code> and <code>average</code>.</li>
-</ol>
-</section>
-<section id="excersice-8-nested-tuples" class="level4">
-<h4 class="anchored" data-anchor-id="excersice-8-nested-tuples">Excersice 8: Nested Tuples</h4>
-<p>Given the nested tuple <code>nested = ((1, 2), (3, 4), (5, 6))</code>,<br>
-a. Print the first element of the second tuple.<br>
-b. Try to change the second element of the third tuple to 7 (what happens?).</p>
-</section>
-<section id="excersice-9-basic-list-comprehension" class="level4">
-<h4 class="anchored" data-anchor-id="excersice-9-basic-list-comprehension">Excersice 9: Basic List Comprehension</h4>
-<ol type="a">
-<li>Create a list comprehension that generates a list of squares of numbers from 1 to 10.<br>
-</li>
-<li>Create a list comprehension that generates a list of even numbers between 1 and 20.</li>
-</ol>
-</section>
-<section id="excersice-10-basic-list-comprehension" class="level4">
-<h4 class="anchored" data-anchor-id="excersice-10-basic-list-comprehension">Excersice 10: Basic List Comprehension</h4>
-<ol type="a">
-<li>Create a list comprehension that generates a list of all numbers between 1 and 50 that are divisible by 3.<br>
-</li>
-<li>Create a list comprehension that generates a list of all numbers between 1 and 100 that are divisible by both 2 and 5.</li>
-</ol>
-</section>
-<section id="excersice-11-nested-list-comprehension" class="level4">
-<h4 class="anchored" data-anchor-id="excersice-11-nested-list-comprehension">Excersice 11: Nested List Comprehension</h4>
-<p>Using nested list comprehension, create a list of all possible combinations of two numbers, where the first number is from the list <code>[1, 2, 3]</code> and the second number is from the list <code>[4, 5, 6]</code>.</p>
-</section>
-<section id="excersice-12-string-manipulation-with-list-comprehension" class="level4">
-<h4 class="anchored" data-anchor-id="excersice-12-string-manipulation-with-list-comprehension">Excersice 12: String Manipulation with List Comprehension</h4>
-<p>Given the list <code>words = ["apple", "banana", "cherry", "date"]</code>,<br>
-a. Create a list comprehension that returns the lengths of each word in the list.<br>
-b. Create a list comprehension that converts each word in the list to uppercase.</p>
-</section>
-<section id="excersice-13-tuples-and-list-comprehension" class="level4">
-<h4 class="anchored" data-anchor-id="excersice-13-tuples-and-list-comprehension">Excersice 13: Tuples and List Comprehension</h4>
-<p>Given a list of tuples representing students and their scores:<br>
-<code>students = [("Alice", 85), ("Bob", 60), ("Charlie", 95), ("David", 70)]</code>,<br>
-a. Use a list comprehension to create a list of names of students who scored 70 or above.<br>
-b. Use a list comprehension to create a list of tuples where each student’s score is increased by 5 points.</p>
-</section>
-<section id="excersice-14-matrix-flattening" class="level4">
-<h4 class="anchored" data-anchor-id="excersice-14-matrix-flattening">Excersice 14: Matrix Flattening</h4>
-<p>Given a nested list (matrix): <code>matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]</code>, use list comprehension to flatten the matrix into a single list.</p>
 
 
 </section>
