@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./12_JSON.html" rel="next">
 <link href="./10_Data_Structures1.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -203,6 +204,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./11_Data_Structures2.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Data Structures: Dictionaries and Sets</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_JSON.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">JSON Files in Python</span></span></a>
   </div>
 </li>
     </ul>
@@ -440,7 +447,7 @@ dict_items([('John', 88), ('David', 90)])</code></pre>
 <section id="iterating-over-key-value-pairs" class="level4">
 <h4 class="anchored" data-anchor-id="iterating-over-key-value-pairs">Iterating Over Key-Value Pairs</h4>
 <p>The <code>items()</code> method allows you to iterate over both keys and values simultaneously:</p>
-<pre class="xlfpwsnn"><code>for student, grade in grades.items():
+<pre class="ovjtktbn"><code>for student, grade in grades.items():
     print(f"{student}: {grade}")</code></pre>
 </section>
 </section>
@@ -663,7 +670,7 @@ age: 20</code></pre>
 <span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fruits)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{1, 2, 3, 4, 5}
-{'banana', 'cherry', 'apple'}</code></pre>
+{'banana', 'apple', 'cherry'}</code></pre>
 </div>
 </div>
 </section>
@@ -681,7 +688,7 @@ age: 20</code></pre>
 <span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(letters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{1, 2, 3, 4, 5}
-{'e', 'h', 'o', 'l'}</code></pre>
+{'o', 'l', 'e', 'h'}</code></pre>
 </div>
 </div>
 </section>
@@ -701,8 +708,8 @@ age: 20</code></pre>
 <span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>fruits.add(<span class="st">"apple"</span>)</span>
 <span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fruits)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>{'banana', 'cherry', 'apple'}
-{'banana', 'cherry', 'apple'}</code></pre>
+<pre><code>{'banana', 'apple', 'cherry'}
+{'banana', 'apple', 'cherry'}</code></pre>
 </div>
 </div>
 </section>
@@ -728,7 +735,7 @@ age: 20</code></pre>
 <span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(random_fruit)  </span>
 <span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fruits)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>{'cherry', 'apple'}
+<pre><code>{'apple', 'cherry'}
 {'cherry'}
 cherry
 set()</code></pre>
@@ -922,7 +929,7 @@ True</code></pre>
 <span id="cb66-13"><a href="#cb66-13" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> unique_words(sentences)</span>
 <span id="cb66-14"><a href="#cb66-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result)  <span class="co"># Output: {'data': 2, 'science': 2, 'is': 2, 'great': 1, 'evolving': 1}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>{'great': 1, 'is': 2, 'data': 2, 'science': 2, 'evolving': 1}</code></pre>
+<pre><code>{'data': 2, 'is': 2, 'great': 1, 'science': 2, 'evolving': 1}</code></pre>
 </div>
 </div>
 <p>This function uses sets to ensure that each word in a sentence is only counted once per sentence and then stores the results in a dictionary.</p>
@@ -1272,6 +1279,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./12_JSON.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">JSON Files in Python</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
