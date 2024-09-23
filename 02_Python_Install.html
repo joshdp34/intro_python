@@ -225,6 +225,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#installing-python" id="toc-installing-python" class="nav-link active" data-scroll-target="#installing-python"><span class="header-section-number">2.1</span> Installing Python</a></li>
   <li><a href="#understanding-integrated-development-environments-ides" id="toc-understanding-integrated-development-environments-ides" class="nav-link" data-scroll-target="#understanding-integrated-development-environments-ides"><span class="header-section-number">2.2</span> Understanding Integrated Development Environments (IDEs)</a></li>
   <li><a href="#setting-up-your-ide" id="toc-setting-up-your-ide" class="nav-link" data-scroll-target="#setting-up-your-ide"><span class="header-section-number">2.3</span> Setting Up Your IDE</a></li>
+  <li><a href="#using-google-colab" id="toc-using-google-colab" class="nav-link" data-scroll-target="#using-google-colab"><span class="header-section-number">2.4</span> Using Google Colab</a>
+  <ul class="collapse">
+  <li><a href="#accessing-google-colab" id="toc-accessing-google-colab" class="nav-link" data-scroll-target="#accessing-google-colab"><span class="header-section-number">2.4.1</span> Accessing Google Colab</a></li>
+  <li><a href="#connecting-google-drive-to-colab" id="toc-connecting-google-drive-to-colab" class="nav-link" data-scroll-target="#connecting-google-drive-to-colab"><span class="header-section-number">2.4.2</span> Connecting Google Drive to Colab</a></li>
+  <li><a href="#installing-packages-in-google-colab" id="toc-installing-packages-in-google-colab" class="nav-link" data-scroll-target="#installing-packages-in-google-colab"><span class="header-section-number">2.4.3</span> Installing Packages in Google Colab</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -372,8 +378,49 @@ sudo apt install python3</code></pre>
 </ul></li>
 </ol>
 <p>By following these instructions, you’ll have Python installed and be ready to start coding with PyCharm or RStudio as your IDE.</p>
+</section>
+<section id="using-google-colab" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="using-google-colab"><span class="header-section-number">2.4</span> Using Google Colab</h2>
+<p>Google Colab is a powerful tool that allows you to write and run Python code in a browser. It provides free access to computing resources, including GPU and TPU options, making it ideal for learning, experimenting, or running intensive computations without needing a high-performance computer. Colab is built on Jupyter Notebooks, which means you can easily share your code and outputs.</p>
+<p>In this section, The following will be covered:</p>
+<ol type="1">
+<li>Accessing and using Google Colab</li>
+<li>Connecting to your Google Drive</li>
+<li>Installing additional Python packages in Colab</li>
+</ol>
+<section id="accessing-google-colab" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="accessing-google-colab"><span class="header-section-number">2.4.1</span> Accessing Google Colab</h3>
+<p>To access Google Colab, simply navigate to <a href="https://colab.research.google.com">https://colab.research.google.com</a> in your browser. You can start a new notebook by selecting <code>New Notebook</code> from the main dashboard.</p>
+<p>Alternatively, if you have a Jupyter Notebook (.ipynb) saved on your local machine or in Google Drive, you can upload and work on it directly.</p>
+</section>
+<section id="connecting-google-drive-to-colab" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="connecting-google-drive-to-colab"><span class="header-section-number">2.4.2</span> Connecting Google Drive to Colab</h3>
+<p>One of the most useful features of Google Colab is its ability to connect directly to your Google Drive, allowing you to load and save files with ease.</p>
+<p>Here’s how to connect your Google Drive to your Colab notebook:</p>
+<ol type="1">
+<li><p><strong>Open a new or existing Colab notebook</strong>.</p></li>
+<li><p><strong>Mount Google Drive</strong> using the following code:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google.colab <span class="im">import</span> drive</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>drive.mount(<span class="st">'/content/drive'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Run the cell</strong> by clicking the play button. A link will appear that directs you to authorize access to your Google Drive. Click the link and follow the instructions to grant access.</p></li>
+<li><p>(If Necessary) After authorizing, <strong>copy the authentication code</strong> provided and paste it into the Colab input box.</p></li>
+<li><p>Your Google Drive is now mounted, and you can access your files under the path <code>/content/drive/My Drive/</code>.</p></li>
+</ol>
+<p>For example, to read a file from your Google Drive, you can use:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="op">=</span> <span class="st">'/content/drive/My Drive/your_folder/your_file.csv'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To save a file back to Google Drive, specify the path similarly.</p>
+</section>
+<section id="installing-packages-in-google-colab" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="installing-packages-in-google-colab"><span class="header-section-number">2.4.3</span> Installing Packages in Google Colab</h3>
+<p>Google Colab comes pre-installed with many common Python libraries (like NumPy, pandas, and Matplotlib), but you may occasionally need to install additional packages.</p>
+<p>To install a new package, use the <code>!pip</code> or <code>!apt-get</code> commands directly within a notebook cell. For example, to install a package with pip:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install some<span class="op">-</span>package</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For example, to install <code>plotly</code>, a Python library for creating interactive plots, you would use:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install plotly</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After running the command, the package will be available for immediate use in the current Colab session.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
