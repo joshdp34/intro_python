@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -218,6 +218,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">NumPy</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_Pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Pandas</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -427,10 +433,10 @@ Goodbye, Charlie!</code></pre>
 </section>
 <section id="sec-functions_kargs" class="level3" data-number="8.3.4">
 <h3 data-number="8.3.4" class="anchored" data-anchor-id="sec-functions_kargs"><span class="header-section-number">8.3.4</span> Variable-Length Arguments</h3>
-<p>In Python, functions are not limited to accepting a fixed number of arguments. You can design functions to accept a variable number of arguments, allowing for greater flexibility and adaptability in different scenarios. Python provides two special types of arguments for this purpose: <code>*args</code> for positional arguments and <code>**kwargs</code> for keyword arguments. We will discuss <code>*args</code> here and come back to <code>**kwargs</code> later in <a href="11_Data_Structures2.html"><span>Chapter&nbsp;11</span></a> after we discuss dictionaries.</p>
+<p>In Python, functions are not limited to accepting a fixed number of arguments. You can design functions to accept a variable number of arguments, allowing for greater flexibility and adaptability in different scenarios. Python provides two special types of arguments for this purpose: <code>*args</code> for positional arguments and <code>**kwargs</code> for keyword arguments. We will discuss <code>*args</code> here and come back to <code>**kwargs</code> later in <a href="#sec-data2"><span class="quarto-unresolved-ref">sec-data2</span></a> after we discuss dictionaries.</p>
 <section id="args-variable-length-positional-arguments" class="level4">
 <h4 class="anchored" data-anchor-id="args-variable-length-positional-arguments"><code>*args</code> – Variable-Length Positional Arguments</h4>
-<p>The <code>*args</code> syntax allows a function to accept any number of positional arguments. When you use <code>*args</code> in a function definition, Python collects all the positional arguments passed into the function and stores them in a tuple, which is an ordered and immutable collection of items (discussed in <a href="10_Data_Structures1.html"><span>Chapter&nbsp;10</span></a>). When you define a function with <code>*args</code>, it can handle calls with any number of positional arguments—from zero to many.</p>
+<p>The <code>*args</code> syntax allows a function to accept any number of positional arguments. When you use <code>*args</code> in a function definition, Python collects all the positional arguments passed into the function and stores them in a tuple, which is an ordered and immutable collection of items (discussed in <a href="#sec-data1"><span class="quarto-unresolved-ref">sec-data1</span></a>). When you define a function with <code>*args</code>, it can handle calls with any number of positional arguments—from zero to many.</p>
 <p><strong>Example:</strong></p>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> greet(<span class="op">*</span>names):</span>
@@ -496,7 +502,7 @@ Hello, Charlie!</code></pre>
 <p>In Python, a function can return more than one value at a time, which is a feature that adds considerable flexibility to the way functions are used. When a function returns multiple values, it does so by returning a tuple. This allows you to return several related pieces of data from a single function call, without the need to explicitly create and manage a complex data structure.</p>
 <section id="how-multiple-return-values-work" class="level4">
 <h4 class="anchored" data-anchor-id="how-multiple-return-values-work">How Multiple Return Values Work</h4>
-<p>When a function is designed to return multiple values, it simply lists the values after the <code>return</code> keyword, separated by commas. Python automatically packages these values into a tuple. The caller of the function can then unpack this tuple (see <a href="10_Data_Structures1.html"><span>Chapter&nbsp;10</span></a>) into separate variables, each receiving one of the returned values.</p>
+<p>When a function is designed to return multiple values, it simply lists the values after the <code>return</code> keyword, separated by commas. Python automatically packages these values into a tuple. The caller of the function can then unpack this tuple (see <a href="#sec-data1"><span class="quarto-unresolved-ref">sec-data1</span></a>) into separate variables, each receiving one of the returned values.</p>
 <p><strong>Example:</strong></p>
 <p>Consider the following example:</p>
 <div class="cell" data-execution_count="13">
@@ -634,7 +640,7 @@ Hello, Charlie!</code></pre>
 <section id="avoid-side-effects" class="level4">
 <h4 class="anchored" data-anchor-id="avoid-side-effects">Avoid Side Effects</h4>
 <p>Side effects occur when a function modifies some state or interacts with outside elements like global variables, files, or databases, which are not directly related to its inputs and outputs. While side effects are sometimes necessary, minimizing them helps ensure that functions are predictable and easier to test.</p>
-<p>Recall that global and local variables were first discussed in <a href="04_Names_and_Variables.html#sec-names"><span>Section&nbsp;4.1</span></a>.</p>
+<p>Recall that global and local variables were first discussed in <a href="#sec-names"><span class="quarto-unresolved-ref">sec-names</span></a>.</p>
 <p><strong>Example of a Function with Side Effects:</strong></p>
 <div class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> <span class="dv">0</span></span>
