@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>STA 2450 Computing for Math &amp; Stat - 18&nbsp; Exception Handling and Debugging Techniques</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./17_Documentation.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./18_Exception.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Exception Handling and Debugging Techniques</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./"></a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_Intro_to_Programming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Intro to Computing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_Python_Install.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Installing Python and Setting Up Your IDE</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_Basic_Syntax_and_Expressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Basic Syntax and Expressions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_Names_and_Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Names and Variables</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_Data_Types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_Conditional_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Control Structures: Conditional Statements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Control Structures: Loops</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Functions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_Libraries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to Modules and Libraries</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_Data_Structures1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Data Structures: Lists and Tuples</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_Data_Structures2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Data Structures: Dictionaries and Sets</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_JSON.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">JSON Files in Python</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_NumPy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">NumPy</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_Pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Pandas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_Data_Vis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Data Visualization in Python</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_OOP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Object-Oriented Programming in Python</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17_Documentation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Writing Clear and Effective Documentation and PEP 8</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18_Exception.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Exception Handling and Debugging Techniques</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction-to-exception-handling" id="toc-introduction-to-exception-handling" class="nav-link active" data-scroll-target="#introduction-to-exception-handling"><span class="header-section-number">18.1</span> Introduction to Exception Handling</a>
+  <ul class="collapse">
+  <li><a href="#types-of-errors-in-python" id="toc-types-of-errors-in-python" class="nav-link" data-scroll-target="#types-of-errors-in-python"><span class="header-section-number">18.1.1</span> Types of Errors in Python</a></li>
+  <li><a href="#why-handle-exceptions" id="toc-why-handle-exceptions" class="nav-link" data-scroll-target="#why-handle-exceptions"><span class="header-section-number">18.1.2</span> Why Handle Exceptions?</a></li>
+  <li><a href="#the-life-cycle-of-an-exception" id="toc-the-life-cycle-of-an-exception" class="nav-link" data-scroll-target="#the-life-cycle-of-an-exception"><span class="header-section-number">18.1.3</span> The Life Cycle of an Exception</a></li>
+  <li><a href="#common-exceptions-in-python" id="toc-common-exceptions-in-python" class="nav-link" data-scroll-target="#common-exceptions-in-python"><span class="header-section-number">18.1.4</span> Common Exceptions in Python</a></li>
+  <li><a href="#the-philosophy-behind-pythons-exception-handling" id="toc-the-philosophy-behind-pythons-exception-handling" class="nav-link" data-scroll-target="#the-philosophy-behind-pythons-exception-handling"><span class="header-section-number">18.1.5</span> The Philosophy Behind Python’s Exception Handling</a></li>
+  <li><a href="#exceptions-in-statistical-and-mathematical-computing" id="toc-exceptions-in-statistical-and-mathematical-computing" class="nav-link" data-scroll-target="#exceptions-in-statistical-and-mathematical-computing"><span class="header-section-number">18.1.6</span> Exceptions in Statistical and Mathematical Computing</a></li>
+  </ul></li>
+  <li><a href="#the-try-and-except-blocks" id="toc-the-try-and-except-blocks" class="nav-link" data-scroll-target="#the-try-and-except-blocks"><span class="header-section-number">18.2</span> The <code>try</code> and <code>except</code> Blocks</a>
+  <ul class="collapse">
+  <li><a href="#basic-structure-of-try-and-except" id="toc-basic-structure-of-try-and-except" class="nav-link" data-scroll-target="#basic-structure-of-try-and-except"><span class="header-section-number">18.2.1</span> Basic Structure of <code>try</code> and <code>except</code></a></li>
+  <li><a href="#catching-specific-exceptions" id="toc-catching-specific-exceptions" class="nav-link" data-scroll-target="#catching-specific-exceptions"><span class="header-section-number">18.2.2</span> Catching Specific Exceptions</a></li>
+  <li><a href="#catching-multiple-exceptions-in-one-block" id="toc-catching-multiple-exceptions-in-one-block" class="nav-link" data-scroll-target="#catching-multiple-exceptions-in-one-block"><span class="header-section-number">18.2.3</span> Catching Multiple Exceptions in One Block</a></li>
+  <li><a href="#handling-all-exceptions-not-recommended" id="toc-handling-all-exceptions-not-recommended" class="nav-link" data-scroll-target="#handling-all-exceptions-not-recommended"><span class="header-section-number">18.2.4</span> Handling All Exceptions (Not Recommended)</a></li>
+  <li><a href="#using-the-else-block" id="toc-using-the-else-block" class="nav-link" data-scroll-target="#using-the-else-block"><span class="header-section-number">18.2.5</span> Using the <code>else</code> Block</a></li>
+  <li><a href="#the-finally-block" id="toc-the-finally-block" class="nav-link" data-scroll-target="#the-finally-block"><span class="header-section-number">18.2.6</span> The <code>finally</code> Block</a></li>
+  <li><a href="#nesting-try-and-except-blocks" id="toc-nesting-try-and-except-blocks" class="nav-link" data-scroll-target="#nesting-try-and-except-blocks"><span class="header-section-number">18.2.7</span> Nesting <code>try</code> and <code>except</code> Blocks</a></li>
+  <li><a href="#raising-exceptions" id="toc-raising-exceptions" class="nav-link" data-scroll-target="#raising-exceptions"><span class="header-section-number">18.2.8</span> Raising Exceptions</a></li>
+  </ul></li>
+  <li><a href="#debugging-techniques" id="toc-debugging-techniques" class="nav-link" data-scroll-target="#debugging-techniques"><span class="header-section-number">18.3</span> Debugging Techniques</a>
+  <ul class="collapse">
+  <li><a href="#using-print-statements-for-debugging" id="toc-using-print-statements-for-debugging" class="nav-link" data-scroll-target="#using-print-statements-for-debugging"><span class="header-section-number">18.3.1</span> Using Print Statements for Debugging</a></li>
+  <li><a href="#using-pythons-built-in-debugger-pdb" id="toc-using-pythons-built-in-debugger-pdb" class="nav-link" data-scroll-target="#using-pythons-built-in-debugger-pdb"><span class="header-section-number">18.3.2</span> Using Python’s Built-In Debugger (<code>pdb</code>)</a></li>
+  <li><a href="#ide-debugging-tools" id="toc-ide-debugging-tools" class="nav-link" data-scroll-target="#ide-debugging-tools"><span class="header-section-number">18.3.3</span> IDE Debugging Tools</a></li>
+  <li><a href="#testing-and-assertions" id="toc-testing-and-assertions" class="nav-link" data-scroll-target="#testing-and-assertions"><span class="header-section-number">18.3.4</span> Testing and Assertions</a></li>
+  <li><a href="#logging-for-debugging" id="toc-logging-for-debugging" class="nav-link" data-scroll-target="#logging-for-debugging"><span class="header-section-number">18.3.5</span> Logging for Debugging</a></li>
+  <li><a href="#writing-clean-code-to-minimize-bugs" id="toc-writing-clean-code-to-minimize-bugs" class="nav-link" data-scroll-target="#writing-clean-code-to-minimize-bugs"><span class="header-section-number">18.3.6</span> Writing Clean Code to Minimize Bugs</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">18.4</span> Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-exception" class="quarto-section-identifier"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Exception Handling and Debugging Techniques</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction-to-exception-handling" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="introduction-to-exception-handling"><span class="header-section-number">18.1</span> Introduction to Exception Handling</h2>
+<p>In computer programming, errors are an inevitable part of development. These errors, known as <em>exceptions</em>, occur when a program encounters something unexpected during execution. For example, dividing by zero, accessing a file that doesn’t exist, or trying to convert a string to a number can all cause exceptions. If not handled properly, these exceptions can cause a program to crash, resulting in a poor user experience and potential data loss.</p>
+<p>Exception handling is the mechanism that allows programs to anticipate and gracefully respond to errors. Rather than terminating abruptly, a program can detect an exception, respond appropriately, and continue functioning. This approach is especially important in scientific computing, statistical modeling, and other data-intensive tasks where robustness and reliability are paramount.</p>
+<section id="types-of-errors-in-python" class="level3" data-number="18.1.1">
+<h3 data-number="18.1.1" class="anchored" data-anchor-id="types-of-errors-in-python"><span class="header-section-number">18.1.1</span> Types of Errors in Python</h3>
+<p>There are three primary categories of errors that can occur in Python:</p>
+<ol type="1">
+<li><p><strong>Syntax Errors</strong><br>
+Syntax errors, also known as <em>parsing errors</em>, occur when Python cannot interpret the code because it violates the language’s syntax rules. These are usually caught before the program runs.</p>
+<p><strong>Example:</strong></p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hello"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>SyntaxError: incomplete input (3469545723.py, line 1)</code></pre>
+</div>
+</div>
+<p>The missing closing parenthesis will raise a <code>SyntaxError</code>.</p></li>
+<li><p><strong>Runtime Errors (Exceptions)</strong><br>
+These errors occur during program execution, even if the code is syntactically correct. Runtime errors are what we typically handle using exception handling mechanisms.</p>
+<p><strong>Example:</strong></p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">10</span> <span class="op">/</span> <span class="dv">0</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>ZeroDivisionError: division by zero</code></pre>
+</div>
+</div></li>
+<li><p><strong>Logical Errors</strong><br>
+Logical errors do not cause the program to crash, but the output is incorrect due to flaws in the logic of the code. These are often the hardest to detect and require thorough testing to identify.</p></li>
+</ol>
+</section>
+<section id="why-handle-exceptions" class="level3" data-number="18.1.2">
+<h3 data-number="18.1.2" class="anchored" data-anchor-id="why-handle-exceptions"><span class="header-section-number">18.1.2</span> Why Handle Exceptions?</h3>
+<p>In large-scale applications—such as those used for statistical modeling, data collection, or machine learning—exceptions are common and can arise from user input errors, missing data, or network connectivity issues. Handling exceptions ensures that:</p>
+<ul>
+<li><strong>Programs Remain Functional:</strong> Rather than crashing, the program can respond to the error and continue executing.</li>
+<li><strong>Users Receive Feedback:</strong> Users get meaningful error messages, helping them understand and correct their input.</li>
+<li><strong>Data Integrity is Preserved:</strong> By handling exceptions, the program can prevent incomplete operations that could lead to data corruption.</li>
+<li><strong>Code is Easier to Maintain:</strong> Exception handling creates structured and predictable error management, making the codebase easier to debug and maintain.</li>
+</ul>
+</section>
+<section id="the-life-cycle-of-an-exception" class="level3" data-number="18.1.3">
+<h3 data-number="18.1.3" class="anchored" data-anchor-id="the-life-cycle-of-an-exception"><span class="header-section-number">18.1.3</span> The Life Cycle of an Exception</h3>
+<p>When an exception occurs, the following sequence of events takes place:</p>
+<ol type="1">
+<li><strong>Detection:</strong> An exception is raised when Python encounters an unexpected situation.</li>
+<li><strong>Propagation:</strong> If the exception is not handled in the immediate scope, Python searches for a matching handler up the call stack.</li>
+<li><strong>Handling:</strong> If a matching handler is found, the program executes the code in the corresponding <code>except</code> block.</li>
+<li><strong>Termination or Recovery:</strong> Depending on the program’s design, it may either terminate gracefully or recover and continue.</li>
+</ol>
+</section>
+<section id="common-exceptions-in-python" class="level3" data-number="18.1.4">
+<h3 data-number="18.1.4" class="anchored" data-anchor-id="common-exceptions-in-python"><span class="header-section-number">18.1.4</span> Common Exceptions in Python</h3>
+<p>Below is a list of some frequently encountered exceptions in Python, along with descriptions:</p>
+<table class="table">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 67%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Exception</strong></th>
+<th><strong>Cause</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ZeroDivisionError</code></td>
+<td>Attempt to divide by zero.</td>
+</tr>
+<tr class="even">
+<td><code>ValueError</code></td>
+<td>Invalid argument passed to a function.</td>
+</tr>
+<tr class="odd">
+<td><code>TypeError</code></td>
+<td>Operation applied to an inappropriate type.</td>
+</tr>
+<tr class="even">
+<td><code>FileNotFoundError</code></td>
+<td>File or directory does not exist.</td>
+</tr>
+<tr class="odd">
+<td><code>IndexError</code></td>
+<td>Index out of range for a list or tuple.</td>
+</tr>
+<tr class="even">
+<td><code>KeyError</code></td>
+<td>Key not found in a dictionary.</td>
+</tr>
+<tr class="odd">
+<td><code>AttributeError</code></td>
+<td>Accessing an attribute that doesn’t exist.</td>
+</tr>
+<tr class="even">
+<td><code>IOError</code></td>
+<td>Input/output operation failed (e.g., file read error).</td>
+</tr>
+<tr class="odd">
+<td><code>AssertionError</code></td>
+<td>Raised when an assertion fails.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-philosophy-behind-pythons-exception-handling" class="level3" data-number="18.1.5">
+<h3 data-number="18.1.5" class="anchored" data-anchor-id="the-philosophy-behind-pythons-exception-handling"><span class="header-section-number">18.1.5</span> The Philosophy Behind Python’s Exception Handling</h3>
+<p>Python’s philosophy for exception handling emphasizes readability, simplicity, and robustness, in line with the language’s overarching principle, expressed in the Zen of Python: <em>“Errors should never pass silently.”</em> By making error handling explicit, Python encourages developers to anticipate and plan for potential problems.</p>
+<p>Python also follows the principle of <em>EAFP (Easier to Ask for Forgiveness than Permission)</em>. Rather than checking in advance if an operation will succeed, it is often more efficient to perform the operation and handle any exceptions if they arise. This approach simplifies code while ensuring errors are dealt with properly.</p>
+<p><strong>Example of EAFP in practice:</strong></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Enter a number: "</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ValueError</span>:</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Invalid input. Please enter a valid integer."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Instead of preemptively validating input, the code attempts to perform the operation and handles any issues via exception handling.</p>
+</section>
+<section id="exceptions-in-statistical-and-mathematical-computing" class="level3" data-number="18.1.6">
+<h3 data-number="18.1.6" class="anchored" data-anchor-id="exceptions-in-statistical-and-mathematical-computing"><span class="header-section-number">18.1.6</span> Exceptions in Statistical and Mathematical Computing</h3>
+<p>In statistical programming, exception handling plays a critical role. Consider the following scenarios:</p>
+<ol type="1">
+<li><p><strong>Handling Division by Zero in Calculations</strong></p>
+<p>When performing statistical computations, division by zero might occur due to missing or incomplete data. Proper exception handling ensures the program doesn’t crash and provides meaningful feedback.</p>
+<p><strong>Example:</strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    mean <span class="op">=</span> total_sum <span class="op">/</span> count</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Cannot compute mean: division by zero."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Handling File Input Errors</strong></p>
+<p>Data processing often involves reading data from external files. Exception handling ensures the program gracefully handles missing files or incorrect paths.</p>
+<p><strong>Example:</strong></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">"data.csv"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> <span class="bu">file</span>.read()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">FileNotFoundError</span>:</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"The data file is missing."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Managing User Input in Interactive Applications</strong></p>
+<p>Many programs used for data analysis involve user interaction. Ensuring users provide valid input is critical to avoid runtime errors.</p>
+<p><strong>Example:</strong></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        n <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Enter the sample size: "</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">ValueError</span>:</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Invalid input. Please enter a number."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+<p>Exception handling allows developers to anticipate, detect, and respond to errors effectively, ensuring the program runs smoothly under unexpected conditions. Whether in data analysis or mathematical modeling, properly handling exceptions is essential for developing reliable and user-friendly applications. The next sections will dive into the syntax and practical examples of handling exceptions in Python, providing tools to manage errors and improve program stability.</p>
+</section>
+</section>
+<section id="the-try-and-except-blocks" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="the-try-and-except-blocks"><span class="header-section-number">18.2</span> The <code>try</code> and <code>except</code> Blocks</h2>
+<p>The foundation of exception handling in Python lies in the use of <code>try</code> and <code>except</code> blocks. These blocks allow you to “try” a block of code that might raise an exception and catch that exception to handle it gracefully. The <code>try</code> block contains the code that may cause an error, while the <code>except</code> block specifies how to handle the error if it occurs.</p>
+<section id="basic-structure-of-try-and-except" class="level3" data-number="18.2.1">
+<h3 data-number="18.2.1" class="anchored" data-anchor-id="basic-structure-of-try-and-except"><span class="header-section-number">18.2.1</span> Basic Structure of <code>try</code> and <code>except</code></h3>
+<p>The basic syntax for a <code>try</code>-<code>except</code> block is as follows:</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Code that might raise an exception</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> <span class="dv">10</span> <span class="op">/</span> <span class="dv">0</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Code to handle the exception</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Cannot divide by zero."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Cannot divide by zero.</code></pre>
+</div>
+</div>
+<p>In the example above, Python attempts to execute the code in the <code>try</code> block. Since dividing by zero is not allowed, a <code>ZeroDivisionError</code> is raised, and control is passed to the <code>except</code> block, which prints an appropriate message.</p>
+</section>
+<section id="catching-specific-exceptions" class="level3" data-number="18.2.2">
+<h3 data-number="18.2.2" class="anchored" data-anchor-id="catching-specific-exceptions"><span class="header-section-number">18.2.2</span> Catching Specific Exceptions</h3>
+<p>You can specify multiple <code>except</code> blocks to catch different types of exceptions. This is useful when you want to handle different errors in different ways.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Enter a number: "</span>))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> <span class="dv">10</span> <span class="op">/</span> value</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ValueError</span>:</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Invalid input. Please enter a valid number."</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"You can't divide by zero!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This example ensures that invalid input and division by zero are handled separately, improving the user experience with specific error messages.</p>
+</section>
+<section id="catching-multiple-exceptions-in-one-block" class="level3" data-number="18.2.3">
+<h3 data-number="18.2.3" class="anchored" data-anchor-id="catching-multiple-exceptions-in-one-block"><span class="header-section-number">18.2.3</span> Catching Multiple Exceptions in One Block</h3>
+<p>When multiple exceptions are expected, you can handle them in a single <code>except</code> block by grouping them in a tuple.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Enter a number: "</span>))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> <span class="dv">10</span> <span class="op">/</span> value</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> (<span class="pp">ValueError</span>, <span class="pp">ZeroDivisionError</span>) <span class="im">as</span> e:</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Error occurred: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This approach simplifies code when the same response is appropriate for different exceptions.</p>
+</section>
+<section id="handling-all-exceptions-not-recommended" class="level3" data-number="18.2.4">
+<h3 data-number="18.2.4" class="anchored" data-anchor-id="handling-all-exceptions-not-recommended"><span class="header-section-number">18.2.4</span> Handling All Exceptions (Not Recommended)</h3>
+<p>If you do not know what exceptions might occur, you can use a bare <code>except</code> block. However, this is generally discouraged because it can catch unexpected exceptions, making debugging more difficult.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> <span class="dv">10</span> <span class="op">/</span> value</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"An error occurred."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A better practice is to catch exceptions explicitly or use <code>Exception</code> to capture any standard error while leaving system-exit exceptions unhandled.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> <span class="dv">10</span> <span class="op">/</span> value</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"An unexpected error occurred: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="using-the-else-block" class="level3" data-number="18.2.5">
+<h3 data-number="18.2.5" class="anchored" data-anchor-id="using-the-else-block"><span class="header-section-number">18.2.5</span> Using the <code>else</code> Block</h3>
+<p>Python provides an optional <code>else</code> block that runs only if no exceptions are raised in the <code>try</code> block. This ensures that the <code>else</code> block is executed only when everything runs smoothly.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Enter a number: "</span>))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> <span class="dv">10</span> <span class="op">/</span> value</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"You can't divide by zero!"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ValueError</span>:</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Please enter a valid number."</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"The result is </span><span class="sc">{</span>result<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This example ensures that the message in the <code>else</code> block is printed only if the input is valid and no exception occurs.</p>
+</section>
+<section id="the-finally-block" class="level3" data-number="18.2.6">
+<h3 data-number="18.2.6" class="anchored" data-anchor-id="the-finally-block"><span class="header-section-number">18.2.6</span> The <code>finally</code> Block</h3>
+<p>A <code>finally</code> block is always executed, regardless of whether an exception occurs. It is typically used for cleanup operations, such as closing files or releasing resources.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">file</span> <span class="op">=</span> <span class="bu">open</span>(<span class="st">"data.txt"</span>, <span class="st">"r"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> <span class="bu">file</span>.read()</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">FileNotFoundError</span>:</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"The file was not found."</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="cf">finally</span>:</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">file</span>.close()  <span class="co"># Ensures the file is closed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Even if an exception occurs, the <code>finally</code> block ensures the file is closed, preventing resource leaks.</p>
+</section>
+<section id="nesting-try-and-except-blocks" class="level3" data-number="18.2.7">
+<h3 data-number="18.2.7" class="anchored" data-anchor-id="nesting-try-and-except-blocks"><span class="header-section-number">18.2.7</span> Nesting <code>try</code> and <code>except</code> Blocks</h3>
+<p>In more complex scenarios, <code>try</code> and <code>except</code> blocks can be nested to handle multiple layers of potential exceptions.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">file</span> <span class="op">=</span> <span class="bu">open</span>(<span class="st">"data.txt"</span>, <span class="st">"r"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> <span class="bu">file</span>.read()</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>        value <span class="op">=</span> <span class="bu">int</span>(data)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">ValueError</span>:</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Data is not a valid integer."</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="cf">finally</span>:</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">file</span>.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here, the inner <code>try</code> block handles issues with reading or processing data, while the outer block ensures the file is closed no matter what happens.</p>
+</section>
+<section id="raising-exceptions" class="level3" data-number="18.2.8">
+<h3 data-number="18.2.8" class="anchored" data-anchor-id="raising-exceptions"><span class="header-section-number">18.2.8</span> Raising Exceptions</h3>
+<p>Python allows developers to manually raise exceptions using the <code>raise</code> statement. This is helpful when you want to enforce certain conditions in your code.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> set_age(age):</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> age <span class="op">&lt;</span> <span class="dv">0</span>:</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Age cannot be negative."</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Age is set to </span><span class="sc">{</span>age<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    set_age(<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ValueError</span> <span class="im">as</span> e:</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Error: Age cannot be negative.</code></pre>
+</div>
+</div>
+<p>In this example, the function raises a <code>ValueError</code> if the age is negative. This exception is caught in the <code>try</code>-<code>except</code> block to provide meaningful feedback.</p>
+<p>The <code>try</code> and <code>except</code> blocks provide a powerful way to manage exceptions gracefully. By anticipating potential errors and designing structured exception handling, you can build programs that are more robust, maintainable, and user-friendly. The next section will explore best practices for debugging to further enhance code reliability.</p>
+</section>
+</section>
+<section id="debugging-techniques" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="debugging-techniques"><span class="header-section-number">18.3</span> Debugging Techniques</h2>
+<p>Debugging is the process of identifying, analyzing, and resolving errors or bugs in a program. Even with well-structured code, errors can arise from various sources, such as logical flaws, incorrect assumptions, or misinterpretation of data. Therefore, mastering debugging techniques is essential for writing reliable and efficient programs, particularly in fields like statistical computing and data analysis, where accuracy is paramount.</p>
+<section id="using-print-statements-for-debugging" class="level3" data-number="18.3.1">
+<h3 data-number="18.3.1" class="anchored" data-anchor-id="using-print-statements-for-debugging"><span class="header-section-number">18.3.1</span> Using Print Statements for Debugging</h3>
+<p>One of the simplest and most common debugging techniques is the use of <code>print()</code> statements. By printing intermediate values or messages, you can track the flow of your program and observe how variables change over time. This method is especially useful for tracking down logical errors.</p>
+<p><strong>Example:</strong></p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_average(numbers):</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> <span class="bu">sum</span>(numbers)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Total: </span><span class="sc">{</span>total<span class="sc">}</span><span class="ss">"</span>)  <span class="co"># Debugging statement</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    average <span class="op">=</span> total <span class="op">/</span> <span class="bu">len</span>(numbers)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Average: </span><span class="sc">{</span>average<span class="sc">}</span><span class="ss">"</span>)  <span class="co"># Debugging statement</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> average</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>]</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>calculate_average(numbers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Total: 100
+Average: 25.0</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>25.0</code></pre>
+</div>
+</div>
+<p>In this example, the <code>print()</code> statements help visualize how the total and average values are calculated. This technique is simple but effective for small programs or sections of code.</p>
+<p><strong>Limitations:</strong></p>
+<ul>
+<li>It can clutter your code with <code>print()</code> statements.</li>
+<li>You must remove or comment out these statements once the bug is fixed.</li>
+<li>It can be inefficient when debugging larger, more complex programs.</li>
+</ul>
+</section>
+<section id="using-pythons-built-in-debugger-pdb" class="level3" data-number="18.3.2">
+<h3 data-number="18.3.2" class="anchored" data-anchor-id="using-pythons-built-in-debugger-pdb"><span class="header-section-number">18.3.2</span> Using Python’s Built-In Debugger (<code>pdb</code>)</h3>
+<p>Python provides a built-in debugger, <code>pdb</code>, which offers more powerful debugging capabilities. It allows you to set breakpoints, step through your code, and inspect variables at runtime.</p>
+<p>To start using <code>pdb</code>, you can insert the following line in your code where you want the execution to pause:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pdb<span class="op">;</span> pdb.set_trace()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Example:</strong></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_average(numbers):</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> <span class="bu">sum</span>(numbers)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> pdb<span class="op">;</span> pdb.set_trace()  <span class="co"># Sets a breakpoint here</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    average <span class="op">=</span> total <span class="op">/</span> <span class="bu">len</span>(numbers)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> average</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>]</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>calculate_average(numbers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When you run the program, it will pause at the breakpoint. You can then use the following commands to debug:</p>
+<ul>
+<li><code>n</code> (next): Execute the next line of code.</li>
+<li><code>c</code> (continue): Continue execution until the next breakpoint.</li>
+<li><code>p</code> (print): Print the value of a variable.</li>
+<li><code>q</code> (quit): Exit the debugger.</li>
+</ul>
+<p>Using <code>pdb</code>, you can navigate through your program interactively and inspect the state of variables at specific points, making it easier to identify the cause of an issue.</p>
+</section>
+<section id="ide-debugging-tools" class="level3" data-number="18.3.3">
+<h3 data-number="18.3.3" class="anchored" data-anchor-id="ide-debugging-tools"><span class="header-section-number">18.3.3</span> IDE Debugging Tools</h3>
+<p>Most modern Integrated Development Environments (IDEs), such as PyCharm, VSCode, and RStudio, offer built-in debugging tools that provide a graphical interface for setting breakpoints, stepping through code, and inspecting variables. These tools enhance productivity and streamline the debugging process by making it more intuitive.</p>
+<p>In PyCharm, for example, you can:</p>
+<ol type="1">
+<li>Set breakpoints by clicking next to the line number in the editor.</li>
+<li>Run the program in debug mode by clicking the “bug” icon.</li>
+<li>Inspect the value of variables in the “Variables” pane.</li>
+<li>Step through code using the “Step Into,” “Step Over,” and “Step Out” buttons.</li>
+</ol>
+<p><strong>Advantages of IDE Debuggers:</strong></p>
+<ul>
+<li>No need to modify your code with debugging statements like <code>print()</code> or <code>pdb.set_trace()</code>.</li>
+<li>Easier navigation through complex codebases.</li>
+<li>Visual inspection of variables, call stacks, and execution flow.</li>
+</ul>
+</section>
+<section id="testing-and-assertions" class="level3" data-number="18.3.4">
+<h3 data-number="18.3.4" class="anchored" data-anchor-id="testing-and-assertions"><span class="header-section-number">18.3.4</span> Testing and Assertions</h3>
+<p>Testing is a proactive debugging technique that ensures your code behaves as expected. Writing tests allows you to check the correctness of your functions and detect issues early. Testing frameworks like <code>unittest</code> and <code>pytest</code> help automate the process, ensuring that any future changes don’t introduce new bugs.</p>
+<p><strong>Example Using <code>unittest</code>:</strong></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> unittest</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_average(numbers):</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(numbers) <span class="op">/</span> <span class="bu">len</span>(numbers)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TestAverage(unittest.TestCase):</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> test_average(<span class="va">self</span>):</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.assertEqual(calculate_average([<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>]), <span class="dv">20</span>)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.assertEqual(calculate_average([<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">5</span>]), <span class="dv">5</span>)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    unittest.main()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this example, the <code>unittest</code> framework is used to check if the <code>calculate_average</code> function returns the expected values. Tests can be run repeatedly to ensure code correctness.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Purpose of <code>if __name__ == "__main__":</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In Python, the <code>if __name__ == "__main__":</code> construct is used to control the execution of code, ensuring that certain blocks run only when the script is executed directly, and not when it is imported as a module. This is a best practice for writing reusable code and organizing scripts that might serve as both standalone programs and libraries.</p>
+<section id="how-it-works" class="level4">
+<h4 class="anchored" data-anchor-id="how-it-works">How It Works</h4>
+<p>When a Python file is executed, the interpreter sets a special built-in variable, <code>__name__</code>. If the script is being run directly, <code>__name__</code> is set to <code>"__main__"</code>. However, if the script is imported into another module, <code>__name__</code> takes the name of the module instead.</p>
+</section>
+<section id="example" class="level4">
+<h4 class="anchored" data-anchor-id="example">Example:</h4>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> greet():</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Hello, world!"</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    greet()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>If this script is run directly (e.g., <code>python script.py</code>), the <code>greet()</code> function will be called, printing <code>"Hello, world!"</code>.</li>
+<li>If the same script is imported into another module, the <code>greet()</code> function won’t run automatically because the code inside the <code>if __name__ == "__main__":</code> block will be skipped.</li>
+</ul>
+</section>
+<section id="why-its-useful" class="level4">
+<h4 class="anchored" data-anchor-id="why-its-useful">Why It’s Useful</h4>
+<ol type="1">
+<li><strong>Prevents Unintended Execution:</strong> Ensures that code meant for direct execution does not run when the module is imported elsewhere.</li>
+<li><strong>Facilitates Code Reusability:</strong> Allows you to reuse functions, classes, or variables in other scripts without triggering the script’s main logic.</li>
+<li><strong>Supports Testing:</strong> Makes it easy to write code that behaves differently during development, testing, and production.</li>
+</ol>
+<p>This construct is an essential part of Python programming, especially when writing scripts that may also serve as importable modules.</p>
+</section>
+</div>
+</div>
+<section id="assertions" class="level4">
+<h4 class="anchored" data-anchor-id="assertions">Assertions</h4>
+<p>Assertions are a built-in mechanism in Python to enforce assumptions in your code. If an assertion fails, it raises an <code>AssertionError</code> and stops the program, allowing you to catch logic errors during development.</p>
+<p><strong>Example:</strong></p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_average(numbers):</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">len</span>(numbers) <span class="op">&gt;</span> <span class="dv">0</span>, <span class="st">"List of numbers cannot be empty"</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(numbers) <span class="op">/</span> <span class="bu">len</span>(numbers)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Raises AssertionError if an empty list is passed</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>calculate_average([])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>AssertionError: List of numbers cannot be empty</code></pre>
+</div>
+</div>
+<p>Assertions provide a simple way to ensure that certain conditions hold true during execution, helping you catch errors early.</p>
+</section>
+</section>
+<section id="logging-for-debugging" class="level3" data-number="18.3.5">
+<h3 data-number="18.3.5" class="anchored" data-anchor-id="logging-for-debugging"><span class="header-section-number">18.3.5</span> Logging for Debugging</h3>
+<p>Logging is a more advanced form of debugging, particularly useful for larger applications. While <code>print()</code> statements are great for quick checks, logging provides a more robust and configurable way to record what is happening in your program.</p>
+<p>Python’s <code>logging</code> module allows you to log messages at different levels of severity, such as <code>DEBUG</code>, <code>INFO</code>, <code>WARNING</code>, <code>ERROR</code>, and <code>CRITICAL</code>. This makes it easy to record important information about the state of your program while it runs.</p>
+<p><strong>Example Using <code>logging</code>:</strong></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> logging</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>logging.basicConfig(level<span class="op">=</span>logging.DEBUG)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_average(numbers):</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    logging.debug(<span class="ss">f"Calculating average for: </span><span class="sc">{</span>numbers<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> <span class="bu">sum</span>(numbers)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    logging.debug(<span class="ss">f"Total: </span><span class="sc">{</span>total<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    average <span class="op">=</span> total <span class="op">/</span> <span class="bu">len</span>(numbers)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    logging.debug(<span class="ss">f"Average: </span><span class="sc">{</span>average<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> average</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>]</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>calculate_average(numbers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this example, <code>logging.debug()</code> statements provide a running log of the calculations performed by the program. Unlike <code>print()</code> statements, you can easily disable or change the logging level without modifying the code.</p>
+<p><strong>Benefits of Logging:</strong></p>
+<ul>
+<li>You can control the amount of output by setting different logging levels.</li>
+<li>Log files can be created to store output for later analysis.</li>
+<li>It helps in debugging production code without interrupting the program’s flow.</li>
+</ul>
+</section>
+<section id="writing-clean-code-to-minimize-bugs" class="level3" data-number="18.3.6">
+<h3 data-number="18.3.6" class="anchored" data-anchor-id="writing-clean-code-to-minimize-bugs"><span class="header-section-number">18.3.6</span> Writing Clean Code to Minimize Bugs</h3>
+<p>The best way to reduce debugging time is to write clean, well-structured code from the beginning. Adopting best practices such as following PEP 8 (Python’s style guide), writing meaningful variable names, and breaking complex tasks into smaller functions can drastically reduce the likelihood of bugs.</p>
+<p>Some tips include:</p>
+<ul>
+<li>Use descriptive names for variables and functions.</li>
+<li>Write functions that do one thing and do it well.</li>
+<li>Keep your code DRY (Don’t Repeat Yourself).</li>
+<li>Write unit tests to ensure each part of your code works as expected.</li>
+</ul>
+<p>Debugging is an essential part of the development process, especially in fields like statistics and data science, where accuracy is critical. From simple print statements to advanced logging techniques, there are various tools available to help identify and resolve issues. By combining these strategies with careful coding practices, you can reduce the number of bugs in your programs and make the debugging process more efficient.</p>
+</section>
+</section>
+<section id="exercises" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="exercises"><span class="header-section-number">18.4</span> Exercises</h2>
+<section id="exercise-1-handling-division-by-zero" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-1-handling-division-by-zero">Exercise 1: Handling Division by Zero</h4>
+<p>Write a program that asks the user for two numbers and prints the result of dividing the first number by the second. Use exception handling to manage cases where the second number is zero. Ensure that the program does not crash and provides a helpful error message.</p>
+<p><em>Example Output:</em></p>
+<pre><code>Enter the numerator: 10
+Enter the denominator: 0
+Error: Cannot divide by zero.</code></pre>
+</section>
+<section id="exercise-2-file-reading-with-exception-handling" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-2-file-reading-with-exception-handling">Exercise 2: File Reading with Exception Handling</h4>
+<p>Write a program that attempts to open a file and read its contents. If the file does not exist, handle the <code>FileNotFoundError</code> exception by printing an appropriate message. Add a <code>finally</code> block to ensure the file is closed after reading, even if an error occurs.</p>
+<p><em>Example Output:</em></p>
+<pre><code>Enter the file name: missing_file.txt
+Error: The file was not found.</code></pre>
+</section>
+<section id="exercise-3-validating-user-input" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-3-validating-user-input">Exercise 3: Validating User Input</h4>
+<p>Create a function that prompts the user to enter a positive integer. Use exception handling to ensure the input is a valid integer and greater than zero. If the user enters invalid input, prompt them to try again until they enter a valid number.</p>
+<p><em>Example Output:</em></p>
+<pre><code>Enter a positive integer: -5
+Invalid input. Please enter a positive integer.
+Enter a positive integer: hello
+Invalid input. Please enter a positive integer.
+Enter a positive integer: 10
+You entered: 10</code></pre>
+</section>
+<section id="exercise-4-testing-with-assertions" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-4-testing-with-assertions">Exercise 4: Testing with Assertions</h4>
+<p>Write a function that calculates the square root of a number, but only for non-negative inputs. Use an assertion to ensure that the input is non-negative, and if the input is negative, raise an <code>AssertionError</code>. Write test cases to verify the behavior of the function.</p>
+</section>
+<section id="exercise-5-using-pdb-for-debugging" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-5-using-pdb-for-debugging">Exercise 5: Using <code>pdb</code> for Debugging</h4>
+<p>Insert a breakpoint in the following code using the pdb debugger. Run the program and step through it to find the error.</p>
+<pre><code>def average(numbers):
+    total = 0
+    for num in numbers:
+       total -= num
+    return total/(len(numbers) - 1)
+    
+numbers = [1, 2, 3, 4, 5]
+print(average(numbers))</code></pre>
+<p><em>Question:</em> What steps did you use in the debugger to confirm the program works?</p>
+</section>
+<section id="exercise-6-logging-and-error-messages" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-6-logging-and-error-messages">Exercise 6: Logging and Error Messages</h4>
+<p>Write a program that logs the steps of a basic math operation (addition, subtraction, multiplication, and division). Use the <code>logging</code> module to track each operation, and add appropriate log levels for normal execution (<code>INFO</code>) and errors (<code>ERROR</code>).</p>
+<p><!-- **Example Output:** --> <!-- ``` --> <!-- import logging --> <!-- logging.basicConfig(level=logging.DEBUG) --></p>
+<p><!-- def divide(a, b): --> <!--     logging.info(f"Dividing {a} by {b}") --> <!--     try: --> <!--         result = a / b --> <!--     except ZeroDivisionError: --> <!--         logging.error("Attempted to divide by zero.") --> <!--         return None --> <!--     return result --> <!-- ``` --></p>
+</section>
+<section id="exercise-7-nesting-try-and-except-blocks" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-7-nesting-try-and-except-blocks">Exercise 7: Nesting <code>try</code> and <code>except</code> Blocks</h4>
+<p>Create a program that reads a number from the user, writes it to a file, and then reads the file back. Use nested <code>try</code> and <code>except</code> blocks to handle potential errors, such as invalid input, file writing errors, or file reading errors.</p>
+<p><em>Example Output:</em></p>
+<pre><code>Enter a number: 42
+Successfully wrote the number to file.
+Error: Unable to read the file.</code></pre>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./17_Documentation.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Writing Clear and Effective Documentation and PEP 8</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">STA 2450</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">Fall 2024</div>
+  </div>
+</footer>
+
+
+
+</body></html>

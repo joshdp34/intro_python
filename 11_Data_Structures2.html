@@ -242,6 +242,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Writing Clear and Effective Documentation and PEP 8</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18_Exception.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Exception Handling and Debugging Techniques</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -477,7 +483,7 @@ dict_items([('John', 88), ('David', 90)])</code></pre>
 <section id="iterating-over-key-value-pairs" class="level4">
 <h4 class="anchored" data-anchor-id="iterating-over-key-value-pairs">Iterating Over Key-Value Pairs</h4>
 <p>The <code>items()</code> method allows you to iterate over both keys and values simultaneously:</p>
-<pre class="srsenqgn"><code>for student, grade in grades.items():
+<pre class="hhbwofpn"><code>for student, grade in grades.items():
     print(f"{student}: {grade}")</code></pre>
 </section>
 </section>
@@ -700,7 +706,7 @@ age: 20</code></pre>
 <span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fruits)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{1, 2, 3, 4, 5}
-{'apple', 'cherry', 'banana'}</code></pre>
+{'apple', 'banana', 'cherry'}</code></pre>
 </div>
 </div>
 </section>
@@ -718,7 +724,7 @@ age: 20</code></pre>
 <span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(letters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{1, 2, 3, 4, 5}
-{'l', 'e', 'o', 'h'}</code></pre>
+{'e', 'o', 'l', 'h'}</code></pre>
 </div>
 </div>
 </section>
@@ -738,8 +744,8 @@ age: 20</code></pre>
 <span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>fruits.add(<span class="st">"apple"</span>)</span>
 <span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fruits)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>{'apple', 'cherry', 'banana'}
-{'apple', 'cherry', 'banana'}</code></pre>
+<pre><code>{'apple', 'banana', 'cherry'}
+{'apple', 'banana', 'cherry'}</code></pre>
 </div>
 </div>
 </section>
@@ -959,7 +965,7 @@ True</code></pre>
 <span id="cb66-13"><a href="#cb66-13" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> unique_words(sentences)</span>
 <span id="cb66-14"><a href="#cb66-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result)  <span class="co"># Output: {'data': 2, 'science': 2, 'is': 2, 'great': 1, 'evolving': 1}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>{'data': 2, 'science': 2, 'is': 2, 'great': 1, 'evolving': 1}</code></pre>
+<pre><code>{'is': 2, 'science': 2, 'great': 1, 'data': 2, 'evolving': 1}</code></pre>
 </div>
 </div>
 <p>This function uses sets to ensure that each word in a sentence is only counted once per sentence and then stores the results in a dictionary.</p>
