@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>STA 2450 Computing for Math &amp; Stat - 19&nbsp; Regular Expressions</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./18_Exception.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_String.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Regular Expressions</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./"></a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_Intro_to_Programming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Intro to Computing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_Python_Install.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Installing Python and Setting Up Your IDE</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_Basic_Syntax_and_Expressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Basic Syntax and Expressions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_Names_and_Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Names and Variables</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_Data_Types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_Conditional_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Control Structures: Conditional Statements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Control Structures: Loops</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Functions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_Libraries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to Modules and Libraries</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_Data_Structures1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Data Structures: Lists and Tuples</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_Data_Structures2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Data Structures: Dictionaries and Sets</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_JSON.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">JSON Files in Python</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_NumPy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">NumPy</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_Pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Pandas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_Data_Vis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Data Visualization in Python</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_OOP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Object-Oriented Programming in Python</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17_Documentation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Writing Clear and Effective Documentation and PEP 8</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18_Exception.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Exception Handling and Debugging Techniques</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19_String.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Regular Expressions</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-concept-of-pattern-matching" id="toc-the-concept-of-pattern-matching" class="nav-link active" data-scroll-target="#the-concept-of-pattern-matching"><span class="header-section-number">19.1</span> The Concept of Pattern Matching</a>
+  <ul class="collapse">
+  <li><a href="#anatomy-of-a-regular-expression" id="toc-anatomy-of-a-regular-expression" class="nav-link" data-scroll-target="#anatomy-of-a-regular-expression"><span class="header-section-number">19.1.1</span> Anatomy of a Regular Expression</a></li>
+  <li><a href="#why-use-regular-expressions" id="toc-why-use-regular-expressions" class="nav-link" data-scroll-target="#why-use-regular-expressions"><span class="header-section-number">19.1.2</span> Why Use Regular Expressions?</a></li>
+  </ul></li>
+  <li><a href="#using-regular-expressions-in-python" id="toc-using-regular-expressions-in-python" class="nav-link" data-scroll-target="#using-regular-expressions-in-python"><span class="header-section-number">19.2</span> Using Regular Expressions in Python</a>
+  <ul class="collapse">
+  <li><a href="#key-functions-in-pythons-re-library" id="toc-key-functions-in-pythons-re-library" class="nav-link" data-scroll-target="#key-functions-in-pythons-re-library"><span class="header-section-number">19.2.1</span> Key Functions in Python’s <code>re</code> Library</a></li>
+  <li><a href="#using-re.search" id="toc-using-re.search" class="nav-link" data-scroll-target="#using-re.search"><span class="header-section-number">19.2.2</span> Using <code>re.search()</code></a></li>
+  <li><a href="#using-re.findall" id="toc-using-re.findall" class="nav-link" data-scroll-target="#using-re.findall"><span class="header-section-number">19.2.3</span> Using <code>re.findall()</code></a></li>
+  <li><a href="#re.match" id="toc-re.match" class="nav-link" data-scroll-target="#re.match"><span class="header-section-number">19.2.4</span> <code>re.match()</code></a></li>
+  <li><a href="#using-re.sub" id="toc-using-re.sub" class="nav-link" data-scroll-target="#using-re.sub"><span class="header-section-number">19.2.5</span> Using <code>re.sub()</code></a></li>
+  <li><a href="#using-re.split" id="toc-using-re.split" class="nav-link" data-scroll-target="#using-re.split"><span class="header-section-number">19.2.6</span> Using <code>re.split()</code></a></li>
+  </ul></li>
+  <li><a href="#common-metacharacters" id="toc-common-metacharacters" class="nav-link" data-scroll-target="#common-metacharacters"><span class="header-section-number">19.3</span> Common Metacharacters</a></li>
+  <li><a href="#building-complex-patterns" id="toc-building-complex-patterns" class="nav-link" data-scroll-target="#building-complex-patterns"><span class="header-section-number">19.4</span> Building Complex Patterns</a>
+  <ul class="collapse">
+  <li><a href="#using-grouping-and-capturing" id="toc-using-grouping-and-capturing" class="nav-link" data-scroll-target="#using-grouping-and-capturing"><span class="header-section-number">19.4.1</span> Using Grouping and Capturing</a></li>
+  <li><a href="#lookahead-and-lookbehind-assertions" id="toc-lookahead-and-lookbehind-assertions" class="nav-link" data-scroll-target="#lookahead-and-lookbehind-assertions"><span class="header-section-number">19.4.2</span> Lookahead and Lookbehind Assertions</a></li>
+  <li><a href="#alternation-with-the-operator" id="toc-alternation-with-the-operator" class="nav-link" data-scroll-target="#alternation-with-the-operator"><span class="header-section-number">19.4.3</span> Alternation with the <code>|</code> Operator</a></li>
+  <li><a href="#working-with-character-classes-and-ranges" id="toc-working-with-character-classes-and-ranges" class="nav-link" data-scroll-target="#working-with-character-classes-and-ranges"><span class="header-section-number">19.4.4</span> Working with Character Classes and Ranges</a></li>
+  <li><a href="#using-backreferences" id="toc-using-backreferences" class="nav-link" data-scroll-target="#using-backreferences"><span class="header-section-number">19.4.5</span> Using Backreferences</a></li>
+  <li><a href="#conditional-matching-with-quantifiers" id="toc-conditional-matching-with-quantifiers" class="nav-link" data-scroll-target="#conditional-matching-with-quantifiers"><span class="header-section-number">19.4.6</span> Conditional Matching with Quantifiers</a></li>
+  <li><a href="#combining-techniques-for-complex-patterns" id="toc-combining-techniques-for-complex-patterns" class="nav-link" data-scroll-target="#combining-techniques-for-complex-patterns"><span class="header-section-number">19.4.7</span> Combining Techniques for Complex Patterns</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">19.5</span> Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-regex" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Regular Expressions</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>In programming, we often encounter tasks that require searching, extracting, or validating specific patterns within strings. <em>Regular Expressions</em> (regex or regexp) provide a powerful tool for these tasks by allowing us to define search patterns with precision. Regular expressions are particularly useful in text processing, making it easier to handle tasks such as finding email addresses, extracting numerical values, or validating formatted inputs.</p>
+<section id="the-concept-of-pattern-matching" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="the-concept-of-pattern-matching"><span class="header-section-number">19.1</span> The Concept of Pattern Matching</h2>
+<p>At its core, a regular expression is a sequence of characters that form a <strong>pattern</strong>. This pattern describes the structure or sequence you are interested in finding within a larger text. Unlike simple string matching, which relies on an exact match (e.g., searching for the word “data” would only find “data” and not “dataset” or “database”), regular expressions allow for more <strong>flexible</strong> and <strong>dynamic</strong> matching, capturing partial matches or patterns that meet certain criteria.</p>
+<p>For instance, the pattern <code>data\w*</code> will match:</p>
+<ul>
+<li>“data” (the word itself)</li>
+<li>“dataset”</li>
+<li>“database”</li>
+</ul>
+<p>This flexibility is what makes regular expressions so powerful for text processing.</p>
+<section id="anatomy-of-a-regular-expression" class="level3" data-number="19.1.1">
+<h3 data-number="19.1.1" class="anchored" data-anchor-id="anatomy-of-a-regular-expression"><span class="header-section-number">19.1.1</span> Anatomy of a Regular Expression</h3>
+<p>To build effective regular expressions, it’s helpful to understand the components that make up a pattern. Each character in a regular expression can have a special meaning, enabling more complex pattern definitions.</p>
+<ol type="1">
+<li><p><strong>Literal Characters</strong>: Most characters (like letters or numbers) match themselves. For instance, the pattern <code>data</code> will only match occurrences of the word “data”.</p></li>
+<li><p><strong>Metacharacters</strong>: These are special characters that have specific functions in regex syntax. Some commonly used metacharacters are:</p>
+<ul>
+<li><strong><code>.</code> (dot)</strong>: Matches any single character except a newline.</li>
+<li><strong><code>^</code> (caret)</strong>: Indicates the start of a string.</li>
+<li><strong><code>$</code> (dollar)</strong>: Indicates the end of a string.</li>
+<li><strong><code>*</code>, <code>+</code>, <code>?</code></strong>: Define the frequency or repetition of patterns.</li>
+</ul></li>
+<li><p><strong>Character Classes</strong>: Defined by brackets <code>[ ]</code>, character classes allow you to match any one of a set of characters.</p>
+<ul>
+<li>For example, <code>[abc]</code> will match either “a”, “b”, or “c”.</li>
+<li>Ranges can also be used within brackets, like <code>[0-9]</code> to match any digit.</li>
+</ul></li>
+<li><p><strong>Escape Sequences</strong>: Some characters (such as <code>.</code> or <code>*</code>) have special meanings, so you may need to <strong>escape</strong> them with a backslash (<code>\</code>) if you want to match them literally. For instance, <code>\.</code> will match a period rather than any character.</p></li>
+<li><p><strong>Quantifiers</strong>: These symbols define how many times a character or pattern must appear.</p>
+<ul>
+<li><strong><code>*</code></strong> matches zero or more occurrences.</li>
+<li><strong><code>+</code></strong> matches one or more occurrences.</li>
+<li><strong><code>?</code></strong> matches zero or one occurrence.</li>
+</ul></li>
+</ol>
+</section>
+<section id="why-use-regular-expressions" class="level3" data-number="19.1.2">
+<h3 data-number="19.1.2" class="anchored" data-anchor-id="why-use-regular-expressions"><span class="header-section-number">19.1.2</span> Why Use Regular Expressions?</h3>
+<p>Regular expressions are particularly useful when handling unstructured data, such as:</p>
+<ul>
+<li><strong>Data Extraction</strong>: Pulling specific data, like email addresses, phone numbers, or dates, from large text files.</li>
+<li><strong>Data Validation</strong>: Ensuring that an input string follows a required format, such as validating email addresses or passwords.</li>
+<li><strong>Text Replacement</strong>: Substituting parts of a string with new values, which can help anonymize data or clean up formatting.</li>
+</ul>
+<p>Regular expressions are versatile enough to support a wide variety of tasks in text processing, making them invaluable in fields like data science, web development, and natural language processing.</p>
+</section>
+</section>
+<section id="using-regular-expressions-in-python" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="using-regular-expressions-in-python"><span class="header-section-number">19.2</span> Using Regular Expressions in Python</h2>
+<p>Python’s <code>re</code> library is designed to work with regular expressions, providing several powerful functions for pattern matching and text manipulation. Below, we explore some of the key functions in the <code>re</code> library, each accompanied by examples to demonstrate their practical applications.</p>
+<section id="key-functions-in-pythons-re-library" class="level3" data-number="19.2.1">
+<h3 data-number="19.2.1" class="anchored" data-anchor-id="key-functions-in-pythons-re-library"><span class="header-section-number">19.2.1</span> Key Functions in Python’s <code>re</code> Library</h3>
+<ol type="1">
+<li><p><strong><code>re.search()</code></strong>: This function searches for the first occurrence of a pattern within a string. If it finds a match, it returns a match object; otherwise, it returns <code>None</code>.</p></li>
+<li><p><strong><code>re.findall()</code></strong>: This function finds all non-overlapping matches of a pattern in a string and returns them as a list.</p></li>
+<li><p><strong><code>re.match()</code></strong>: This function checks for a match only at the beginning of a string.</p></li>
+<li><p><strong><code>re.sub()</code></strong>: This function replaces occurrences of a pattern with a specified replacement string.</p></li>
+<li><p><strong><code>re.split()</code></strong>: This function splits a string by occurrences of a pattern, returning a list of substrings.</p></li>
+</ol>
+<p>Each function serves a unique purpose and can be applied to various text-processing tasks.</p>
+</section>
+<section id="using-re.search" class="level3" data-number="19.2.2">
+<h3 data-number="19.2.2" class="anchored" data-anchor-id="using-re.search"><span class="header-section-number">19.2.2</span> Using <code>re.search()</code></h3>
+<p>The <code>re.search()</code> function finds the first match of a pattern within a string. This is useful when you only need to confirm the existence of a pattern or retrieve the first match.</p>
+<p><strong>Example 1:</strong> Searching for a word that starts with “data”</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"The dataset is being updated in the database."</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"data\w*"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Search for the first occurrence of the pattern</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> re.search(pattern, text)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> result:</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Found:"</span>, result.group())  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Found: dataset</code></pre>
+</div>
+</div>
+<p>In this example: - The pattern <code>data\w*</code> matches “data” followed by zero or more word characters (<code>\w*</code>). - The <code>result.group()</code> method returns the matched string.</p>
+<p><strong>Example 2:</strong> Checking for the presence of a phone number pattern</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Contact us at 123-867-5309."</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\d</span><span class="sc">{3}</span><span class="vs">-\d</span><span class="sc">{3}</span><span class="vs">-\d</span><span class="sc">{4}</span><span class="vs">"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> re.search(pattern, text)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> result:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Phone number found:"</span>, result.group())  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Phone number found: 123-867-5309</code></pre>
+</div>
+</div>
+<p>The <code>\d</code> metacharacter matches any digit and is equivalent to <code>[0-9]</code>. When followed by <code>{3}</code>, then we are looking for three consecutive digits.</p>
+</section>
+<section id="using-re.findall" class="level3" data-number="19.2.3">
+<h3 data-number="19.2.3" class="anchored" data-anchor-id="using-re.findall"><span class="header-section-number">19.2.3</span> Using <code>re.findall()</code></h3>
+<p>The <code>re.findall()</code> function returns all matches of a pattern as a list, making it ideal for finding multiple occurrences of a pattern within a string.</p>
+<p><strong>Example 1:</strong> Extracting all email addresses</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Emails: alice@example.com, bob@example.org, charlie@test.com"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\b\w+@\w+\.\w+\b"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>emails <span class="op">=</span> re.findall(pattern, text)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Emails found:"</span>, emails)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Emails found: ['alice@example.com', 'bob@example.org', 'charlie@test.com']</code></pre>
+</div>
+</div>
+<p>In this example:</p>
+<ul>
+<li>The pattern <code>\b\w+@\w+\.\w+\b</code> matches email addresses by looking for word characters around the “@” and “.” symbols.</li>
+<li><code>re.findall()</code> captures all email addresses in the text.</li>
+</ul>
+<p><strong>Example 2:</strong> Finding all words starting with “stat”</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Statistics is a fascinating field, with stats and statistical methods widely applied."</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\bstat\w*"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> re.findall(pattern, text)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Words found:"</span>, matches)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Words found: ['stats', 'statistical']</code></pre>
+</div>
+</div>
+</section>
+<section id="re.match" class="level3" data-number="19.2.4">
+<h3 data-number="19.2.4" class="anchored" data-anchor-id="re.match"><span class="header-section-number">19.2.4</span> <code>re.match()</code></h3>
+<p>The <code>re.match()</code> function checks if a pattern matches only at the beginning of a string, returning <code>None</code> if the pattern appears elsewhere.</p>
+<p><strong>Example 1:</strong> Verifying the format of a postal code at the beginning of a string</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"12345-6789 is the postal code."</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"^\d</span><span class="sc">{5}</span><span class="vs">-\d</span><span class="sc">{4}</span><span class="vs">"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> re.match(pattern, text):</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Valid postal code format."</span>)  </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Invalid format."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Valid postal code format.</code></pre>
+</div>
+</div>
+<p>Here:</p>
+<ul>
+<li>The pattern <code>^\d{5}-\d{4}</code> matches a 5-digit number, a hyphen, and a 4-digit number, specifically at the start of the string.</li>
+</ul>
+</section>
+<section id="using-re.sub" class="level3" data-number="19.2.5">
+<h3 data-number="19.2.5" class="anchored" data-anchor-id="using-re.sub"><span class="header-section-number">19.2.5</span> Using <code>re.sub()</code></h3>
+<p>The <code>re.sub()</code> function replaces all occurrences of a pattern with a specified replacement string, making it useful for sanitizing or formatting data.</p>
+<p><strong>Example 1:</strong> Replacing phone numbers with “[PHONE]”</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Reach us at 123-456-7890 or 987-654-3210."</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\d</span><span class="sc">{3}</span><span class="vs">-\d</span><span class="sc">{3}</span><span class="vs">-\d</span><span class="sc">{4}</span><span class="vs">"</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>new_text <span class="op">=</span> re.sub(pattern, <span class="st">"[PHONE]"</span>, text)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(new_text)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reach us at [PHONE] or [PHONE].</code></pre>
+</div>
+</div>
+<p><strong>Example 2:</strong> Standardizing date formats</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Event on 2023-01-25, follow-up on 01/26/2023."</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"(\d</span><span class="sc">{4}</span><span class="vs">)-(\d</span><span class="sc">{2}</span><span class="vs">)-(\d</span><span class="sc">{2}</span><span class="vs">)"</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Reformat dates to MM/DD/YYYY</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>new_text <span class="op">=</span> re.sub(pattern, <span class="vs">r"\2/\3/\1"</span>, text)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(new_text)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Event on 01/25/2023, follow-up on 01/26/2023.</code></pre>
+</div>
+</div>
+<p>In this example:</p>
+<ul>
+<li>The pattern <code>(\d{4})-(\d{2})-(\d{2})</code> captures the year, month, and day.</li>
+<li>The replacement pattern <code>\2/\3/\1</code> reorders the components to MM/DD/YYYY.</li>
+</ul>
+</section>
+<section id="using-re.split" class="level3" data-number="19.2.6">
+<h3 data-number="19.2.6" class="anchored" data-anchor-id="using-re.split"><span class="header-section-number">19.2.6</span> Using <code>re.split()</code></h3>
+<p>The <code>re.split()</code> function splits a string based on a regular expression, which is useful when splitting by complex delimiters.</p>
+<p><strong>Example 1:</strong> Splitting text by multiple delimiters</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"apple; orange, banana|grape"</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"[;,|]"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>fruits <span class="op">=</span> re.split(pattern, text)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fruits)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['apple', ' orange', ' banana', 'grape']</code></pre>
+</div>
+</div>
+<p>Here, the pattern <code>[;,|]</code> matches any one of <code>;</code>, <code>,</code>, or <code>|</code> as delimiters.</p>
+</section>
+</section>
+<section id="common-metacharacters" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="common-metacharacters"><span class="header-section-number">19.3</span> Common Metacharacters</h2>
+<p>Here’s a list of commonly used special characters (also called <em>escape sequences</em> or <em>metacharacters</em>) in regular expressions, along with their functions:</p>
+<section id="anchors" class="level4">
+<h4 class="anchored" data-anchor-id="anchors">Anchors</h4>
+<ul>
+<li><strong><code>^</code></strong>: Matches the start of a string.</li>
+<li><strong><code>$</code></strong>: Matches the end of a string.</li>
+<li><strong><code>\b</code></strong>: Matches a word boundary (position between a word and a non-word character).</li>
+<li><strong><code>\B</code></strong>: Matches a position that is not a word boundary.</li>
+</ul>
+</section>
+<section id="character-classes" class="level4">
+<h4 class="anchored" data-anchor-id="character-classes">Character Classes</h4>
+<ul>
+<li><strong><code>.</code></strong>: Matches any character except a newline.</li>
+<li><strong><code>\d</code></strong>: Matches any digit, equivalent to <code>[0-9]</code>.</li>
+<li><strong><code>\D</code></strong>: Matches any non-digit character, equivalent to <code>[^0-9]</code>.</li>
+<li><strong><code>\w</code></strong>: Matches any word character (alphanumeric or underscore), equivalent to <code>[a-zA-Z0-9_]</code>.</li>
+<li><strong><code>\W</code></strong>: Matches any non-word character, equivalent to <code>[^a-zA-Z0-9_]</code>.</li>
+<li><strong><code>\s</code></strong>: Matches any whitespace character (spaces, tabs, newlines).</li>
+<li><strong><code>\S</code></strong>: Matches any non-whitespace character.</li>
+</ul>
+</section>
+<section id="quantifiers" class="level4">
+<h4 class="anchored" data-anchor-id="quantifiers">Quantifiers</h4>
+<ul>
+<li><strong><code>*</code></strong>: Matches 0 or more occurrences of the preceding element.</li>
+<li><strong><code>+</code></strong>: Matches 1 or more occurrences of the preceding element.</li>
+<li><strong><code>?</code></strong>: Matches 0 or 1 occurrence of the preceding element.</li>
+<li><strong><code>{n}</code></strong>: Matches exactly <code>n</code> occurrences of the preceding element.</li>
+<li><strong><code>{n,}</code></strong>: Matches <code>n</code> or more occurrences.</li>
+<li><strong><code>{n,m}</code></strong>: Matches between <code>n</code> and <code>m</code> occurrences.</li>
+</ul>
+</section>
+<section id="groups-and-references" class="level4">
+<h4 class="anchored" data-anchor-id="groups-and-references">Groups and References</h4>
+<ul>
+<li><strong><code>( )</code></strong>: Groups a pattern together, allowing you to apply quantifiers to the entire group or capture matches.</li>
+<li><strong><code>|</code></strong>: Alternation operator, meaning “or” (e.g., <code>data|info</code> matches “data” or “info”).</li>
+<li><strong><code>\</code></strong>: Escapes special characters, allowing them to be used as literal characters (e.g., <code>\.</code> matches a period).</li>
+<li><strong><code>\1</code>, <code>\2</code>, etc.</strong>: Refers to matched groups in the pattern, useful for back-references.</li>
+</ul>
+</section>
+<section id="lookaheads-and-lookbehinds" class="level4">
+<h4 class="anchored" data-anchor-id="lookaheads-and-lookbehinds">Lookaheads and Lookbehinds</h4>
+<ul>
+<li><strong><code>(?=...)</code></strong>: Positive lookahead, ensures that what follows matches <code>...</code>.</li>
+<li><strong><code>(?!...)</code></strong>: Negative lookahead, ensures that what follows does not match <code>...</code>.</li>
+<li><strong><code>(?&lt;=...)</code></strong>: Positive lookbehind, ensures that what precedes matches <code>...</code>.</li>
+<li><strong><code>(?&lt;!...)</code></strong>: Negative lookbehind, ensures that what precedes does not match <code>...</code>.</li>
+</ul>
+</section>
+<section id="escaped-characters-for-specific-needs" class="level4">
+<h4 class="anchored" data-anchor-id="escaped-characters-for-specific-needs">Escaped Characters for Specific Needs</h4>
+<ul>
+<li><strong><code>\t</code></strong>: Matches a tab character.</li>
+<li><strong><code>\n</code></strong>: Matches a newline character.</li>
+<li><strong><code>\r</code></strong>: Matches a carriage return character.</li>
+<li><strong><code>\f</code></strong>: Matches a form feed character.</li>
+<li><strong><code>\v</code></strong>: Matches a vertical tab character.</li>
+<li><strong><code>\0</code></strong>: Matches the null character.</li>
+</ul>
+</section>
+</section>
+<section id="building-complex-patterns" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="building-complex-patterns"><span class="header-section-number">19.4</span> Building Complex Patterns</h2>
+<p>Regular expressions become particularly powerful when we combine multiple elements to create complex patterns. This section explores some advanced techniques to build sophisticated expressions, allowing for precise control over pattern matching.</p>
+<section id="using-grouping-and-capturing" class="level3" data-number="19.4.1">
+<h3 data-number="19.4.1" class="anchored" data-anchor-id="using-grouping-and-capturing"><span class="header-section-number">19.4.1</span> Using Grouping and Capturing</h3>
+<p>Grouping is achieved by enclosing parts of a pattern within parentheses <code>()</code>. Groups allow you to:</p>
+<ol type="1">
+<li>Apply quantifiers to an entire section of a pattern.</li>
+<li>Capture parts of a match, enabling you to reference them later (known as <strong>capturing groups</strong>).</li>
+</ol>
+<p><strong>Example:</strong> Capturing parts of a date</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Today's date is 2024-11-03."</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"(\d</span><span class="sc">{4}</span><span class="vs">)-(\d</span><span class="sc">{2}</span><span class="vs">)-(\d</span><span class="sc">{2}</span><span class="vs">)"</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>match <span class="op">=</span> re.search(pattern, text)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> match:</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    year, month, day <span class="op">=</span> match.groups()</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Year: </span><span class="sc">{</span>year<span class="sc">}</span><span class="ss">, Month: </span><span class="sc">{</span>month<span class="sc">}</span><span class="ss">, Day: </span><span class="sc">{</span>day<span class="sc">}</span><span class="ss">"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Year: 2024, Month: 11, Day: 03</code></pre>
+</div>
+</div>
+<p>In this example:</p>
+<ul>
+<li>The pattern <code>(\d{4})-(\d{2})-(\d{2})</code> captures the year, month, and day as separate groups.</li>
+<li>The <code>match.groups()</code> method returns a tuple with the captured parts.</li>
+</ul>
+</section>
+<section id="lookahead-and-lookbehind-assertions" class="level3" data-number="19.4.2">
+<h3 data-number="19.4.2" class="anchored" data-anchor-id="lookahead-and-lookbehind-assertions"><span class="header-section-number">19.4.2</span> Lookahead and Lookbehind Assertions</h3>
+<p><strong>Lookahead</strong> and <strong>lookbehind</strong> assertions allow you to match a pattern based on what follows or precedes it, without including that part in the match.</p>
+<ul>
+<li><strong>Positive Lookahead</strong> <code>(?=...)</code>: Asserts that a match is followed by a specific pattern.</li>
+<li><strong>Negative Lookahead</strong> <code>(?!...)</code>: Asserts that a match is <strong>not</strong> followed by a specific pattern.</li>
+<li><strong>Positive Lookbehind</strong> <code>(?&lt;=...)</code>: Asserts that a match is preceded by a specific pattern.</li>
+<li><strong>Negative Lookbehind</strong> <code>(?&lt;!...)</code>: Asserts that a match is <strong>not</strong> preceded by a specific pattern.</li>
+</ul>
+<p><strong>Example 1:</strong> Finding words followed by “ing” (positive lookahead)</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"The following items are walking, talking, and reading."</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\b\w+(?=ing\b)"</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> re.findall(pattern, text)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(matches)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['follow', 'walk', 'talk', 'read']</code></pre>
+</div>
+</div>
+<p><strong>Example 2:</strong> Finding numbers not preceded by a dollar sign (negative lookbehind)</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Price is $100 but I paid 150."</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"(?&lt;!\$)\b\d+\b"</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> re.findall(pattern, text)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(matches)  <span class="co"># Output: ['150']</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['150']</code></pre>
+</div>
+</div>
+</section>
+<section id="alternation-with-the-operator" class="level3" data-number="19.4.3">
+<h3 data-number="19.4.3" class="anchored" data-anchor-id="alternation-with-the-operator"><span class="header-section-number">19.4.3</span> Alternation with the <code>|</code> Operator</h3>
+<p>The <code>|</code> operator allows you to specify multiple patterns, matching if any of the alternatives are found.</p>
+<p><strong>Example:</strong> Matching multiple file extensions</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Files: report.pdf, image.jpg, document.docx"</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\b\w+\.(pdf|jpg|docx)\b"</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> re.findall(pattern, text)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(matches)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['pdf', 'jpg', 'docx']</code></pre>
+</div>
+</div>
+<p>Here, the pattern matches any word followed by a file extension (either “pdf”, “jpg”, or “docx”).</p>
+</section>
+<section id="working-with-character-classes-and-ranges" class="level3" data-number="19.4.4">
+<h3 data-number="19.4.4" class="anchored" data-anchor-id="working-with-character-classes-and-ranges"><span class="header-section-number">19.4.4</span> Working with Character Classes and Ranges</h3>
+<p>Character classes <code>[ ]</code> allow for more flexibility by matching any one character within the brackets. You can also define ranges within classes to match multiple characters more succinctly.</p>
+<ul>
+<li><strong>Ranges</strong>: For example, <code>[a-z]</code> matches any lowercase letter, while <code>[0-9]</code> matches any digit.</li>
+<li><strong>Negated Classes</strong>: Using <code>[^...]</code> matches any character <strong>not</strong> in the brackets.</li>
+</ul>
+<p><strong>Example 1:</strong> Matching only vowels</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Regular expressions are useful."</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"[aeiou]"</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>vowels <span class="op">=</span> re.findall(pattern, text)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(vowels)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['e', 'u', 'a', 'e', 'e', 'i', 'o', 'a', 'e', 'u', 'e', 'u']</code></pre>
+</div>
+</div>
+<p><strong>Example 2:</strong> Matching any character except vowels</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"[^aeiou]"</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>non_vowels <span class="op">=</span> re.findall(pattern, text)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(non_vowels)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['R', 'g', 'l', 'r', ' ', 'x', 'p', 'r', 's', 's', 'n', 's', ' ', 'r', ' ', 's', 'f', 'l', '.']</code></pre>
+</div>
+</div>
+</section>
+<section id="using-backreferences" class="level3" data-number="19.4.5">
+<h3 data-number="19.4.5" class="anchored" data-anchor-id="using-backreferences"><span class="header-section-number">19.4.5</span> Using Backreferences</h3>
+<p>Backreferences allow you to reuse a captured group within the same pattern. This is especially useful for finding repeated patterns.</p>
+<p><strong>Example:</strong> Matching repeated words</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"The the test was a success."</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\b(\w+)\s+\1\b"</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> re.findall(pattern, text, re.IGNORECASE)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(matches)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['The']</code></pre>
+</div>
+</div>
+<p>Here: - <code>(\w+)</code> captures a word, and <code>\1</code> references this captured group, matching any repeated word.</p>
+</section>
+<section id="conditional-matching-with-quantifiers" class="level3" data-number="19.4.6">
+<h3 data-number="19.4.6" class="anchored" data-anchor-id="conditional-matching-with-quantifiers"><span class="header-section-number">19.4.6</span> Conditional Matching with Quantifiers</h3>
+<p>Quantifiers, such as <code>*</code>, <code>+</code>, and <code>{n,m}</code>, allow you to control the frequency of matched elements, providing even more flexibility for complex patterns.</p>
+<ul>
+<li><strong><code>*</code></strong>: Matches zero or more occurrences.</li>
+<li><strong><code>+</code></strong>: Matches one or more occurrences.</li>
+<li><strong><code>?</code></strong>: Matches zero or one occurrence.</li>
+<li><strong><code>{n}</code></strong>: Matches exactly <code>n</code> occurrences.</li>
+<li><strong><code>{n,}</code></strong>: Matches <code>n</code> or more occurrences.</li>
+<li><strong><code>{n,m}</code></strong>: Matches between <code>n</code> and <code>m</code> occurrences.</li>
+</ul>
+<p><strong>Example 1:</strong> Matching sequences of digits with varying lengths</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Order numbers: 123, 4567, 89, 23456"</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\b\d{2,4}\b"</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> re.findall(pattern, text)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(matches)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['123', '4567', '89']</code></pre>
+</div>
+</div>
+<p>This pattern matches numbers that are 2 to 4 digits long.</p>
+</section>
+<section id="combining-techniques-for-complex-patterns" class="level3" data-number="19.4.7">
+<h3 data-number="19.4.7" class="anchored" data-anchor-id="combining-techniques-for-complex-patterns"><span class="header-section-number">19.4.7</span> Combining Techniques for Complex Patterns</h3>
+<p>By combining groups, lookaheads, alternation, and quantifiers, you can construct highly specific patterns.</p>
+<p><strong>Example:</strong> Extracting full names in the format “Last, First M.”</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Attendees: Smith, John A.; Doe, Jane B."</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\b([A-Z][a-z]+),\s([A-Z][a-z]+)\b"</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>names <span class="op">=</span> re.findall(pattern, text)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(names)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[('Smith', 'John'), ('Doe', 'Jane')]</code></pre>
+</div>
+</div>
+<p>Here:</p>
+<ul>
+<li><code>[A-Z][a-z]+</code> matches capitalized words.</li>
+<li><code>\s</code> matches spaces.</li>
+</ul>
+</section>
+</section>
+<section id="exercises" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="exercises"><span class="header-section-number">19.5</span> Exercises</h2>
+<section id="exercise-1-extracting-domain-names" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-1-extracting-domain-names">Exercise 1: Extracting Domain Names</h4>
+<ul>
+<li>Write a regular expression to find all domain names in a text. Assume that domain names have the format <code>www.something.com</code>, <code>something.org</code>, or <code>something.edu</code>.</li>
+<li><strong>Sample Input</strong>: <code>"Visit us at www.example.com or go to research.org for more info."</code></li>
+<li><strong>Expected Output</strong>: <code>['example.com', 'research.org']</code></li>
+</ul>
+</section>
+<section id="exercise-2-removing-punctuation" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-2-removing-punctuation">Exercise 2: Removing Punctuation</h4>
+<ul>
+<li>Use <code>re.sub()</code> to remove all punctuation from a sentence, leaving only alphanumeric characters and spaces.</li>
+<li><strong>Sample Input</strong>: <code>"Hello, world! Let's test this: are you ready?"</code></li>
+<li><strong>Expected Output</strong>: <code>"Hello world Lets test this are you ready"</code></li>
+</ul>
+</section>
+<section id="exercise-3-extracting-hashtags" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-3-extracting-hashtags">Exercise 3: Extracting Hashtags</h4>
+<ul>
+<li>Write a pattern to find all hashtags in a given string.</li>
+<li><strong>Sample Input</strong>: <code>"Join the conversation with #Python, #DataScience, and #MachineLearning!"</code></li>
+<li><strong>Expected Output</strong>: <code>['#Python', '#DataScience', '#MachineLearning']</code></li>
+</ul>
+</section>
+<section id="exercise-4-finding-dates-in-different-formats" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-4-finding-dates-in-different-formats">Exercise 4: Finding Dates in Different Formats</h4>
+<ul>
+<li>Write a regular expression to find dates in multiple formats, such as <code>MM/DD/YYYY</code>, <code>YYYY-MM-DD</code>, and <code>DD.MM.YYYY</code>.</li>
+<li><strong>Sample Input</strong>: <code>"We met on 2024-11-03, and we’ll meet again on 11/03/2024."</code></li>
+<li><strong>Expected Output</strong>: <code>['2024-11-03', '11/03/2024']</code></li>
+</ul>
+</section>
+<section id="exercise-5-finding-words-that-start-with-a-specific-letter" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-5-finding-words-that-start-with-a-specific-letter">Exercise 5: Finding Words That Start with a Specific Letter</h4>
+<ul>
+<li>Write a regular expression to find all words that start with the letter “s” (case-insensitive).</li>
+<li><strong>Sample Input</strong>: <code>"She sells seashells by the seashore."</code></li>
+<li><strong>Expected Output</strong>: <code>['She', 'sells', 'seashells', 'seashore']</code></li>
+</ul>
+</section>
+<section id="exercise-6-redacting-sensitive-information" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-6-redacting-sensitive-information">Exercise 6: Redacting Sensitive Information</h4>
+<ul>
+<li>Use <code>re.sub()</code> to replace all Social Security numbers (formatted as <code>###-##-####</code>) with <code>[REDACTED]</code>.</li>
+<li><strong>Sample Input</strong>: <code>"Client's SSN is 123-45-6789."</code></li>
+<li><strong>Expected Output</strong>: <code>"Client's SSN is [REDACTED]."</code></li>
+</ul>
+</section>
+<section id="exercise-7-validating-password-strength" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-7-validating-password-strength">Exercise 7: Validating Password Strength</h4>
+<ul>
+<li>Write a regular expression to validate that a password is at least 8 characters long, contains at least one uppercase letter, one lowercase letter, one digit, and one special character (e.g., <code>@</code>, <code>#</code>, <code>!</code>, <code>$</code>).</li>
+<li><strong>Sample Input</strong>: <code>Password123!</code></li>
+<li><strong>Expected Output</strong>: Match found</li>
+<li><strong>Sample Input</strong>: <code>weakpass</code></li>
+<li><strong>Expected Output</strong>: No match</li>
+</ul>
+</section>
+<section id="exercise-8-extracting-full-names" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-8-extracting-full-names">Exercise 8: Extracting Full Names</h4>
+<pre><code>- Write a regular expression to capture full names with the format “Last, First M.”, where “M.” is an optional middle initial.
+- **Sample Input**: `"Dr. Smith, John A. and Dr. Brown, Lisa attended the meeting."`
+- **Expected Output**: `[('Smith', 'John', 'A.'), ('Brown', 'Lisa', '')]`</code></pre>
+</section>
+<section id="exercise-9-finding-repeated-words" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-9-finding-repeated-words">Exercise 9: Finding Repeated Words</h4>
+<pre><code>- Write a regular expression to find and return any repeated words in a sentence.
+- **Sample Input**: `"This is a test test sentence."`
+- **Expected Output**: `['test']`</code></pre>
+</section>
+<section id="exercise-10-splitting-a-sentence-by-words-with-multiple-delimiters" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-10-splitting-a-sentence-by-words-with-multiple-delimiters">Exercise 10: Splitting a Sentence by Words with Multiple Delimiters</h4>
+<pre><code>- Write a regular expression to split a sentence by multiple delimiters, such as spaces, commas, or semicolons.
+- **Sample Input**: `"Apples; oranges, and bananas are tasty."`
+- **Expected Output**: `['Apples', 'oranges', 'and', 'bananas', 'are', 'tasty']`</code></pre>
+</section>
+<section id="exercise-11-extracting-file-names-with-specific-extensions" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-11-extracting-file-names-with-specific-extensions">Exercise 11: Extracting File Names with Specific Extensions</h4>
+<pre><code>- Write a pattern to find all files with `.pdf`, `.docx`, or `.xlsx` extensions.
+- **Sample Input**: `"Documents include report.pdf, summary.docx, and data.xlsx."`
+- **Expected Output**: `['report.pdf', 'summary.docx', 'data.xlsx']`</code></pre>
+</section>
+<section id="exercise-12-extracting-sentences-without-ending-with-a-question-mark" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-12-extracting-sentences-without-ending-with-a-question-mark">Exercise 12: Extracting Sentences without Ending with a Question Mark</h4>
+<pre><code>- Write a regular expression to capture all sentences that do not end with a question mark.
+- **Sample Input**: `"What is your name? My name is Alice. Where are you from?"`
+- **Expected Output**: `['My name is Alice']`</code></pre>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./18_Exception.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Exception Handling and Debugging Techniques</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">STA 2450</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">Fall 2024</div>
+  </div>
+</footer>
+
+
+
+</body></html>
