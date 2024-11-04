@@ -1,0 +1,491 @@
+# Regular Expressions {#sec-regex}
+
+
+
+In programming, we often encounter tasks that require searching, extracting, or validating specific patterns within strings. *Regular Expressions* (regex or regexp) provide a powerful tool for these tasks by allowing us to define search patterns with precision. Regular expressions are particularly useful in text processing, making it easier to handle tasks such as finding email addresses, extracting numerical values, or validating formatted inputs.
+
+
+## The Concept of Pattern Matching
+
+At its core, a regular expression is a sequence of characters that form a **pattern**. This pattern describes the structure or sequence you are interested in finding within a larger text. Unlike simple string matching, which relies on an exact match (e.g., searching for the word "data" would only find “data” and not “dataset” or “database”), regular expressions allow for more **flexible** and **dynamic** matching, capturing partial matches or patterns that meet certain criteria.
+
+For instance, the pattern `data\w*` will match:
+
+- "data" (the word itself)
+- "dataset"
+- "database"
+
+This flexibility is what makes regular expressions so powerful for text processing.
+
+### Anatomy of a Regular Expression
+
+To build effective regular expressions, it’s helpful to understand the components that make up a pattern. Each character in a regular expression can have a special meaning, enabling more complex pattern definitions.
+
+1. **Literal Characters**: Most characters (like letters or numbers) match themselves. For instance, the pattern `data` will only match occurrences of the word "data".
+
+2. **Metacharacters**: These are special characters that have specific functions in regex syntax. Some commonly used metacharacters are:
+
+   - **`.` (dot)**: Matches any single character except a newline.
+   - **`^` (caret)**: Indicates the start of a string.
+   - **`$` (dollar)**: Indicates the end of a string.
+   - **`*`, `+`, `?`**: Define the frequency or repetition of patterns.
+
+3. **Character Classes**: Defined by brackets `[ ]`, character classes allow you to match any one of a set of characters.
+
+   - For example, `[abc]` will match either "a", "b", or "c".
+   - Ranges can also be used within brackets, like `[0-9]` to match any digit.
+
+4. **Escape Sequences**: Some characters (such as `.` or `*`) have special meanings, so you may need to **escape** them with a backslash (`\`) if you want to match them literally. For instance, `\.` will match a period rather than any character.
+
+5. **Quantifiers**: These symbols define how many times a character or pattern must appear.
+
+   - **`*`** matches zero or more occurrences.
+   - **`+`** matches one or more occurrences.
+   - **`?`** matches zero or one occurrence.
+
+### Why Use Regular Expressions?
+
+Regular expressions are particularly useful when handling unstructured data, such as:
+
+- **Data Extraction**: Pulling specific data, like email addresses, phone numbers, or dates, from large text files.
+- **Data Validation**: Ensuring that an input string follows a required format, such as validating email addresses or passwords.
+- **Text Replacement**: Substituting parts of a string with new values, which can help anonymize data or clean up formatting.
+
+Regular expressions are versatile enough to support a wide variety of tasks in text processing, making them invaluable in fields like data science, web development, and natural language processing.
+
+
+
+
+
+## Using Regular Expressions in Python
+
+Python’s `re` library is designed to work with regular expressions, providing several powerful functions for pattern matching and text manipulation. Below, we explore some of the key functions in the `re` library, each accompanied by examples to demonstrate their practical applications.
+
+### Key Functions in Python’s `re` Library
+
+1. **`re.search()`**: This function searches for the first occurrence of a pattern within a string. If it finds a match, it returns a match object; otherwise, it returns `None`.
+
+2. **`re.findall()`**: This function finds all non-overlapping matches of a pattern in a string and returns them as a list.
+
+3. **`re.match()`**: This function checks for a match only at the beginning of a string.
+
+4. **`re.sub()`**: This function replaces occurrences of a pattern with a specified replacement string.
+
+5. **`re.split()`**: This function splits a string by occurrences of a pattern, returning a list of substrings.
+
+Each function serves a unique purpose and can be applied to various text-processing tasks.
+
+### Using `re.search()`
+
+The `re.search()` function finds the first match of a pattern within a string. This is useful when you only need to confirm the existence of a pattern or retrieve the first match.
+
+**Example 1:** Searching for a word that starts with “data”
+```{python}
+import re
+
+text = "The dataset is being updated in the database."
+pattern = r"data\w*"
+
+# Search for the first occurrence of the pattern
+result = re.search(pattern, text)
+if result:
+    print("Found:", result.group())  
+```
+
+In this example:
+- The pattern `data\w*` matches "data" followed by zero or more word characters (`\w*`).
+- The `result.group()` method returns the matched string.
+
+**Example 2:** Checking for the presence of a phone number pattern
+```{python}
+text = "Contact us at 123-867-5309."
+pattern = r"\d{3}-\d{3}-\d{4}"
+
+result = re.search(pattern, text)
+if result:
+    print("Phone number found:", result.group())  
+```
+
+The `\d` metacharacter matches any digit and is equivalent to `[0-9]`. When followed by `{3}`, then we are looking for three consecutive digits. 
+
+### Using `re.findall()`
+
+The `re.findall()` function returns all matches of a pattern as a list, making it ideal for finding multiple occurrences of a pattern within a string.
+
+**Example 1:** Extracting all email addresses
+```{python}
+text = "Emails: alice@example.com, bob@example.org, charlie@test.com"
+pattern = r"\b\w+@\w+\.\w+\b"
+
+emails = re.findall(pattern, text)
+print("Emails found:", emails)  
+```
+
+In this example:
+
+- The pattern `\b\w+@\w+\.\w+\b` matches email addresses by looking for word characters around the "@" and "." symbols.
+- `re.findall()` captures all email addresses in the text.
+
+**Example 2:** Finding all words starting with "stat"
+```{python}
+text = "Statistics is a fascinating field, with stats and statistical methods widely applied."
+pattern = r"\bstat\w*"
+
+matches = re.findall(pattern, text)
+print("Words found:", matches)  
+```
+
+### `re.match()`
+
+The `re.match()` function checks if a pattern matches only at the beginning of a string, returning `None` if the pattern appears elsewhere.
+
+**Example 1:** Verifying the format of a postal code at the beginning of a string
+```{python}
+text = "12345-6789 is the postal code."
+pattern = r"^\d{5}-\d{4}"
+
+if re.match(pattern, text):
+    print("Valid postal code format.")  
+else:
+    print("Invalid format.")
+```
+
+Here:
+
+- The pattern `^\d{5}-\d{4}` matches a 5-digit number, a hyphen, and a 4-digit number, specifically at the start of the string.
+
+### Using `re.sub()`
+
+The `re.sub()` function replaces all occurrences of a pattern with a specified replacement string, making it useful for sanitizing or formatting data.
+
+**Example 1:** Replacing phone numbers with “[PHONE]”
+```{python}
+text = "Reach us at 123-456-7890 or 987-654-3210."
+pattern = r"\d{3}-\d{3}-\d{4}"
+
+new_text = re.sub(pattern, "[PHONE]", text)
+print(new_text)  
+```
+
+**Example 2:** Standardizing date formats
+```{python}
+text = "Event on 2023-01-25, follow-up on 01/26/2023."
+pattern = r"(\d{4})-(\d{2})-(\d{2})"
+
+# Reformat dates to MM/DD/YYYY
+new_text = re.sub(pattern, r"\2/\3/\1", text)
+print(new_text)  
+```
+
+In this example:
+
+- The pattern `(\d{4})-(\d{2})-(\d{2})` captures the year, month, and day.
+- The replacement pattern `\2/\3/\1` reorders the components to MM/DD/YYYY.
+
+### Using `re.split()`
+
+The `re.split()` function splits a string based on a regular expression, which is useful when splitting by complex delimiters.
+
+**Example 1:** Splitting text by multiple delimiters
+```{python}
+text = "apple; orange, banana|grape"
+pattern = r"[;,|]"
+
+fruits = re.split(pattern, text)
+print(fruits)  
+```
+
+Here, the pattern `[;,|]` matches any one of `;`, `,`, or `|` as delimiters.
+
+
+## Common Metacharacters
+
+Here's a list of commonly used special characters (also called *escape sequences* or *metacharacters*) in regular expressions, along with their functions:
+
+#### Anchors
+
+- **`^`**: Matches the start of a string.
+- **`$`**: Matches the end of a string.
+- **`\b`**: Matches a word boundary (position between a word and a non-word character).
+- **`\B`**: Matches a position that is not a word boundary.
+
+#### Character Classes
+
+- **`.`**: Matches any character except a newline.
+- **`\d`**: Matches any digit, equivalent to `[0-9]`.
+- **`\D`**: Matches any non-digit character, equivalent to `[^0-9]`.
+- **`\w`**: Matches any word character (alphanumeric or underscore), equivalent to `[a-zA-Z0-9_]`.
+- **`\W`**: Matches any non-word character, equivalent to `[^a-zA-Z0-9_]`.
+- **`\s`**: Matches any whitespace character (spaces, tabs, newlines).
+- **`\S`**: Matches any non-whitespace character.
+
+#### Quantifiers
+
+- **`*`**: Matches 0 or more occurrences of the preceding element.
+- **`+`**: Matches 1 or more occurrences of the preceding element.
+- **`?`**: Matches 0 or 1 occurrence of the preceding element.
+- **`{n}`**: Matches exactly `n` occurrences of the preceding element.
+- **`{n,}`**: Matches `n` or more occurrences.
+- **`{n,m}`**: Matches between `n` and `m` occurrences.
+
+#### Groups and References
+
+- **`( )`**: Groups a pattern together, allowing you to apply quantifiers to the entire group or capture matches.
+- **`|`**: Alternation operator, meaning “or” (e.g., `data|info` matches "data" or "info").
+- **`\`**: Escapes special characters, allowing them to be used as literal characters (e.g., `\.` matches a period).
+- **`\1`, `\2`, etc.**: Refers to matched groups in the pattern, useful for back-references.
+
+#### Lookaheads and Lookbehinds
+
+- **`(?=...)`**: Positive lookahead, ensures that what follows matches `...`.
+- **`(?!...)`**: Negative lookahead, ensures that what follows does not match `...`.
+- **`(?<=...)`**: Positive lookbehind, ensures that what precedes matches `...`.
+- **`(?<!...)`**: Negative lookbehind, ensures that what precedes does not match `...`.
+
+#### Escaped Characters for Specific Needs
+
+- **`\t`**: Matches a tab character.
+- **`\n`**: Matches a newline character.
+- **`\r`**: Matches a carriage return character.
+- **`\f`**: Matches a form feed character.
+- **`\v`**: Matches a vertical tab character.
+- **`\0`**: Matches the null character.
+
+
+
+
+
+## Building Complex Patterns
+
+Regular expressions become particularly powerful when we combine multiple elements to create complex patterns. This section explores some advanced techniques to build sophisticated expressions, allowing for precise control over pattern matching.
+
+### Using Grouping and Capturing
+
+Grouping is achieved by enclosing parts of a pattern within parentheses `()`. Groups allow you to:
+
+1. Apply quantifiers to an entire section of a pattern.
+2. Capture parts of a match, enabling you to reference them later (known as **capturing groups**).
+
+**Example:** Capturing parts of a date
+```{python}
+import re
+
+text = "Today's date is 2024-11-03."
+pattern = r"(\d{4})-(\d{2})-(\d{2})"
+
+match = re.search(pattern, text)
+if match:
+    year, month, day = match.groups()
+    print(f"Year: {year}, Month: {month}, Day: {day}")  
+```
+
+In this example:
+
+- The pattern `(\d{4})-(\d{2})-(\d{2})` captures the year, month, and day as separate groups.
+- The `match.groups()` method returns a tuple with the captured parts.
+
+
+
+### Lookahead and Lookbehind Assertions
+
+**Lookahead** and **lookbehind** assertions allow you to match a pattern based on what follows or precedes it, without including that part in the match.
+
+- **Positive Lookahead** `(?=...)`: Asserts that a match is followed by a specific pattern.
+- **Negative Lookahead** `(?!...)`: Asserts that a match is **not** followed by a specific pattern.
+- **Positive Lookbehind** `(?<=...)`: Asserts that a match is preceded by a specific pattern.
+- **Negative Lookbehind** `(?<!...)`: Asserts that a match is **not** preceded by a specific pattern.
+
+**Example 1:** Finding words followed by "ing" (positive lookahead)
+```{python}
+text = "The following items are walking, talking, and reading."
+pattern = r"\b\w+(?=ing\b)"
+
+matches = re.findall(pattern, text)
+print(matches)  
+```
+
+**Example 2:** Finding numbers not preceded by a dollar sign (negative lookbehind)
+```{python}
+text = "Price is $100 but I paid 150."
+pattern = r"(?<!\$)\b\d+\b"
+
+matches = re.findall(pattern, text)
+print(matches)  # Output: ['150']
+```
+
+### Alternation with the `|` Operator
+
+The `|` operator allows you to specify multiple patterns, matching if any of the alternatives are found.
+
+**Example:** Matching multiple file extensions
+```{python}
+text = "Files: report.pdf, image.jpg, document.docx"
+pattern = r"\b\w+\.(pdf|jpg|docx)\b"
+
+matches = re.findall(pattern, text)
+print(matches)  
+```
+
+Here, the pattern matches any word followed by a file extension (either "pdf", "jpg", or "docx").
+
+### Working with Character Classes and Ranges
+
+Character classes `[ ]` allow for more flexibility by matching any one character within the brackets. You can also define ranges within classes to match multiple characters more succinctly.
+
+- **Ranges**: For example, `[a-z]` matches any lowercase letter, while `[0-9]` matches any digit.
+- **Negated Classes**: Using `[^...]` matches any character **not** in the brackets.
+
+**Example 1:** Matching only vowels
+```{python}
+text = "Regular expressions are useful."
+pattern = r"[aeiou]"
+
+vowels = re.findall(pattern, text)
+print(vowels)  
+```
+
+**Example 2:** Matching any character except vowels
+```{python}
+pattern = r"[^aeiou]"
+
+non_vowels = re.findall(pattern, text)
+print(non_vowels)  
+```
+
+### Using Backreferences
+
+Backreferences allow you to reuse a captured group within the same pattern. This is especially useful for finding repeated patterns.
+
+**Example:** Matching repeated words
+```{python}
+text = "The the test was a success."
+pattern = r"\b(\w+)\s+\1\b"
+
+matches = re.findall(pattern, text, re.IGNORECASE)
+print(matches)  
+```
+
+Here:
+- `(\w+)` captures a word, and `\1` references this captured group, matching any repeated word.
+
+### Conditional Matching with Quantifiers
+
+Quantifiers, such as `*`, `+`, and `{n,m}`, allow you to control the frequency of matched elements, providing even more flexibility for complex patterns.
+
+- **`*`**: Matches zero or more occurrences.
+- **`+`**: Matches one or more occurrences.
+- **`?`**: Matches zero or one occurrence.
+- **`{n}`**: Matches exactly `n` occurrences.
+- **`{n,}`**: Matches `n` or more occurrences.
+- **`{n,m}`**: Matches between `n` and `m` occurrences.
+
+**Example 1:** Matching sequences of digits with varying lengths
+```{python}
+text = "Order numbers: 123, 4567, 89, 23456"
+pattern = r"\b\d{2,4}\b"
+
+matches = re.findall(pattern, text)
+print(matches)
+```
+
+This pattern matches numbers that are 2 to 4 digits long.
+
+### Combining Techniques for Complex Patterns
+
+By combining groups, lookaheads, alternation, and quantifiers, you can construct highly specific patterns.
+
+**Example:** Extracting full names in the format "Last, First M."
+```{python}
+text = "Attendees: Smith, John A.; Doe, Jane B."
+pattern = r"\b([A-Z][a-z]+),\s([A-Z][a-z]+)\b"
+
+names = re.findall(pattern, text)
+print(names)  
+```
+
+Here:
+
+- `[A-Z][a-z]+` matches capitalized words.
+- `\s` matches spaces.
+
+
+## Exercises
+
+
+#### Exercise 1: Extracting Domain Names
+
+   - Write a regular expression to find all domain names in a text. Assume that domain names have the format `www.something.com`, `something.org`, or `something.edu`.
+   - **Sample Input**: `"Visit us at www.example.com or go to research.org for more info."`
+   - **Expected Output**: `['example.com', 'research.org']`
+
+#### Exercise 2: Removing Punctuation
+
+   - Use `re.sub()` to remove all punctuation from a sentence, leaving only alphanumeric characters and spaces.
+   - **Sample Input**: `"Hello, world! Let's test this: are you ready?"`
+   - **Expected Output**: `"Hello world Lets test this are you ready"`
+
+#### Exercise 3: Extracting Hashtags
+
+   - Write a pattern to find all hashtags in a given string.
+   - **Sample Input**: `"Join the conversation with #Python, #DataScience, and #MachineLearning!"`
+   - **Expected Output**: `['#Python', '#DataScience', '#MachineLearning']`
+
+
+#### Exercise 4: Finding Dates in Different Formats
+
+   - Write a regular expression to find dates in multiple formats, such as `MM/DD/YYYY`, `YYYY-MM-DD`, and `DD.MM.YYYY`.
+   - **Sample Input**: `"We met on 2024-11-03, and we’ll meet again on 11/03/2024."`
+   - **Expected Output**: `['2024-11-03', '11/03/2024']`
+
+#### Exercise 5: Finding Words That Start with a Specific Letter
+
+   - Write a regular expression to find all words that start with the letter “s” (case-insensitive).
+   - **Sample Input**: `"She sells seashells by the seashore."`
+   - **Expected Output**: `['She', 'sells', 'seashells', 'seashore']`
+
+#### Exercise 6: Redacting Sensitive Information
+
+   - Use `re.sub()` to replace all Social Security numbers (formatted as `###-##-####`) with `[REDACTED]`.
+   - **Sample Input**: `"Client's SSN is 123-45-6789."`
+   - **Expected Output**: `"Client's SSN is [REDACTED]."`
+
+#### Exercise 7: Validating Password Strength
+
+   - Write a regular expression to validate that a password is at least 8 characters long, contains at least one uppercase letter, one lowercase letter, one digit, and one special character (e.g., `@`, `#`, `!`, `$`).
+   - **Sample Input**: `Password123!`
+   - **Expected Output**: Match found
+   - **Sample Input**: `weakpass`
+   - **Expected Output**: No match
+
+#### Exercise 8: Extracting Full Names
+
+    - Write a regular expression to capture full names with the format “Last, First M.”, where “M.” is an optional middle initial.
+    - **Sample Input**: `"Dr. Smith, John A. and Dr. Brown, Lisa attended the meeting."`
+    - **Expected Output**: `[('Smith', 'John', 'A.'), ('Brown', 'Lisa', '')]`
+
+#### Exercise 9: Finding Repeated Words
+
+    - Write a regular expression to find and return any repeated words in a sentence.
+    - **Sample Input**: `"This is a test test sentence."`
+    - **Expected Output**: `['test']`
+
+#### Exercise 10: Splitting a Sentence by Words with Multiple Delimiters
+
+    - Write a regular expression to split a sentence by multiple delimiters, such as spaces, commas, or semicolons.
+    - **Sample Input**: `"Apples; oranges, and bananas are tasty."`
+    - **Expected Output**: `['Apples', 'oranges', 'and', 'bananas', 'are', 'tasty']`
+    
+#### Exercise 11: Extracting File Names with Specific Extensions
+
+    - Write a pattern to find all files with `.pdf`, `.docx`, or `.xlsx` extensions.
+    - **Sample Input**: `"Documents include report.pdf, summary.docx, and data.xlsx."`
+    - **Expected Output**: `['report.pdf', 'summary.docx', 'data.xlsx']`
+
+
+#### Exercise 12: Extracting Sentences without Ending with a Question Mark
+
+    - Write a regular expression to capture all sentences that do not end with a question mark.
+    - **Sample Input**: `"What is your name? My name is Alice. Where are you from?"`
+    - **Expected Output**: `['My name is Alice']`
+
+

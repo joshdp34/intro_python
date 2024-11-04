@@ -1,0 +1,11 @@
+# Introduction {.unnumbered}
+
+These are the lecture notes for STA 2450 - Computing for Math & Stat.
+
+**Prerequisites:** None 
+    
+#### Course Description:
+
+Computer programming for mathematical scientists with emphasis on designing algorithms, problem solving, and coding practices. Topics include development of programs from specifications; appropriate use of data types;  functions; modular program organization; documentation and style; and version control and collaborative programming.
+
+

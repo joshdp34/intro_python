@@ -1,0 +1,616 @@
+# Exception Handling and Debugging Techniques {#sec-exception}
+
+
+## Introduction to Exception Handling
+
+In computer programming, errors are an inevitable part of development. These errors, known as *exceptions*, occur when a program encounters something unexpected during execution. For example, dividing by zero, accessing a file that doesn’t exist, or trying to convert a string to a number can all cause exceptions. If not handled properly, these exceptions can cause a program to crash, resulting in a poor user experience and potential data loss.
+
+Exception handling is the mechanism that allows programs to anticipate and gracefully respond to errors. Rather than terminating abruptly, a program can detect an exception, respond appropriately, and continue functioning. This approach is especially important in scientific computing, statistical modeling, and other data-intensive tasks where robustness and reliability are paramount.
+
+
+### Types of Errors in Python
+
+There are three primary categories of errors that can occur in Python:  
+
+1. **Syntax Errors**  
+   Syntax errors, also known as *parsing errors*, occur when Python cannot interpret the code because it violates the language's syntax rules. These are usually caught before the program runs.  
+
+   **Example:**
+   ```{python}
+   #| error: true
+   
+   print("Hello"
+   ```
+   
+   The missing closing parenthesis will raise a `SyntaxError`.
+
+2. **Runtime Errors (Exceptions)**  
+   These errors occur during program execution, even if the code is syntactically correct. Runtime errors are what we typically handle using exception handling mechanisms.
+
+   **Example:**
+   ```{python}
+   #| error: true
+   
+   x = 10 / 0  
+   ```
+
+3. **Logical Errors**  
+   Logical errors do not cause the program to crash, but the output is incorrect due to flaws in the logic of the code. These are often the hardest to detect and require thorough testing to identify.
+
+
+### Why Handle Exceptions?
+
+In large-scale applications—such as those used for statistical modeling, data collection, or machine learning—exceptions are common and can arise from user input errors, missing data, or network connectivity issues. Handling exceptions ensures that:
+
+- **Programs Remain Functional:** Rather than crashing, the program can respond to the error and continue executing.
+- **Users Receive Feedback:** Users get meaningful error messages, helping them understand and correct their input.
+- **Data Integrity is Preserved:** By handling exceptions, the program can prevent incomplete operations that could lead to data corruption.
+- **Code is Easier to Maintain:** Exception handling creates structured and predictable error management, making the codebase easier to debug and maintain.
+
+### The Life Cycle of an Exception
+
+When an exception occurs, the following sequence of events takes place:
+
+1. **Detection:** An exception is raised when Python encounters an unexpected situation.
+2. **Propagation:** If the exception is not handled in the immediate scope, Python searches for a matching handler up the call stack.
+3. **Handling:** If a matching handler is found, the program executes the code in the corresponding `except` block.
+4. **Termination or Recovery:** Depending on the program's design, it may either terminate gracefully or recover and continue.
+
+
+### Common Exceptions in Python
+
+Below is a list of some frequently encountered exceptions in Python, along with descriptions:
+
+| **Exception**           | **Cause**                                           |
+|-------------------------|-----------------------------------------------------|
+| `ZeroDivisionError`     | Attempt to divide by zero.                          |
+| `ValueError`            | Invalid argument passed to a function.              |
+| `TypeError`             | Operation applied to an inappropriate type.         |
+| `FileNotFoundError`     | File or directory does not exist.                   |
+| `IndexError`            | Index out of range for a list or tuple.             |
+| `KeyError`              | Key not found in a dictionary.                      |
+| `AttributeError`        | Accessing an attribute that doesn't exist.          |
+| `IOError`               | Input/output operation failed (e.g., file read error). |
+| `AssertionError`        | Raised when an assertion fails.                     |
+
+
+### The Philosophy Behind Python’s Exception Handling
+
+Python’s philosophy for exception handling emphasizes readability, simplicity, and robustness, in line with the language’s overarching principle, expressed in the Zen of Python: *“Errors should never pass silently.”* By making error handling explicit, Python encourages developers to anticipate and plan for potential problems.
+
+Python also follows the principle of *EAFP (Easier to Ask for Forgiveness than Permission)*. Rather than checking in advance if an operation will succeed, it is often more efficient to perform the operation and handle any exceptions if they arise. This approach simplifies code while ensuring errors are dealt with properly.
+
+**Example of EAFP in practice:**
+
+```python
+try:
+    value = int(input("Enter a number: "))
+except ValueError:
+    print("Invalid input. Please enter a valid integer.")
+```
+
+Instead of preemptively validating input, the code attempts to perform the operation and handles any issues via exception handling.
+
+
+### Exceptions in Statistical and Mathematical Computing
+
+In statistical programming, exception handling plays a critical role. Consider the following scenarios:
+
+1. **Handling Division by Zero in Calculations**  
+
+   When performing statistical computations, division by zero might occur due to missing or incomplete data. Proper exception handling ensures the program doesn't crash and provides meaningful feedback.
+
+   **Example:**
+   ```python
+   try:
+       mean = total_sum / count
+   except ZeroDivisionError:
+       print("Cannot compute mean: division by zero.")
+   ```
+
+2. **Handling File Input Errors**  
+
+   Data processing often involves reading data from external files. Exception handling ensures the program gracefully handles missing files or incorrect paths.
+
+   **Example:**
+   ```python
+   try:
+       with open("data.csv", "r") as file:
+           data = file.read()
+   except FileNotFoundError:
+       print("The data file is missing.")
+   ```
+
+3. **Managing User Input in Interactive Applications**  
+
+   Many programs used for data analysis involve user interaction. Ensuring users provide valid input is critical to avoid runtime errors.
+
+   **Example:**
+   ```python
+   while True:
+       try:
+           n = int(input("Enter the sample size: "))
+           break
+       except ValueError:
+           print("Invalid input. Please enter a number.")
+   ```
+
+
+
+Exception handling allows developers to anticipate, detect, and respond to errors effectively, ensuring the program runs smoothly under unexpected conditions. Whether in data analysis or mathematical modeling, properly handling exceptions is essential for developing reliable and user-friendly applications. The next sections will dive into the syntax and practical examples of handling exceptions in Python, providing tools to manage errors and improve program stability.
+
+
+
+
+## The `try` and `except` Blocks
+
+The foundation of exception handling in Python lies in the use of `try` and `except` blocks. These blocks allow you to "try" a block of code that might raise an exception and catch that exception to handle it gracefully. The `try` block contains the code that may cause an error, while the `except` block specifies how to handle the error if it occurs.
+
+
+### Basic Structure of `try` and `except`
+
+The basic syntax for a `try`-`except` block is as follows:
+
+```{python}
+try:
+    # Code that might raise an exception
+    result = 10 / 0
+except ZeroDivisionError:
+    # Code to handle the exception
+    print("Cannot divide by zero.")
+```
+
+In the example above, Python attempts to execute the code in the `try` block. Since dividing by zero is not allowed, a `ZeroDivisionError` is raised, and control is passed to the `except` block, which prints an appropriate message.
+
+
+### Catching Specific Exceptions
+
+You can specify multiple `except` blocks to catch different types of exceptions. This is useful when you want to handle different errors in different ways.
+
+```python
+try:
+    value = int(input("Enter a number: "))
+    result = 10 / value
+except ValueError:
+    print("Invalid input. Please enter a valid number.")
+except ZeroDivisionError:
+    print("You can't divide by zero!")
+```
+
+This example ensures that invalid input and division by zero are handled separately, improving the user experience with specific error messages.
+
+
+### Catching Multiple Exceptions in One Block
+
+When multiple exceptions are expected, you can handle them in a single `except` block by grouping them in a tuple.
+
+```python
+try:
+    value = int(input("Enter a number: "))
+    result = 10 / value
+except (ValueError, ZeroDivisionError) as e:
+    print(f"Error occurred: {e}")
+```
+
+This approach simplifies code when the same response is appropriate for different exceptions.
+
+
+### Handling All Exceptions (Not Recommended)
+
+If you do not know what exceptions might occur, you can use a bare `except` block. However, this is generally discouraged because it can catch unexpected exceptions, making debugging more difficult.
+
+```python
+try:
+    result = 10 / value
+except:
+    print("An error occurred.")
+```
+
+A better practice is to catch exceptions explicitly or use `Exception` to capture any standard error while leaving system-exit exceptions unhandled.
+
+```python
+try:
+    result = 10 / value
+except Exception as e:
+    print(f"An unexpected error occurred: {e}")
+```
+
+
+
+### Using the `else` Block
+
+Python provides an optional `else` block that runs only if no exceptions are raised in the `try` block. This ensures that the `else` block is executed only when everything runs smoothly.
+
+```python
+try:
+    value = int(input("Enter a number: "))
+    result = 10 / value
+except ZeroDivisionError:
+    print("You can't divide by zero!")
+except ValueError:
+    print("Please enter a valid number.")
+else:
+    print(f"The result is {result}")
+```
+
+This example ensures that the message in the `else` block is printed only if the input is valid and no exception occurs.
+
+
+### The `finally` Block
+
+A `finally` block is always executed, regardless of whether an exception occurs. It is typically used for cleanup operations, such as closing files or releasing resources.
+
+```python
+try:
+    file = open("data.txt", "r")
+    data = file.read()
+except FileNotFoundError:
+    print("The file was not found.")
+finally:
+    file.close()  # Ensures the file is closed
+```
+
+Even if an exception occurs, the `finally` block ensures the file is closed, preventing resource leaks.
+
+
+### Nesting `try` and `except` Blocks
+
+In more complex scenarios, `try` and `except` blocks can be nested to handle multiple layers of potential exceptions.
+
+```python
+try:
+    file = open("data.txt", "r")
+    try:
+        data = file.read()
+        value = int(data)
+    except ValueError:
+        print("Data is not a valid integer.")
+finally:
+    file.close()
+```
+
+Here, the inner `try` block handles issues with reading or processing data, while the outer block ensures the file is closed no matter what happens.
+
+
+### Raising Exceptions
+
+Python allows developers to manually raise exceptions using the `raise` statement. This is helpful when you want to enforce certain conditions in your code.
+
+```{python}
+#| error: true
+
+def set_age(age):
+    if age < 0:
+        raise ValueError("Age cannot be negative.")
+    print(f"Age is set to {age}")
+
+try:
+    set_age(-1)
+except ValueError as e:
+    print(f"Error: {e}")
+```
+
+In this example, the function raises a `ValueError` if the age is negative. This exception is caught in the `try`-`except` block to provide meaningful feedback.
+
+
+The `try` and `except` blocks provide a powerful way to manage exceptions gracefully. By anticipating potential errors and designing structured exception handling, you can build programs that are more robust, maintainable, and user-friendly. The next section will explore best practices for debugging to further enhance code reliability.
+
+
+
+## Debugging Techniques
+
+Debugging is the process of identifying, analyzing, and resolving errors or bugs in a program. Even with well-structured code, errors can arise from various sources, such as logical flaws, incorrect assumptions, or misinterpretation of data. Therefore, mastering debugging techniques is essential for writing reliable and efficient programs, particularly in fields like statistical computing and data analysis, where accuracy is paramount.
+
+
+### Using Print Statements for Debugging
+
+One of the simplest and most common debugging techniques is the use of `print()` statements. By printing intermediate values or messages, you can track the flow of your program and observe how variables change over time. This method is especially useful for tracking down logical errors.
+
+**Example:**
+
+```{python}
+def calculate_average(numbers):
+    total = sum(numbers)
+    print(f"Total: {total}")  # Debugging statement
+    average = total / len(numbers)
+    print(f"Average: {average}")  # Debugging statement
+    return average
+
+numbers = [10, 20, 30, 40]
+calculate_average(numbers)
+```
+
+In this example, the `print()` statements help visualize how the total and average values are calculated. This technique is simple but effective for small programs or sections of code.
+
+**Limitations:** 
+
+- It can clutter your code with `print()` statements.
+- You must remove or comment out these statements once the bug is fixed.
+- It can be inefficient when debugging larger, more complex programs.
+
+
+
+
+### Using Python’s Built-In Debugger (`pdb`)
+
+Python provides a built-in debugger, `pdb`, which offers more powerful debugging capabilities. It allows you to set breakpoints, step through your code, and inspect variables at runtime.
+
+To start using `pdb`, you can insert the following line in your code where you want the execution to pause:
+
+```python
+import pdb; pdb.set_trace()
+```
+
+**Example:**
+
+```python
+def calculate_average(numbers):
+    total = sum(numbers)
+    import pdb; pdb.set_trace()  # Sets a breakpoint here
+    average = total / len(numbers)
+    return average
+
+numbers = [10, 20, 30, 40]
+calculate_average(numbers)
+```
+
+When you run the program, it will pause at the breakpoint. You can then use the following commands to debug:
+
+- `n` (next): Execute the next line of code.
+- `c` (continue): Continue execution until the next breakpoint.
+- `p` (print): Print the value of a variable.
+- `q` (quit): Exit the debugger.
+
+Using `pdb`, you can navigate through your program interactively and inspect the state of variables at specific points, making it easier to identify the cause of an issue.
+
+
+### IDE Debugging Tools
+
+Most modern Integrated Development Environments (IDEs), such as PyCharm, VSCode, and RStudio, offer built-in debugging tools that provide a graphical interface for setting breakpoints, stepping through code, and inspecting variables. These tools enhance productivity and streamline the debugging process by making it more intuitive.
+
+In PyCharm, for example, you can:
+
+1. Set breakpoints by clicking next to the line number in the editor.
+2. Run the program in debug mode by clicking the “bug” icon.
+3. Inspect the value of variables in the “Variables” pane.
+4. Step through code using the “Step Into,” “Step Over,” and “Step Out” buttons.
+
+**Advantages of IDE Debuggers:**
+
+- No need to modify your code with debugging statements like `print()` or `pdb.set_trace()`.
+- Easier navigation through complex codebases.
+- Visual inspection of variables, call stacks, and execution flow.
+
+
+
+
+### Testing and Assertions
+
+Testing is a proactive debugging technique that ensures your code behaves as expected. Writing tests allows you to check the correctness of your functions and detect issues early. Testing frameworks like `unittest` and `pytest` help automate the process, ensuring that any future changes don’t introduce new bugs.
+
+**Example Using `unittest`:**
+
+```python
+import unittest
+
+def calculate_average(numbers):
+    return sum(numbers) / len(numbers)
+
+class TestAverage(unittest.TestCase):
+    def test_average(self):
+        self.assertEqual(calculate_average([10, 20, 30]), 20)
+        self.assertEqual(calculate_average([5, 5, 5]), 5)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+In this example, the `unittest` framework is used to check if the `calculate_average` function returns the expected values. Tests can be run repeatedly to ensure code correctness.
+
+
+::: {.callout-note}
+## The Purpose of `if __name__ == "__main__":`
+
+In Python, the `if __name__ == "__main__":` construct is used to control the execution of code, ensuring that certain blocks run only when the script is executed directly, and not when it is imported as a module. This is a best practice for writing reusable code and organizing scripts that might serve as both standalone programs and libraries.
+
+#### How It Works
+
+When a Python file is executed, the interpreter sets a special built-in variable, `__name__`. If the script is being run directly, `__name__` is set to `"__main__"`. However, if the script is imported into another module, `__name__` takes the name of the module instead.
+
+
+#### Example:
+
+```python
+def greet():
+    print("Hello, world!")
+
+if __name__ == "__main__":
+    greet()
+```
+
+**Explanation:** 
+
+- If this script is run directly (e.g., `python script.py`), the `greet()` function will be called, printing `"Hello, world!"`.
+- If the same script is imported into another module, the `greet()` function won’t run automatically because the code inside the `if __name__ == "__main__":` block will be skipped.
+
+
+
+#### Why It’s Useful
+
+1. **Prevents Unintended Execution:** Ensures that code meant for direct execution does not run when the module is imported elsewhere.
+2. **Facilitates Code Reusability:** Allows you to reuse functions, classes, or variables in other scripts without triggering the script’s main logic.
+3. **Supports Testing:** Makes it easy to write code that behaves differently during development, testing, and production.
+
+This construct is an essential part of Python programming, especially when writing scripts that may also serve as importable modules.
+:::
+
+
+
+#### Assertions
+
+Assertions are a built-in mechanism in Python to enforce assumptions in your code. If an assertion fails, it raises an `AssertionError` and stops the program, allowing you to catch logic errors during development.
+
+**Example:**
+
+```{python}
+#| error: true
+
+def calculate_average(numbers):
+    assert len(numbers) > 0, "List of numbers cannot be empty"
+    return sum(numbers) / len(numbers)
+
+# Raises AssertionError if an empty list is passed
+calculate_average([])
+```
+
+Assertions provide a simple way to ensure that certain conditions hold true during execution, helping you catch errors early.
+
+
+### Logging for Debugging
+
+Logging is a more advanced form of debugging, particularly useful for larger applications. While `print()` statements are great for quick checks, logging provides a more robust and configurable way to record what is happening in your program.
+
+Python's `logging` module allows you to log messages at different levels of severity, such as `DEBUG`, `INFO`, `WARNING`, `ERROR`, and `CRITICAL`. This makes it easy to record important information about the state of your program while it runs.
+
+**Example Using `logging`:**
+
+```python
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+
+def calculate_average(numbers):
+    logging.debug(f"Calculating average for: {numbers}")
+    total = sum(numbers)
+    logging.debug(f"Total: {total}")
+    average = total / len(numbers)
+    logging.debug(f"Average: {average}")
+    return average
+
+numbers = [10, 20, 30]
+calculate_average(numbers)
+```
+
+In this example, `logging.debug()` statements provide a running log of the calculations performed by the program. Unlike `print()` statements, you can easily disable or change the logging level without modifying the code.
+
+**Benefits of Logging:**
+
+- You can control the amount of output by setting different logging levels.
+- Log files can be created to store output for later analysis.
+- It helps in debugging production code without interrupting the program's flow.
+
+
+### Writing Clean Code to Minimize Bugs
+
+The best way to reduce debugging time is to write clean, well-structured code from the beginning. Adopting best practices such as following PEP 8 (Python’s style guide), writing meaningful variable names, and breaking complex tasks into smaller functions can drastically reduce the likelihood of bugs.
+
+Some tips include:
+
+- Use descriptive names for variables and functions.
+- Write functions that do one thing and do it well.
+- Keep your code DRY (Don't Repeat Yourself).
+- Write unit tests to ensure each part of your code works as expected.
+
+
+
+Debugging is an essential part of the development process, especially in fields like statistics and data science, where accuracy is critical. From simple print statements to advanced logging techniques, there are various tools available to help identify and resolve issues. By combining these strategies with careful coding practices, you can reduce the number of bugs in your programs and make the debugging process more efficient.
+
+
+
+
+## Exercises
+
+
+#### Exercise 1: Handling Division by Zero
+
+   Write a program that asks the user for two numbers and prints the result of dividing the first number by the second. Use exception handling to manage cases where the second number is zero. Ensure that the program does not crash and provides a helpful error message.
+
+   *Example Output:*
+   
+   ```
+   Enter the numerator: 10
+   Enter the denominator: 0
+   Error: Cannot divide by zero.
+   ```
+
+#### Exercise 2: File Reading with Exception Handling
+
+   Write a program that attempts to open a file and read its contents. If the file does not exist, handle the `FileNotFoundError` exception by printing an appropriate message. Add a `finally` block to ensure the file is closed after reading, even if an error occurs.
+
+   *Example Output:*
+   
+   ```
+   Enter the file name: missing_file.txt
+   Error: The file was not found.
+   ```
+
+#### Exercise 3: Validating User Input
+
+   Create a function that prompts the user to enter a positive integer. Use exception handling to ensure the input is a valid integer and greater than zero. If the user enters invalid input, prompt them to try again until they enter a valid number.
+
+   *Example Output:*
+   
+   ```
+   Enter a positive integer: -5
+   Invalid input. Please enter a positive integer.
+   Enter a positive integer: hello
+   Invalid input. Please enter a positive integer.
+   Enter a positive integer: 10
+   You entered: 10
+   ```
+
+#### Exercise 4: Testing with Assertions
+
+   Write a function that calculates the square root of a number, but only for non-negative inputs. Use an assertion to ensure that the input is non-negative, and if the input is negative, raise an `AssertionError`. Write test cases to verify the behavior of the function.
+
+
+#### Exercise 5: Using `pdb` for Debugging
+
+   Insert a breakpoint in the following code using the pdb debugger. Run the program and step through it to find the error.
+
+   ```
+   def average(numbers):
+       total = 0
+       for num in numbers:
+          total -= num
+       return total/(len(numbers) - 1)
+       
+   numbers = [1, 2, 3, 4, 5]
+   print(average(numbers))
+   ```
+   
+   *Question:* What steps did you use in the debugger to confirm the program works?
+
+#### Exercise 6: Logging and Error Messages
+
+   Write a program that logs the steps of a basic math operation (addition, subtraction, multiplication, and division). Use the `logging` module to track each operation, and add appropriate log levels for normal execution (`INFO`) and errors (`ERROR`).
+
+   <!-- **Example Output:** -->
+   <!-- ``` -->
+   <!-- import logging -->
+   <!-- logging.basicConfig(level=logging.DEBUG) -->
+
+   <!-- def divide(a, b): -->
+   <!--     logging.info(f"Dividing {a} by {b}") -->
+   <!--     try: -->
+   <!--         result = a / b -->
+   <!--     except ZeroDivisionError: -->
+   <!--         logging.error("Attempted to divide by zero.") -->
+   <!--         return None -->
+   <!--     return result -->
+   <!-- ``` -->
+
+
+#### Exercise 7: Nesting `try` and `except` Blocks
+
+   Create a program that reads a number from the user, writes it to a file, and then reads the file back. Use nested `try` and `except` blocks to handle potential errors, such as invalid input, file writing errors, or file reading errors.
+
+   *Example Output:*
+   
+   ```
+   Enter a number: 42
+   Successfully wrote the number to file.
+   Error: Unable to read the file.
+   ```
+
+
