@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>STA 2450 Computing for Math &amp; Stat - 20&nbsp; Web Scraping</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./19_String.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20_Web.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Web Scraping</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./"></a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_Intro_to_Programming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Intro to Computing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_Python_Install.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Installing Python and Setting Up Your IDE</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_Basic_Syntax_and_Expressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Basic Syntax and Expressions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_Names_and_Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Names and Variables</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_Data_Types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_Conditional_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Control Structures: Conditional Statements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Control Structures: Loops</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Functions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_Libraries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to Modules and Libraries</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_Data_Structures1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Data Structures: Lists and Tuples</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_Data_Structures2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Data Structures: Dictionaries and Sets</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_JSON.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">JSON Files in Python</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_NumPy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">NumPy</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_Pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Pandas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_Data_Vis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Data Visualization in Python</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_OOP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Object-Oriented Programming in Python</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17_Documentation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Writing Clear and Effective Documentation and PEP 8</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18_Exception.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Exception Handling and Debugging Techniques</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19_String.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Regular Expressions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_Web.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction-to-web-scraping" id="toc-introduction-to-web-scraping" class="nav-link active" data-scroll-target="#introduction-to-web-scraping"><span class="header-section-number">20.1</span> Introduction to Web Scraping</a>
+  <ul class="collapse">
+  <li><a href="#applications-of-web-scraping" id="toc-applications-of-web-scraping" class="nav-link" data-scroll-target="#applications-of-web-scraping"><span class="header-section-number">20.1.1</span> Applications of Web Scraping</a></li>
+  <li><a href="#core-libraries-for-web-scraping" id="toc-core-libraries-for-web-scraping" class="nav-link" data-scroll-target="#core-libraries-for-web-scraping"><span class="header-section-number">20.1.2</span> Core Libraries for Web Scraping</a></li>
+  <li><a href="#web-scraping-process-overview" id="toc-web-scraping-process-overview" class="nav-link" data-scroll-target="#web-scraping-process-overview"><span class="header-section-number">20.1.3</span> Web Scraping Process Overview</a></li>
+  <li><a href="#legal-and-ethical-considerations" id="toc-legal-and-ethical-considerations" class="nav-link" data-scroll-target="#legal-and-ethical-considerations"><span class="header-section-number">20.1.4</span> Legal and Ethical Considerations</a></li>
+  </ul></li>
+  <li><a href="#html-basics" id="toc-html-basics" class="nav-link" data-scroll-target="#html-basics"><span class="header-section-number">20.2</span> HTML Basics</a>
+  <ul class="collapse">
+  <li><a href="#key-components-of-html" id="toc-key-components-of-html" class="nav-link" data-scroll-target="#key-components-of-html"><span class="header-section-number">20.2.1</span> Key Components of HTML</a></li>
+  <li><a href="#navigating-html-structure" id="toc-navigating-html-structure" class="nav-link" data-scroll-target="#navigating-html-structure"><span class="header-section-number">20.2.2</span> Navigating HTML Structure</a></li>
+  <li><a href="#common-html-tags-for-web-scraping" id="toc-common-html-tags-for-web-scraping" class="nav-link" data-scroll-target="#common-html-tags-for-web-scraping"><span class="header-section-number">20.2.3</span> Common HTML Tags for Web Scraping</a></li>
+  <li><a href="#using-attributes-for-targeted-extraction" id="toc-using-attributes-for-targeted-extraction" class="nav-link" data-scroll-target="#using-attributes-for-targeted-extraction"><span class="header-section-number">20.2.4</span> Using Attributes for Targeted Extraction</a></li>
+  </ul></li>
+  <li><a href="#sending-http-requests-with-requests" id="toc-sending-http-requests-with-requests" class="nav-link" data-scroll-target="#sending-http-requests-with-requests"><span class="header-section-number">20.3</span> Sending HTTP Requests with <code>requests</code></a>
+  <ul class="collapse">
+  <li><a href="#basic-syntax-for-sending-a-get-request" id="toc-basic-syntax-for-sending-a-get-request" class="nav-link" data-scroll-target="#basic-syntax-for-sending-a-get-request"><span class="header-section-number">20.3.1</span> Basic Syntax for Sending a GET Request</a></li>
+  <li><a href="#inspecting-the-response-status-code" id="toc-inspecting-the-response-status-code" class="nav-link" data-scroll-target="#inspecting-the-response-status-code"><span class="header-section-number">20.3.2</span> Inspecting the Response Status Code</a></li>
+  <li><a href="#retrieving-html-content-from-the-response" id="toc-retrieving-html-content-from-the-response" class="nav-link" data-scroll-target="#retrieving-html-content-from-the-response"><span class="header-section-number">20.3.3</span> Retrieving HTML Content from the Response</a></li>
+  <li><a href="#handling-request-headers-and-user-agents" id="toc-handling-request-headers-and-user-agents" class="nav-link" data-scroll-target="#handling-request-headers-and-user-agents"><span class="header-section-number">20.3.4</span> Handling Request Headers and User Agents</a></li>
+  <li><a href="#error-handling-in-requests" id="toc-error-handling-in-requests" class="nav-link" data-scroll-target="#error-handling-in-requests"><span class="header-section-number">20.3.5</span> Error Handling in Requests</a></li>
+  <li><a href="#example-retrieving-html-with-requests" id="toc-example-retrieving-html-with-requests" class="nav-link" data-scroll-target="#example-retrieving-html-with-requests"><span class="header-section-number">20.3.6</span> Example: Retrieving HTML with Requests</a></li>
+  <li><a href="#advanced-requests-post" id="toc-advanced-requests-post" class="nav-link" data-scroll-target="#advanced-requests-post"><span class="header-section-number">20.3.7</span> Advanced Requests: POST</a></li>
+  </ul></li>
+  <li><a href="#parsing-html-with-beautifulsoup" id="toc-parsing-html-with-beautifulsoup" class="nav-link" data-scroll-target="#parsing-html-with-beautifulsoup"><span class="header-section-number">20.4</span> Parsing HTML with <code>BeautifulSoup</code></a>
+  <ul class="collapse">
+  <li><a href="#setting-up-beautifulsoup" id="toc-setting-up-beautifulsoup" class="nav-link" data-scroll-target="#setting-up-beautifulsoup"><span class="header-section-number">20.4.1</span> Setting Up <code>BeautifulSoup</code></a></li>
+  <li><a href="#basic-navigation-methods" id="toc-basic-navigation-methods" class="nav-link" data-scroll-target="#basic-navigation-methods"><span class="header-section-number">20.4.2</span> Basic Navigation Methods</a></li>
+  <li><a href="#locating-elements-by-tag-name" id="toc-locating-elements-by-tag-name" class="nav-link" data-scroll-target="#locating-elements-by-tag-name"><span class="header-section-number">20.4.3</span> Locating Elements by Tag Name</a></li>
+  <li><a href="#using-attributes-and-classes-for-targeted-extraction" id="toc-using-attributes-and-classes-for-targeted-extraction" class="nav-link" data-scroll-target="#using-attributes-and-classes-for-targeted-extraction"><span class="header-section-number">20.4.4</span> Using Attributes and Classes for Targeted Extraction</a></li>
+  <li><a href="#extracting-text-content" id="toc-extracting-text-content" class="nav-link" data-scroll-target="#extracting-text-content"><span class="header-section-number">20.4.5</span> Extracting Text Content</a></li>
+  <li><a href="#extracting-attribute-values" id="toc-extracting-attribute-values" class="nav-link" data-scroll-target="#extracting-attribute-values"><span class="header-section-number">20.4.6</span> Extracting Attribute Values</a></li>
+  <li><a href="#practical-example-extracting-a-list-of-headings" id="toc-practical-example-extracting-a-list-of-headings" class="nav-link" data-scroll-target="#practical-example-extracting-a-list-of-headings"><span class="header-section-number">20.4.7</span> Practical Example: Extracting a List of Headings</a></li>
+  <li><a href="#handling-nested-elements" id="toc-handling-nested-elements" class="nav-link" data-scroll-target="#handling-nested-elements"><span class="header-section-number">20.4.8</span> Handling Nested Elements</a></li>
+  <li><a href="#working-with-html-tables" id="toc-working-with-html-tables" class="nav-link" data-scroll-target="#working-with-html-tables"><span class="header-section-number">20.4.9</span> Working with HTML Tables</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">20.5</span> Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-web" class="quarto-section-identifier"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction-to-web-scraping" class="level2" data-number="20.1">
+<h2 data-number="20.1" class="anchored" data-anchor-id="introduction-to-web-scraping"><span class="header-section-number">20.1</span> Introduction to Web Scraping</h2>
+<p>Web scraping, or data extraction from websites, is a powerful technique that allows users to programmatically collect data from web pages and use it for a range of applications, from statistical analysis to real-time data-driven applications. This process enables us to take unstructured data in HTML format and transform it into a structured form that is suitable for further analysis and computation in Python.</p>
+<p>Web scraping is especially valuable when data is not readily available via a standard API (Application Programming Interface), or if the data exists only on web pages. By automating the retrieval and organization of this information, we can work more efficiently and even capture data over time to analyze trends and patterns.</p>
+<section id="applications-of-web-scraping" class="level3" data-number="20.1.1">
+<h3 data-number="20.1.1" class="anchored" data-anchor-id="applications-of-web-scraping"><span class="header-section-number">20.1.1</span> Applications of Web Scraping</h3>
+<p>Web scraping is used across various fields, including:</p>
+<ul>
+<li><strong>Market Research and Competitive Analysis</strong>: Organizations monitor competitors’ websites to gather data on pricing, product availability, customer reviews, and more.</li>
+<li><strong>Real-Time Data Gathering</strong>: For example, scraping financial or weather data in real time allows businesses to react to market changes or environmental conditions promptly.</li>
+<li><strong>Academic Research</strong>: Researchers use web scraping to collect large datasets from scientific journals, social media, or news sites for data-driven studies.</li>
+<li><strong>Data Aggregation</strong>: Many websites, such as travel aggregators, rely on scraping data from various sources to provide users with comparative data on flight prices, hotel rates, etc.</li>
+</ul>
+</section>
+<section id="core-libraries-for-web-scraping" class="level3" data-number="20.1.2">
+<h3 data-number="20.1.2" class="anchored" data-anchor-id="core-libraries-for-web-scraping"><span class="header-section-number">20.1.2</span> Core Libraries for Web Scraping</h3>
+<p>Python provides a range of libraries for web scraping, but two foundational tools often used together are <code>requests</code> and <code>BeautifulSoup</code>.</p>
+<ul>
+<li><p><strong><code>requests</code></strong>: This library simplifies the process of sending HTTP requests, such as <code>GET</code> requests, to retrieve HTML data from a specified URL. By providing a simple interface, <code>requests</code> handles much of the complexity associated with connecting to web servers.</p></li>
+<li><p><strong><code>BeautifulSoup</code></strong>: A parsing library built specifically for handling HTML and XML files. BeautifulSoup allows us to navigate the structure of an HTML document, search for elements by tags or attributes, and extract content.</p></li>
+</ul>
+<p>By combining <code>requests</code> to access the HTML and <code>BeautifulSoup</code> to parse it, we can build powerful tools for extracting data from a variety of websites. These libraries, along with basic knowledge of HTML, enable us to automate data extraction for a wide range of applications.</p>
+</section>
+<section id="web-scraping-process-overview" class="level3" data-number="20.1.3">
+<h3 data-number="20.1.3" class="anchored" data-anchor-id="web-scraping-process-overview"><span class="header-section-number">20.1.3</span> Web Scraping Process Overview</h3>
+<p>Web scraping typically involves the following steps:</p>
+<ol type="1">
+<li><p><strong>Identify the Target Data</strong>: Determine which website and specific elements (such as tables, links, images) contain the data of interest. Familiarizing yourself with the website’s HTML structure helps make the extraction process more efficient.</p></li>
+<li><p><strong>Send a Request to Retrieve HTML Content</strong>: Use <code>requests</code> to access the webpage and download its HTML structure. Ensuring the status code is <code>200</code> (OK) indicates a successful request.</p></li>
+<li><p><strong>Parse the HTML</strong>: With BeautifulSoup, parse the retrieved HTML. This allows you to locate and extract the content within specific tags or classes.</p></li>
+<li><p><strong>Data Cleaning and Storage</strong>: After extraction, clean and organize the data for analysis. This often involves formatting the data, handling missing values, and saving it to a structured format like a CSV file or a database.</p></li>
+</ol>
+</section>
+<section id="legal-and-ethical-considerations" class="level3" data-number="20.1.4">
+<h3 data-number="20.1.4" class="anchored" data-anchor-id="legal-and-ethical-considerations"><span class="header-section-number">20.1.4</span> Legal and Ethical Considerations</h3>
+<p>While web scraping is powerful, it is essential to consider the ethical and legal implications. Many websites publish guidelines on scraping in a <code>robots.txt</code> file, which suggests which areas of a site can or cannot be accessed by automated agents. Some sites may strictly prohibit scraping, while others may limit access to specific data.</p>
+<p>Key points to consider:</p>
+<ul>
+<li><p><strong>Respect <code>robots.txt</code></strong>: Review the <code>robots.txt</code> file for scraping restrictions, available at the root URL, e.g., <code>https://example.com/robots.txt</code>.</p></li>
+<li><p><strong>Avoid Excessive Requests</strong>: Sending too many requests in a short period can overload servers and lead to IP blocking. Introducing pauses between requests helps to avoid this.</p></li>
+<li><p><strong>Read the Terms of Service</strong>: Many sites’ terms of service specify acceptable data usage. Scraping that violates these terms can have legal consequences.</p></li>
+</ul>
+</section>
+</section>
+<section id="html-basics" class="level2" data-number="20.2">
+<h2 data-number="20.2" class="anchored" data-anchor-id="html-basics"><span class="header-section-number">20.2</span> HTML Basics</h2>
+<p>To effectively perform web scraping, it is essential to understand the structure of HTML (HyperText Markup Language), the core language that defines the content and layout of web pages. HTML organizes content using a system of nested elements called <strong>tags</strong>, each with specific purposes and attributes. Recognizing the role of these tags helps us locate and extract the desired data with precision.</p>
+<section id="key-components-of-html" class="level3" data-number="20.2.1">
+<h3 data-number="20.2.1" class="anchored" data-anchor-id="key-components-of-html"><span class="header-section-number">20.2.1</span> Key Components of HTML</h3>
+<p>HTML documents consist of several fundamental components, including elements, attributes, and text content. Understanding these elements provides the foundation needed for successful web scraping.</p>
+<ul>
+<li><p><strong>Elements</strong>: HTML elements are the building blocks of a webpage, defined by <strong>tags</strong>. A tag indicates the start of an element (e.g., <code>&lt;p&gt;</code> for a paragraph) and often requires a closing tag (e.g., <code>&lt;/p&gt;</code>).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;p&gt;</span>This is a paragraph.<span class="kw">&lt;/p&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Common tags include <code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code> for headings, <code>&lt;p&gt;</code> for paragraphs, <code>&lt;a&gt;</code> for hyperlinks, and <code>&lt;div&gt;</code> for division or grouping of content.</p></li>
+<li><p><strong>Attributes</strong>: HTML attributes provide additional information about an element, often helping uniquely identify or style specific elements. Attributes appear within the opening tag of an element.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">"intro"</span><span class="kw">&gt;</span>This paragraph has a class attribute.<span class="kw">&lt;/p&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this example, <code>class="intro"</code> is an attribute that assigns a class to the paragraph. The <code>class</code> and <code>id</code> attributes are particularly useful in web scraping because they allow us to precisely locate elements in a webpage’s HTML structure.</p></li>
+<li><p><strong>Text Content</strong>: The content between the opening and closing tags of an element is referred to as <strong>text content</strong>. This is the primary information that we aim to extract in web scraping.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;h1&gt;</span>Web Scraping Basics<span class="kw">&lt;/h1&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here, “Web Scraping Basics” is the text content within the <code>&lt;h1&gt;</code> tag.</p></li>
+</ul>
+</section>
+<section id="navigating-html-structure" class="level3" data-number="20.2.2">
+<h3 data-number="20.2.2" class="anchored" data-anchor-id="navigating-html-structure"><span class="header-section-number">20.2.2</span> Navigating HTML Structure</h3>
+<p>HTML is structured in a hierarchical, tree-like format known as the Document Object Model (DOM). Each element is a <strong>node</strong> in this tree, starting with the <code>&lt;html&gt;</code> node at the root and branching out to elements such as <code>&lt;head&gt;</code>, <code>&lt;body&gt;</code>, and their nested children. Understanding the DOM allows us to traverse elements within a page to locate the exact data points we need.</p>
+<p>For example:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;html&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;head&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;title&gt;</span>Example Web Page<span class="kw">&lt;/title&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;/head&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;body&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;h1&gt;</span>Welcome to Web Scraping<span class="kw">&lt;/h1&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">"description"</span><span class="kw">&gt;</span>Web scraping involves extracting data from websites.<span class="kw">&lt;/p&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"content"</span><span class="kw">&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;h2&gt;</span>Why Learn Web Scraping?<span class="kw">&lt;/h2&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;p&gt;</span>Web scraping automates data collection.<span class="kw">&lt;/p&gt;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/div&gt;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;/body&gt;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/html&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this HTML structure:</p>
+<ul>
+<li><code>&lt;html&gt;</code> is the root element.</li>
+<li><code>&lt;head&gt;</code> and <code>&lt;body&gt;</code> are child elements of <code>&lt;html&gt;</code>.</li>
+<li><code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, and <code>&lt;div&gt;</code> elements are nested within <code>&lt;body&gt;</code>, representing sections of content.</li>
+<li>The <code>&lt;div class="content"&gt;</code> element contains an <code>&lt;h2&gt;</code> heading and another <code>&lt;p&gt;</code> element, making it a parent with child nodes.</li>
+</ul>
+<p>By understanding the DOM hierarchy, we can use libraries like <code>BeautifulSoup</code> to navigate the document systematically, identifying elements by tag, class, id, or their position within the structure.</p>
+</section>
+<section id="common-html-tags-for-web-scraping" class="level3" data-number="20.2.3">
+<h3 data-number="20.2.3" class="anchored" data-anchor-id="common-html-tags-for-web-scraping"><span class="header-section-number">20.2.3</span> Common HTML Tags for Web Scraping</h3>
+<p>Some tags are more commonly encountered when scraping for specific types of data:</p>
+<ul>
+<li><p><strong>Headings (<code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, etc.)</strong>: Used for titles and section headers.</p></li>
+<li><p><strong>Paragraphs (<code>&lt;p&gt;</code>)</strong>: Often contain text content such as descriptions, summaries, or main body text.</p></li>
+<li><p><strong>Links (<code>&lt;a&gt;</code>)</strong>: Defined by the <code>&lt;a&gt;</code> tag, links often have the <code>href</code> attribute, which provides the URL to the linked page. Links are useful for scraping URLs to additional pages or resources.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://example.com"</span><span class="kw">&gt;</span>Example Link<span class="kw">&lt;/a&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Images (<code>&lt;img&gt;</code>)</strong>: The <code>&lt;img&gt;</code> tag contains an <code>src</code> attribute pointing to the image’s URL. Scraping images involves collecting these URLs for further processing or display.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://example.com/image.jpg"</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"Example Image"</span><span class="kw">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Tables (<code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code>, <code>&lt;td&gt;</code>)</strong>: Tables are used to organize data in rows and columns, with <code>&lt;tr&gt;</code> tags representing rows and <code>&lt;td&gt;</code> tags representing individual cells. Tables are common for structured data, such as product listings, schedules, or datasets displayed in tabular format.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;table&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;tr&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;td&gt;</span>Row 1, Cell 1<span class="kw">&lt;/td&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;td&gt;</span>Row 1, Cell 2<span class="kw">&lt;/td&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;/tr&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;tr&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;td&gt;</span>Row 2, Cell 1<span class="kw">&lt;/td&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;td&gt;</span>Row 2, Cell 2<span class="kw">&lt;/td&gt;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;/tr&gt;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/table&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+<section id="using-attributes-for-targeted-extraction" class="level3" data-number="20.2.4">
+<h3 data-number="20.2.4" class="anchored" data-anchor-id="using-attributes-for-targeted-extraction"><span class="header-section-number">20.2.4</span> Using Attributes for Targeted Extraction</h3>
+<p>In web scraping, attributes like <code>id</code> and <code>class</code> are invaluable for pinpointing specific elements, especially when scraping data from complex or crowded pages.</p>
+<ul>
+<li><p><strong><code>class</code> Attribute</strong>: Often used to apply styles to groups of elements, the <code>class</code> attribute can also serve as an identifier when multiple elements share the same styling.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">"info"</span><span class="kw">&gt;</span>This is a paragraph with the class 'info'.<span class="kw">&lt;/p&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong><code>id</code> Attribute</strong>: Unlike <code>class</code>, an <code>id</code> attribute is unique to a single element on the page, making it useful for uniquely identifying specific elements.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;div</span> <span class="er">id</span><span class="ot">=</span><span class="st">"main-content"</span><span class="kw">&gt;</span>This is the main content area.<span class="kw">&lt;/div&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Combining Tags and Attributes</strong>: In practice, you can target specific elements by using both the tag name and attributes in combination. For example, with BeautifulSoup, locating an element with a specific <code>class</code> or <code>id</code> is straightforward:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>content <span class="op">=</span> soup.find(<span class="st">"div"</span>, <span class="bu">id</span><span class="op">=</span><span class="st">"main-content"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<p>By understanding and utilizing these HTML elements and attributes, we can refine our web scraping techniques to extract data accurately and efficiently.</p>
+</section>
+</section>
+<section id="sending-http-requests-with-requests" class="level2" data-number="20.3">
+<h2 data-number="20.3" class="anchored" data-anchor-id="sending-http-requests-with-requests"><span class="header-section-number">20.3</span> Sending HTTP Requests with <code>requests</code></h2>
+<p>To extract data from a web page, the first step in web scraping is to retrieve the page’s HTML content. This process involves sending an HTTP request to the server hosting the page, which, in response, sends back the HTML structure and content. The Python library <code>requests</code> makes this process straightforward by providing a clean interface for sending HTTP requests, retrieving responses, and handling various request types.</p>
+<p>The HTTP protocol supports several types of requests, with the two most common being:</p>
+<ul>
+<li><strong>GET requests</strong>: Retrieve data from a specified resource. In web scraping, <code>GET</code> requests are used to fetch HTML pages from web servers.</li>
+<li><strong>POST requests</strong>: Send data to a server to create or update a resource. While commonly used in forms and other data-submission processes, <code>POST</code> requests are less common in basic web scraping.</li>
+</ul>
+<p>In this section, we focus on <code>GET</code> requests, as they are typically used for retrieving static HTML content for scraping.</p>
+<section id="basic-syntax-for-sending-a-get-request" class="level3" data-number="20.3.1">
+<h3 data-number="20.3.1" class="anchored" data-anchor-id="basic-syntax-for-sending-a-get-request"><span class="header-section-number">20.3.1</span> Basic Syntax for Sending a GET Request</h3>
+<p>The <code>requests</code> library makes it easy to send an HTTP GET request. Here’s the basic syntax:</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://example.com"</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In this example:</p>
+<ul>
+<li><code>url</code> is the target webpage’s address.</li>
+<li><code>requests.get(url)</code> sends a GET request to the URL, retrieving the HTML content.</li>
+<li><code>response</code> stores the server’s response, including the HTML.</li>
+</ul>
+<p>After sending the request, you can inspect various components of the <code>response</code> object, such as the HTML content, response status, and response headers.</p>
+</section>
+<section id="inspecting-the-response-status-code" class="level3" data-number="20.3.2">
+<h3 data-number="20.3.2" class="anchored" data-anchor-id="inspecting-the-response-status-code"><span class="header-section-number">20.3.2</span> Inspecting the Response Status Code</h3>
+<p>When we send a request, the server responds with a status code indicating whether the request was successful. Common HTTP status codes include:</p>
+<ul>
+<li><strong>200 (OK)</strong>: The request was successful, and the server returned the requested content.</li>
+<li><strong>404 (Not Found)</strong>: The server could not find the requested resource.</li>
+<li><strong>500 (Internal Server Error)</strong>: The server encountered an error.</li>
+</ul>
+<p>Checking the status code helps determine whether the request was successful before proceeding with HTML parsing. You can access the status code using the <code>.status_code</code> attribute of the <code>response</code> object:</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Request successful!"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Failed to retrieve the page. Status code:"</span>, response.status_code)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Request successful!</code></pre>
+</div>
+</div>
+</section>
+<section id="retrieving-html-content-from-the-response" class="level3" data-number="20.3.3">
+<h3 data-number="20.3.3" class="anchored" data-anchor-id="retrieving-html-content-from-the-response"><span class="header-section-number">20.3.3</span> Retrieving HTML Content from the Response</h3>
+<p>If the status code indicates success (200), you can proceed to extract the HTML content using <code>response.text</code>, which provides the HTML as a string:</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>html_content <span class="op">=</span> response.text</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(html_content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Example Domain&lt;/title&gt;
+
+    &lt;meta charset="utf-8" /&gt;
+    &lt;meta http-equiv="Content-type" content="text/html; charset=utf-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+    &lt;style type="text/css"&gt;
+    body {
+        background-color: #f0f0f2;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        
+    }
+    div {
+        width: 600px;
+        margin: 5em auto;
+        padding: 2em;
+        background-color: #fdfdff;
+        border-radius: 0.5em;
+        box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.02);
+    }
+    a:link, a:visited {
+        color: #38488f;
+        text-decoration: none;
+    }
+    @media (max-width: 700px) {
+        div {
+            margin: 0 auto;
+            width: auto;
+        }
+    }
+    &lt;/style&gt;    
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;div&gt;
+    &lt;h1&gt;Example Domain&lt;/h1&gt;
+    &lt;p&gt;This domain is for use in illustrative examples in documents. You may use this
+    domain in literature without prior coordination or asking for permission.&lt;/p&gt;
+    &lt;p&gt;&lt;a href="https://www.iana.org/domains/example"&gt;More information...&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+</div>
+</div>
+<p>Alternatively, <code>response.content</code> provides the raw byte data, which is useful if you’re working with non-HTML files (e.g., images or PDFs). For standard HTML scraping, however, <code>response.text</code> is typically more convenient.</p>
+</section>
+<section id="handling-request-headers-and-user-agents" class="level3" data-number="20.3.4">
+<h3 data-number="20.3.4" class="anchored" data-anchor-id="handling-request-headers-and-user-agents"><span class="header-section-number">20.3.4</span> Handling Request Headers and User Agents</h3>
+<p>Some websites use mechanisms to detect automated requests and may block them if they suspect scraping activity. One common strategy to avoid this is to modify the <strong>user-agent</strong> in the request header, which indicates the type of browser or client making the request.</p>
+<p>The <code>requests</code> library allows you to add headers, including a custom user-agent, to mimic a legitimate browser:</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>headers <span class="op">=</span> {</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"User-Agent"</span>: <span class="st">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>headers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In this example:</p>
+<ul>
+<li><code>headers</code> defines a dictionary with the <code>User-Agent</code> key, mimicking a browser like Chrome.</li>
+<li><code>requests.get(url, headers=headers)</code> sends a GET request with the custom header.</li>
+</ul>
+<p>Adding headers can help bypass simple anti-scraping measures on some websites. However, it’s crucial to be mindful of a website’s <code>robots.txt</code> file and terms of service to ensure responsible scraping.</p>
+</section>
+<section id="error-handling-in-requests" class="level3" data-number="20.3.5">
+<h3 data-number="20.3.5" class="anchored" data-anchor-id="error-handling-in-requests"><span class="header-section-number">20.3.5</span> Error Handling in Requests</h3>
+<p>When sending multiple requests in a scraping script, it’s essential to handle potential errors, such as timeouts or connection issues. The <code>requests</code> library provides tools to manage these exceptions.</p>
+<ul>
+<li><p><strong>Timeouts</strong>: Specify a timeout to prevent the request from hanging indefinitely. If the request takes longer than the specified timeout, it raises a <code>Timeout</code> exception:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url, timeout<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> requests.Timeout:</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"The request timed out."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Connection Errors</strong>: If there’s an issue with the internet connection or server, <code>requests</code> raises a <code>ConnectionError</code>. Handling this allows the script to continue or retry:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> requests.<span class="pp">ConnectionError</span>:</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Failed to connect to the server."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<p>These error-handling strategies improve the reliability of scraping scripts, especially when working with numerous pages.</p>
+</section>
+<section id="example-retrieving-html-with-requests" class="level3" data-number="20.3.6">
+<h3 data-number="20.3.6" class="anchored" data-anchor-id="example-retrieving-html-with-requests"><span class="header-section-number">20.3.6</span> Example: Retrieving HTML with Requests</h3>
+<p>The following example demonstrates a complete workflow for retrieving HTML content from a website:</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the target URL and headers</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://example.com"</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>headers <span class="op">=</span> {</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"User-Agent"</span>: <span class="st">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Send a GET request with a timeout and headers</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>headers, timeout<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check if the request was successful</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Successfully retrieved the page."</span>)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>        html_content <span class="op">=</span> response.text  <span class="co"># Extract the HTML content</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Failed to retrieve the page. Status code:"</span>, response.status_code)</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> requests.Timeout:</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"The request timed out."</span>)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> requests.<span class="pp">ConnectionError</span>:</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Connection error occurred."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Successfully retrieved the page.</code></pre>
+</div>
+</div>
+<p>This example combines the elements discussed above: setting headers, managing timeouts, checking the status code, and handling errors. Such a setup is foundational for a robust scraping process.</p>
+</section>
+<section id="advanced-requests-post" class="level3" data-number="20.3.7">
+<h3 data-number="20.3.7" class="anchored" data-anchor-id="advanced-requests-post"><span class="header-section-number">20.3.7</span> Advanced Requests: POST</h3>
+<p>While most web scraping involves <code>GET</code> requests, occasionally, <code>POST</code> requests are required. This occurs when interacting with forms or websites requiring data submission (e.g., login forms or search queries). To send a <code>POST</code> request with <code>requests</code>, you provide data as a dictionary using the <code>data</code> parameter:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://example.com/login"</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {<span class="st">"username"</span>: <span class="st">"user"</span>, <span class="st">"password"</span>: <span class="st">"pass"</span>}</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.post(url, data<span class="op">=</span>data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The server processes the submitted data and typically responds with a page reflecting the action taken (e.g., a logged-in user page).</p>
+</section>
+</section>
+<section id="parsing-html-with-beautifulsoup" class="level2" data-number="20.4">
+<h2 data-number="20.4" class="anchored" data-anchor-id="parsing-html-with-beautifulsoup"><span class="header-section-number">20.4</span> Parsing HTML with <code>BeautifulSoup</code></h2>
+<p>After retrieving a webpage’s HTML content, the next step is to parse and navigate the HTML structure to extract relevant data. The Python library <code>BeautifulSoup</code>, part of the <code>bs4</code> package, provides a straightforward interface for parsing HTML and XML documents, allowing us to locate and manipulate elements with ease. <code>BeautifulSoup</code> works by converting the HTML into a parse tree structure, which mirrors the nested organization of the HTML’s Document Object Model (DOM).</p>
+<p>In this section, we cover the essentials of using <code>BeautifulSoup</code>, including initializing a <code>BeautifulSoup</code> object, locating elements by tags, and using attributes and class names for targeted data extraction.</p>
+<section id="setting-up-beautifulsoup" class="level3" data-number="20.4.1">
+<h3 data-number="20.4.1" class="anchored" data-anchor-id="setting-up-beautifulsoup"><span class="header-section-number">20.4.1</span> Setting Up <code>BeautifulSoup</code></h3>
+<p>To use <code>BeautifulSoup</code>, you must import it from the <code>bs4</code> package and initialize it with the HTML content obtained through <code>requests</code>. The <code>BeautifulSoup</code> constructor requires two parameters: the HTML content (usually as a string) and the parser type. The most commonly used parser is <code>html.parser</code>, a built-in Python parser, but <code>lxml</code> and <code>html5lib</code> are also popular for more complex HTML structures.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample HTML content</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>html_content <span class="op">=</span> <span class="st">"&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello, World!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;"</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a BeautifulSoup object</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html_content, <span class="st">"html.parser"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here, <code>soup</code> becomes the <code>BeautifulSoup</code> object representing the HTML document. We can now navigate through <code>soup</code> to locate specific elements and extract data.</p>
+</section>
+<section id="basic-navigation-methods" class="level3" data-number="20.4.2">
+<h3 data-number="20.4.2" class="anchored" data-anchor-id="basic-navigation-methods"><span class="header-section-number">20.4.2</span> Basic Navigation Methods</h3>
+<p><code>BeautifulSoup</code> provides several methods for navigating and selecting elements:</p>
+<ul>
+<li><strong><code>.find()</code></strong>: Returns the first instance of a specified tag.</li>
+<li><strong><code>.find_all()</code></strong>: Returns a list of all instances of a specified tag.</li>
+<li><strong><code>.select()</code></strong>: Allows CSS selector-based searches for more complex selections.</li>
+</ul>
+<p>Each of these methods provides different levels of control, depending on whether you need a single element or multiple matching elements.</p>
+</section>
+<section id="locating-elements-by-tag-name" class="level3" data-number="20.4.3">
+<h3 data-number="20.4.3" class="anchored" data-anchor-id="locating-elements-by-tag-name"><span class="header-section-number">20.4.3</span> Locating Elements by Tag Name</h3>
+<p>The simplest way to extract data is by locating elements using their tag name. For example, to retrieve the first <code>&lt;h1&gt;</code> element in an HTML document, you can use <code>.find()</code>:</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the first h1 element</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>heading <span class="op">=</span> soup.find(<span class="st">"h1"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(heading.text)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hello, World!</code></pre>
+</div>
+</div>
+<p><code>.find_all()</code> works similarly but returns a list of all matching elements. This is useful when multiple elements share the same tag, such as a series of paragraphs:</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample HTML with multiple paragraphs</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>html_content <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;html&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;body&gt;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;p&gt;First paragraph.&lt;/p&gt;</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;p&gt;Second paragraph.&lt;/p&gt;</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/body&gt;</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/html&gt;</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html_content, <span class="st">"html.parser"</span>)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>paragraphs <span class="op">=</span> soup.find_all(<span class="st">"p"</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Print each paragraph's text content</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> p <span class="kw">in</span> paragraphs:</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(p.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>First paragraph.
+Second paragraph.</code></pre>
+</div>
+</div>
+</section>
+<section id="using-attributes-and-classes-for-targeted-extraction" class="level3" data-number="20.4.4">
+<h3 data-number="20.4.4" class="anchored" data-anchor-id="using-attributes-and-classes-for-targeted-extraction"><span class="header-section-number">20.4.4</span> Using Attributes and Classes for Targeted Extraction</h3>
+<p>In many cases, HTML tags are assigned specific attributes, such as <code>class</code> or <code>id</code>, to organize or style elements. These attributes are helpful for locating elements that share the same tag but need differentiation based on content or position.</p>
+<ul>
+<li><p><strong>Class Attribute</strong>: Use the <code>class_</code> parameter in <code>.find()</code> or <code>.find_all()</code> to locate elements with specific classes.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample HTML with classes</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>html_content <span class="op">=</span> <span class="st">'&lt;p class="intro"&gt;Introduction paragraph.&lt;/p&gt;&lt;p class="info"&gt;Information paragraph.&lt;/p&gt;'</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html_content, <span class="st">"html.parser"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract paragraph with class "intro"</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>intro_paragraph <span class="op">=</span> soup.find(<span class="st">"p"</span>, class_<span class="op">=</span><span class="st">"intro"</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(intro_paragraph.text)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Introduction paragraph.</code></pre>
+</div>
+</div></li>
+<li><p><strong>ID Attribute</strong>: Since IDs are unique within an HTML document, you can use <code>.find()</code> with the <code>id</code> parameter to locate a specific element.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample HTML with an ID</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>html_content <span class="op">=</span> <span class="st">'&lt;div id="main-content"&gt;Main content area.&lt;/div&gt;'</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html_content, <span class="st">"html.parser"</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>main_content <span class="op">=</span> soup.find(<span class="st">"div"</span>, <span class="bu">id</span><span class="op">=</span><span class="st">"main-content"</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(main_content.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Main content area.</code></pre>
+</div>
+</div></li>
+<li><p><strong>CSS Selectors</strong>: For more complex extractions, use <code>.select()</code> with CSS selectors, allowing combinations of tags, classes, and IDs.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample HTML with nested elements</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>html_content <span class="op">=</span> <span class="st">'&lt;div class="container"&gt;&lt;p class="info"&gt;Information paragraph.&lt;/p&gt;&lt;/div&gt;'</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html_content, <span class="st">"html.parser"</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Use a CSS selector to find the paragraph inside the div with class "container"</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>info_paragraph <span class="op">=</span> soup.select(<span class="st">".container .info"</span>)[<span class="dv">0</span>]</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(info_paragraph.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Information paragraph.</code></pre>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="extracting-text-content" class="level3" data-number="20.4.5">
+<h3 data-number="20.4.5" class="anchored" data-anchor-id="extracting-text-content"><span class="header-section-number">20.4.5</span> Extracting Text Content</h3>
+<p>Once the desired element is located, <code>.text</code> can be used to retrieve the text content between the tags. <code>.text</code> strips away HTML tags, leaving only the inner text.</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample HTML</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>html_content <span class="op">=</span> <span class="st">"&lt;h1&gt;Welcome to Web Scraping&lt;/h1&gt;"</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html_content, <span class="st">"html.parser"</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the text from the h1 element</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>heading <span class="op">=</span> soup.find(<span class="st">"h1"</span>).text</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(heading)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Welcome to Web Scraping</code></pre>
+</div>
+</div>
+<p>Alternatively, <code>.get_text()</code> offers the same result and can take optional parameters to modify the output, such as removing extra whitespace.</p>
+</section>
+<section id="extracting-attribute-values" class="level3" data-number="20.4.6">
+<h3 data-number="20.4.6" class="anchored" data-anchor-id="extracting-attribute-values"><span class="header-section-number">20.4.6</span> Extracting Attribute Values</h3>
+<p>In addition to text content, HTML elements often contain attributes (e.g., URLs in <code>&lt;a&gt;</code> tags). To retrieve an attribute’s value, access it like a dictionary:</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample HTML with an anchor tag</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>html_content <span class="op">=</span> <span class="st">'&lt;a href="https://example.com"&gt;Example Link&lt;/a&gt;'</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html_content, <span class="st">"html.parser"</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the URL from the href attribute</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>link <span class="op">=</span> soup.find(<span class="st">"a"</span>)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(link[<span class="st">"href"</span>]) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>https://example.com</code></pre>
+</div>
+</div>
+<p>This technique is particularly useful for gathering links, image sources, or metadata associated with elements.</p>
+</section>
+<section id="practical-example-extracting-a-list-of-headings" class="level3" data-number="20.4.7">
+<h3 data-number="20.4.7" class="anchored" data-anchor-id="practical-example-extracting-a-list-of-headings"><span class="header-section-number">20.4.7</span> Practical Example: Extracting a List of Headings</h3>
+<p>To demonstrate the functionality of <code>BeautifulSoup</code>, here’s a practical example where we extract a list of headings from the Wikipedia home page:</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Target URL</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://en.wikipedia.org/wiki/Main_Page"</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Send a GET request and parse the HTML</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">"html.parser"</span>)</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Find all headlines in h2 tags with the class "mp-h2"</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>headings <span class="op">=</span> soup.find_all(<span class="st">"h2"</span>, class_<span class="op">=</span><span class="st">"mp-h2"</span>)</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Print each headline text</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> heading <span class="kw">in</span> headings:</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(heading.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>From today's featured article
+Did you know&nbsp;...
+In the news
+On this day
+Today's featured picture
+Other areas of Wikipedia
+Wikipedia's sister projects
+Wikipedia languages</code></pre>
+</div>
+</div>
+<p>In this example:</p>
+<ul>
+<li><code>requests.get(url)</code> retrieves the HTML.</li>
+<li><code>soup.find_all("h2", class_="mp-h2")</code> locates all <code>&lt;h2&gt;</code> tags with the class <code>mp-h2</code>.</li>
+</ul>
+</section>
+<section id="handling-nested-elements" class="level3" data-number="20.4.8">
+<h3 data-number="20.4.8" class="anchored" data-anchor-id="handling-nested-elements"><span class="header-section-number">20.4.8</span> Handling Nested Elements</h3>
+<p>Sometimes, desired data is nested within multiple tags. <code>BeautifulSoup</code> allows chaining <code>.find()</code> or <code>.find_all()</code> calls to navigate nested structures.</p>
+<p>For example:</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample HTML with nested elements</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>html_content <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;div class="outer"&gt;</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div class="inner"&gt;</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;p&gt;Nested paragraph content.&lt;/p&gt;</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/div&gt;</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/div&gt;</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html_content, <span class="st">"html.parser"</span>)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Locate the nested paragraph within inner div</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>nested_paragraph <span class="op">=</span> soup.find(<span class="st">"div"</span>, class_<span class="op">=</span><span class="st">"outer"</span>).find(<span class="st">"div"</span>, class_<span class="op">=</span><span class="st">"inner"</span>).find(<span class="st">"p"</span>)</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(nested_paragraph.text)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Nested paragraph content.</code></pre>
+</div>
+</div>
+<p>By chaining <code>.find()</code> calls, we navigate through <code>div.outer</code> to <code>div.inner</code> and finally to the <code>&lt;p&gt;</code> tag containing the text.</p>
+</section>
+<section id="working-with-html-tables" class="level3" data-number="20.4.9">
+<h3 data-number="20.4.9" class="anchored" data-anchor-id="working-with-html-tables"><span class="header-section-number">20.4.9</span> Working with HTML Tables</h3>
+<p>Tables often contain structured data that can be parsed directly. Using <code>.find_all("tr")</code>, you can iterate through each row (<code>&lt;tr&gt;</code>) and extract data from cells (<code>&lt;td&gt;</code>).</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample HTML table</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>html_content <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;table&gt;</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;tr&gt;&lt;td&gt;Row 1, Cell 1&lt;/td&gt;&lt;td&gt;Row 1, Cell 2&lt;/td&gt;&lt;/tr&gt;</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;tr&gt;&lt;td&gt;Row 2, Cell 1&lt;/td&gt;&lt;td&gt;Row 2, Cell 2&lt;/td&gt;&lt;/tr&gt;</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/table&gt;</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html_content, <span class="st">"html.parser"</span>)</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Parse table rows and cells</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> soup.find_all(<span class="st">"tr"</span>)</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row <span class="kw">in</span> rows:</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>    cells <span class="op">=</span> row.find_all(<span class="st">"td"</span>)</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>    row_data <span class="op">=</span> [cell.text <span class="cf">for</span> cell <span class="kw">in</span> cells]</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(row_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['Row 1, Cell 1', 'Row 1, Cell 2']
+['Row 2, Cell 1', 'Row 2, Cell 2']</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="exercises" class="level2" data-number="20.5">
+<h2 data-number="20.5" class="anchored" data-anchor-id="exercises"><span class="header-section-number">20.5</span> Exercises</h2>
+<section id="exercise-1-basic-parsing-and-text-extraction" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-1-basic-parsing-and-text-extraction">Exercise 1: Basic Parsing and Text Extraction</h4>
+<ul>
+<li><p>Write a script that retrieves the title text (<code>&lt;h1&gt;</code> tag) from a sample HTML string:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;html&gt;&lt;body&gt;&lt;h1&gt;</span>Sample Heading<span class="kw">&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Modify the script to print the title’s text content.</p></li>
+</ul>
+</section>
+<section id="exercise-2-extracting-multiple-paragraphs" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-2-extracting-multiple-paragraphs">Exercise 2: Extracting Multiple Paragraphs</h4>
+<ul>
+<li><p>Given the following HTML content, use <code>BeautifulSoup</code> to extract and print the text from each paragraph:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;html&gt;</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;body&gt;</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;p&gt;</span>Paragraph 1 content.<span class="kw">&lt;/p&gt;</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;p&gt;</span>Paragraph 2 content.<span class="kw">&lt;/p&gt;</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;p&gt;</span>Paragraph 3 content.<span class="kw">&lt;/p&gt;</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;/body&gt;</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/html&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+<section id="exercise-3-attribute-based-extraction" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-3-attribute-based-extraction">Exercise 3: Attribute-Based Extraction</h4>
+<ul>
+<li><p>Given the HTML snippet below, use <code>BeautifulSoup</code> to find and print the text of the paragraph with the <code>class</code> attribute <code>highlight</code>:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;html&gt;</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;body&gt;</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">"highlight"</span><span class="kw">&gt;</span>Highlighted text.<span class="kw">&lt;/p&gt;</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;p&gt;</span>Regular text.<span class="kw">&lt;/p&gt;</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;/body&gt;</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/html&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+<section id="exercise-4-extracting-links" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-4-extracting-links">Exercise 4: Extracting Links</h4>
+<ul>
+<li><p>Write a script to retrieve all hyperlinks (<code>&lt;a&gt;</code> tags) from a sample HTML document, printing both the text and <code>href</code> attribute for each link:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;html&gt;</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;body&gt;</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://example.com/page1"</span><span class="kw">&gt;</span>Page 1<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://example.com/page2"</span><span class="kw">&gt;</span>Page 2<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;/body&gt;</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/html&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+<section id="exercise-5-nested-element-extraction" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-5-nested-element-extraction">Exercise 5: Nested Element Extraction</h4>
+<ul>
+<li><p>Given the following nested HTML structure, use <code>BeautifulSoup</code> to retrieve the text within the innermost paragraph:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;html&gt;</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;body&gt;</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"outer"</span><span class="kw">&gt;</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"inner"</span><span class="kw">&gt;</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;p&gt;</span>Deeply nested content.<span class="kw">&lt;/p&gt;</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;/div&gt;</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/div&gt;</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;/body&gt;</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/html&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+<section id="exercise-6-parsing-tables" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-6-parsing-tables">Exercise 6: Parsing Tables</h4>
+<ul>
+<li><p>Given the HTML table structure below, extract the contents of each cell in each row and print them as lists:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;table&gt;</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;tr&gt;&lt;td&gt;</span>Row 1, Cell 1<span class="kw">&lt;/td&gt;&lt;td&gt;</span>Row 1, Cell 2<span class="kw">&lt;/td&gt;&lt;/tr&gt;</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;tr&gt;&lt;td&gt;</span>Row 2, Cell 1<span class="kw">&lt;/td&gt;&lt;td&gt;</span>Row 2, Cell 2<span class="kw">&lt;/td&gt;&lt;/tr&gt;</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/table&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+<section id="exercise-7-applying-css-selectors" class="level4">
+<h4 class="anchored" data-anchor-id="exercise-7-applying-css-selectors">Exercise 7: Applying CSS Selectors</h4>
+<ul>
+<li><p>Using <code>BeautifulSoup</code> and CSS selectors, extract the text from all <code>&lt;p&gt;</code> tags with the <code>class</code> attribute <code>info</code> from the following HTML:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;html&gt;</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;body&gt;</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">"info"</span><span class="kw">&gt;</span>Info 1<span class="kw">&lt;/p&gt;</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">"info"</span><span class="kw">&gt;</span>Info 2<span class="kw">&lt;/p&gt;</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;p&gt;</span>Other paragraph<span class="kw">&lt;/p&gt;</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;/body&gt;</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/html&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./19_String.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Regular Expressions</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">STA 2450</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">Fall 2024</div>
+  </div>
+</footer>
+
+
+
+</body></html>
