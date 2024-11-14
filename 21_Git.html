@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>STA 2450 Computing for Math &amp; Stat - 21&nbsp; Version Control with Git and GitHub</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./20_Web.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./21_Git.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Version Control with Git and GitHub</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./"></a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_Intro_to_Programming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Intro to Computing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_Python_Install.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Installing Python and Setting Up Your IDE</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_Basic_Syntax_and_Expressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Basic Syntax and Expressions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_Names_and_Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Names and Variables</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_Data_Types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_Conditional_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Control Structures: Conditional Statements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Control Structures: Loops</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Functions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_Libraries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to Modules and Libraries</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_Data_Structures1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Data Structures: Lists and Tuples</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_Data_Structures2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Data Structures: Dictionaries and Sets</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_JSON.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">JSON Files in Python</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_NumPy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">NumPy</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_Pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Pandas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_Data_Vis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Data Visualization in Python</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_OOP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Object-Oriented Programming in Python</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17_Documentation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Writing Clear and Effective Documentation and PEP 8</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18_Exception.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Exception Handling and Debugging Techniques</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19_String.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Regular Expressions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_Web.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_Git.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Version Control with Git and GitHub</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction-to-git-and-version-control" id="toc-introduction-to-git-and-version-control" class="nav-link active" data-scroll-target="#introduction-to-git-and-version-control"><span class="header-section-number">21.1</span> Introduction to Git and Version Control</a></li>
+  <li><a href="#setting-up-git-and-github" id="toc-setting-up-git-and-github" class="nav-link" data-scroll-target="#setting-up-git-and-github"><span class="header-section-number">21.2</span> Setting Up Git and GitHub</a>
+  <ul class="collapse">
+  <li><a href="#installing-git" id="toc-installing-git" class="nav-link" data-scroll-target="#installing-git"><span class="header-section-number">21.2.1</span> Installing Git</a></li>
+  <li><a href="#creating-a-github-account" id="toc-creating-a-github-account" class="nav-link" data-scroll-target="#creating-a-github-account"><span class="header-section-number">21.2.2</span> Creating a GitHub Account</a></li>
+  <li><a href="#configuring-git-with-github" id="toc-configuring-git-with-github" class="nav-link" data-scroll-target="#configuring-git-with-github"><span class="header-section-number">21.2.3</span> Configuring Git with GitHub</a></li>
+  </ul></li>
+  <li><a href="#basic-git-commands-in-python" id="toc-basic-git-commands-in-python" class="nav-link" data-scroll-target="#basic-git-commands-in-python"><span class="header-section-number">21.3</span> Basic Git Commands in Python</a>
+  <ul class="collapse">
+  <li><a href="#initializing-a-repository" id="toc-initializing-a-repository" class="nav-link" data-scroll-target="#initializing-a-repository"><span class="header-section-number">21.3.1</span> Initializing a Repository</a></li>
+  <li><a href="#tracking-changes-with-add-commit-and-status" id="toc-tracking-changes-with-add-commit-and-status" class="nav-link" data-scroll-target="#tracking-changes-with-add-commit-and-status"><span class="header-section-number">21.3.2</span> Tracking Changes with <code>add</code>, <code>commit</code>, and <code>status</code></a></li>
+  <li><a href="#reviewing-commit-history-with-log" id="toc-reviewing-commit-history-with-log" class="nav-link" data-scroll-target="#reviewing-commit-history-with-log"><span class="header-section-number">21.3.3</span> Reviewing Commit History with <code>log</code></a></li>
+  <li><a href="#undoing-changes-with-reset-and-checkout" id="toc-undoing-changes-with-reset-and-checkout" class="nav-link" data-scroll-target="#undoing-changes-with-reset-and-checkout"><span class="header-section-number">21.3.4</span> Undoing Changes with <code>reset</code> and <code>checkout</code></a></li>
+  <li><a href="#pushing-and-pulling-changes-with-remote-repositories" id="toc-pushing-and-pulling-changes-with-remote-repositories" class="nav-link" data-scroll-target="#pushing-and-pulling-changes-with-remote-repositories"><span class="header-section-number">21.3.5</span> Pushing and Pulling Changes with Remote Repositories</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-git" class="quarto-section-identifier"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Version Control with Git and GitHub</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction-to-git-and-version-control" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="introduction-to-git-and-version-control"><span class="header-section-number">21.1</span> Introduction to Git and Version Control</h2>
+<p>Version control systems (VCS) are essential tools in modern programming, providing a framework to manage, track, and organize code changes over time. Git, a distributed version control system, allows users to create multiple versions of a project, facilitating collaboration and simplifying the process of managing historical changes. Created by Linus Torvalds in 2005, Git has become a cornerstone in software development, with GitHub providing a popular web-based platform for Git repositories, enabling sharing and collaborative coding.</p>
+<p>For statisticians and mathematicians, Git and GitHub offer streamlined methods for managing code, facilitating collaboration, and ensuring reproducibility. Git enables tracking modifications and maintaining a clear history, while GitHub offers remote storage, a web interface, and collaboration features, making it ideal for both individual and team projects.</p>
+</section>
+<section id="setting-up-git-and-github" class="level2" data-number="21.2">
+<h2 data-number="21.2" class="anchored" data-anchor-id="setting-up-git-and-github"><span class="header-section-number">21.2</span> Setting Up Git and GitHub</h2>
+<p>Git and GitHub work together to streamline version control both locally and remotely. This section will guide you through setting up Git, creating a GitHub account, and connecting Git with GitHub, so you can start tracking and sharing your code.</p>
+<section id="installing-git" class="level3" data-number="21.2.1">
+<h3 data-number="21.2.1" class="anchored" data-anchor-id="installing-git"><span class="header-section-number">21.2.1</span> Installing Git</h3>
+<p>Git must be installed on your computer to work with version control locally. Installation instructions vary based on operating system:</p>
+<ul>
+<li><p><strong>Windows</strong>:</p>
+<ol type="1">
+<li><p>Go to the official Git website at <a href="https://git-scm.com/">git-scm.com</a> and click on the “Download for Windows” button.</p></li>
+<li><p>Run the downloaded installer file. During installation, you will see multiple configuration options. For beginners, the default settings are generally appropriate. However, ensure the “Git Bash Here” option is enabled, as it provides a command-line interface for Git commands.</p></li>
+<li><p>Once installed, open Git Bash by searching for it in your Start menu, and type the following command to verify the installation:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This should display the installed version of Git.</p></li>
+</ol></li>
+<li><p><strong>macOS</strong>:</p>
+<ol type="1">
+<li><p>Git is often pre-installed on macOS. You can check by opening Terminal and typing:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>If it is not installed, Git can be installed using Homebrew, a package manager for macOS. If Homebrew is not already installed, visit <a href="https://brew.sh/">brew.sh</a> and follow the instructions.</p></li>
+<li><p>Install Git by opening Terminal and typing:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol></li>
+</ul>
+<!-- - **Linux**: -->
+<!--   1. Open your terminal and use the package manager for your Linux distribution: -->
+<!--      - For Debian-based systems (e.g., Ubuntu): -->
+<!--        ```bash -->
+<!--        sudo apt update -->
+<!--        sudo apt install git -->
+<!--        ``` -->
+<!--      - For Red Hat-based systems (e.g., Fedora): -->
+<!--        ```bash -->
+<!--        sudo dnf install git -->
+<!--        ``` -->
+<!--   2. Verify the installation by typing: -->
+<!--      ```bash -->
+<!--      git --version -->
+<!--      ``` -->
+<p>With Git installed, you are ready to initialize repositories and start tracking changes in your projects.</p>
+</section>
+<section id="creating-a-github-account" class="level3" data-number="21.2.2">
+<h3 data-number="21.2.2" class="anchored" data-anchor-id="creating-a-github-account"><span class="header-section-number">21.2.2</span> Creating a GitHub Account</h3>
+<p>GitHub is an online platform where you can store and share your Git repositories. Creating an account is straightforward:</p>
+<ol type="1">
+<li>Go to <a href="https://github.com/">GitHub.com</a> and click “Sign Up.”</li>
+<li>Follow the on-screen instructions to complete the account creation, including verifying your email and setting up a secure password.</li>
+<li>GitHub will also prompt you to create your first repository. You can skip this step for now if you want to create a repository directly from your local Git setup.</li>
+</ol>
+<p>After signing up, you’ll want to generate a Personal Access Token (PAT) for secure access between Git and GitHub. This token replaces your password when using Git on the command line or in IDEs.</p>
+<p><strong>Generating a Personal Access Token (PAT):</strong></p>
+<ol type="1">
+<li>In GitHub, go to <strong>Settings</strong> &gt; <strong>Developer settings</strong> &gt; <strong>Personal access tokens</strong>.</li>
+<li>Click <strong>Generate new token</strong>, give it a descriptive name, and select appropriate permissions. For most uses, choose <code>repo</code> (for full control over repositories) and <code>workflow</code> (for CI/CD workflows).</li>
+<li>Copy and save the token somewhere secure, as it will only be displayed once. This token will be required for any remote pushes or fetches involving your GitHub repositories.</li>
+</ol>
+</section>
+<section id="configuring-git-with-github" class="level3" data-number="21.2.3">
+<h3 data-number="21.2.3" class="anchored" data-anchor-id="configuring-git-with-github"><span class="header-section-number">21.2.3</span> Configuring Git with GitHub</h3>
+<p>Before you can interact with GitHub, it is important to set up Git with your GitHub credentials. This helps Git identify you and ensures all commits are associated with your GitHub profile.</p>
+<ol type="1">
+<li><p><strong>Set Your Username and Email Address</strong></p>
+<p>The first time you set up Git, configure your username and email. This information will be attached to all your commits.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"your_username"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"your_email@example.com"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Verify the Configuration</strong></p>
+<p>To verify that your username and email have been correctly set, you can view the configuration with:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This command will display your Git settings, confirming the username and email that will appear on all commits.</p></li>
+<li><p><strong>Caching GitHub Credentials</strong></p>
+<p>To avoid entering your PAT each time you push or pull from GitHub, you can cache your credentials. Git offers a credentials helper to store your PAT securely:</p>
+<ul>
+<li><p><strong>macOS</strong>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> credential.helper osxkeychain</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Windows</strong>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> credential.helper wincred</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<!-- - **Linux**: -->
+<!--   ```bash -->
+<!--   git config --global credential.helper cache -->
+<!--   ``` --></li>
+<li><p><strong>Testing the Connection to GitHub</strong></p>
+<p>To confirm Git and GitHub are configured correctly, try cloning an empty repository from GitHub. First, create an empty repository in GitHub by clicking “New” on your GitHub dashboard. Copy the repository’s URL and use the following command:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/your_username/your_repository.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If everything is configured correctly, this command should clone the repository to your local machine without errors.</p></li>
+</ol>
+<!-- ### 19.2.4 Optional: Using SSH for GitHub Authentication -->
+<!-- An alternative to PATs is using SSH keys for GitHub authentication. SSH keys are a secure, passwordless way of connecting to GitHub from your local machine: -->
+<!-- 1. **Generate SSH Key**   -->
+<!--    Open Terminal and type: -->
+<!--    ```bash -->
+<!--    ssh-keygen -t ed25519 -C "your_email@example.com" -->
+<!--    ``` -->
+<!--    Follow the prompts and specify a file location (default is fine) and a passphrase if desired. -->
+<!-- 2. **Add the SSH Key to GitHub**   -->
+<!--    - Copy the SSH key to your clipboard: -->
+<!--      ```bash -->
+<!--      cat ~/.ssh/id_ed25519.pub -->
+<!--      ``` -->
+<!--    - Go to GitHub > **Settings** > **SSH and GPG keys** > **New SSH key**. -->
+<!--    - Paste the key and save it with a descriptive title. -->
+<!-- 3. **Test the SSH Connection**   -->
+<!--    Verify the SSH setup by running: -->
+<!--    ```bash -->
+<!--    ssh -T git@github.com -->
+<!--    ``` -->
+<!--    If successful, GitHub will respond with a message confirming your access. -->
+</section>
+</section>
+<section id="basic-git-commands-in-python" class="level2" data-number="21.3">
+<h2 data-number="21.3" class="anchored" data-anchor-id="basic-git-commands-in-python"><span class="header-section-number">21.3</span> Basic Git Commands in Python</h2>
+<p>Once you have Git and GitHub set up, you can start using basic Git commands to track, manage, and push code changes. These commands can be run in a terminal or integrated into your Python code using libraries like <code>GitPython</code>. This section covers essential Git operations, including initializing a repository, staging and committing changes, and viewing repository status.</p>
+<section id="initializing-a-repository" class="level3" data-number="21.3.1">
+<h3 data-number="21.3.1" class="anchored" data-anchor-id="initializing-a-repository"><span class="header-section-number">21.3.1</span> Initializing a Repository</h3>
+<p>Creating a Git repository is the first step in tracking changes for a new project. This action initializes a <code>.git</code> folder in your project directory, which will store all Git data, including your commit history and configurations.</p>
+<ul>
+<li><p><strong>Command Line</strong>: Navigate to your project folder and use:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This command will initialize a new Git repository in the current directory.</p></li>
+<li><p><strong>Python with <code>GitPython</code></strong>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> git <span class="im">import</span> Repo</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>repo <span class="op">=</span> Repo.init(<span class="st">"/path/to/your/project"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This code initializes a repository in the specified directory, enabling you to start tracking changes from within Python.</p></li>
+</ul>
+</section>
+<section id="tracking-changes-with-add-commit-and-status" class="level3" data-number="21.3.2">
+<h3 data-number="21.3.2" class="anchored" data-anchor-id="tracking-changes-with-add-commit-and-status"><span class="header-section-number">21.3.2</span> Tracking Changes with <code>add</code>, <code>commit</code>, and <code>status</code></h3>
+<p>Tracking changes in Git follows a specific workflow where files are staged, committed, and reviewed. Let’s explore these steps in detail.</p>
+<ol type="1">
+<li><p><strong>Adding Files to the Staging Area</strong></p>
+<p>Before saving a snapshot of your changes, you must add files to the “staging area.” Staging allows you to control which files will be included in the next commit.</p>
+<ul>
+<li><strong>Command Line</strong>: Use <code>git add</code> to stage a file or directory. For example:</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add filename.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To stage all changes in the repository, use:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p><strong>Python with <code>GitPython</code></strong>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>repo <span class="op">=</span> Repo(<span class="st">'/path/to/your/project'</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>repo.index.add([<span class="st">'filename.py'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This line stages the specified file. You can also add multiple files by including them in the list, e.g., <code>['file1.py', 'file2.py']</code>.</p></li>
+</ul></li>
+<li><p><strong>Committing Changes</strong></p>
+<p>A commit is a snapshot of your repository at a specific point in time. Each commit should have a message that describes the changes.</p>
+<ul>
+<li><p><strong>Command Line</strong>: After staging, use <code>git commit</code> to save your changes:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Initial commit"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>-m</code> flag allows you to include a message that summarizes the purpose of the commit.</p></li>
+<li><p><strong>Python with <code>GitPython</code></strong>:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>repo.index.commit(<span class="st">"Initial commit"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This line commits staged changes with the provided message.</p></li>
+</ul></li>
+<li><p><strong>Viewing the Status</strong></p>
+<p>It’s often helpful to review the current status of your repository to see which files are staged, unstaged, or untracked.</p>
+<ul>
+<li><p><strong>Command Line</strong>: To view the status of your repository, use:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This command displays a summary of changes, showing which files are staged, unstaged, or untracked.</p></li>
+<li><p><strong>Python with <code>GitPython</code></strong>:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>repo <span class="op">=</span> Repo(<span class="st">'/path/to/your/project'</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> repo.index.diff(<span class="va">None</span>):</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(item.a_path, item.change_type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This Python code provides a list of files with their change types (e.g., added, modified, deleted), giving an overview of the repository’s current status.</p></li>
+</ul></li>
+</ol>
+</section>
+<section id="reviewing-commit-history-with-log" class="level3" data-number="21.3.3">
+<h3 data-number="21.3.3" class="anchored" data-anchor-id="reviewing-commit-history-with-log"><span class="header-section-number">21.3.3</span> Reviewing Commit History with <code>log</code></h3>
+<p>Reviewing the commit history is an important part of version control. Git allows you to see past commits, which include messages, author information, and unique commit IDs.</p>
+<ul>
+<li><p><strong>Command Line</strong>: Use <code>git log</code> to view the commit history:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This command shows a list of commits in reverse chronological order. Each entry includes a commit hash, author, date, and message.</p></li>
+<li><p><strong>Python with <code>GitPython</code></strong>:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> commit <span class="kw">in</span> repo.iter_commits():</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Commit: </span><span class="sc">{</span>commit<span class="sc">.</span>hexsha<span class="sc">}</span><span class="ch">\n</span><span class="ss">Author: </span><span class="sc">{</span>commit<span class="sc">.</span>author<span class="sc">.</span>name<span class="sc">}</span><span class="ch">\n</span><span class="ss">Date: </span><span class="sc">{</span>commit<span class="sc">.</span>committed_datetime<span class="sc">}</span><span class="ch">\n</span><span class="ss">Message: </span><span class="sc">{</span>commit<span class="sc">.</span>message<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This code iterates through the commit history, displaying details for each commit. The <code>hexsha</code> attribute provides the unique commit ID.</p></li>
+</ul>
+</section>
+<section id="undoing-changes-with-reset-and-checkout" class="level3" data-number="21.3.4">
+<h3 data-number="21.3.4" class="anchored" data-anchor-id="undoing-changes-with-reset-and-checkout"><span class="header-section-number">21.3.4</span> Undoing Changes with <code>reset</code> and <code>checkout</code></h3>
+<p>Git provides several commands to undo changes or revert to a previous state, helping to recover from mistakes or unwanted changes.</p>
+<ol type="1">
+<li><p><strong>Unstaging Files</strong></p>
+<p>If you accidentally added a file to the staging area, you can remove it without discarding changes.</p>
+<ul>
+<li><p><strong>Command Line</strong>: Use <code>git reset</code> to unstage: <code>bash     git reset filename.py</code></p></li>
+<li><p><strong>Python with <code>GitPython</code></strong>: <code>python     repo.index.remove(['filename.py'], working_tree=True)</code></p></li>
+</ul></li>
+<li><p><strong>Reverting to Previous Commits</strong></p>
+<p>You can roll back your repository to a previous state by checking out a previous commit. This will reset your working directory to that specific point in history.</p>
+<ul>
+<li><strong>Command Line</strong>: Use <code>git checkout</code> followed by the commit hash:</li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="op">&lt;</span>commit_hash<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><strong>Python with <code>GitPython</code></strong>:</li>
+</ul>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>repo.git.checkout(<span class="st">'commit_hash'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Replace <code>'commit_hash'</code> with the actual hash of the commit you want to revert to.</p></li>
+</ol>
+</section>
+<section id="pushing-and-pulling-changes-with-remote-repositories" class="level3" data-number="21.3.5">
+<h3 data-number="21.3.5" class="anchored" data-anchor-id="pushing-and-pulling-changes-with-remote-repositories"><span class="header-section-number">21.3.5</span> Pushing and Pulling Changes with Remote Repositories</h3>
+<p>To collaborate with others or back up your work, you’ll need to push changes to a remote repository or pull updates from it. Let’s see how to work with remote repositories on GitHub.</p>
+<ol type="1">
+<li><p><strong>Adding a Remote Repository</strong></p>
+<p>Linking your local Git repository to a GitHub repository allows you to sync changes.</p>
+<ul>
+<li><strong>Command Line</strong>: Use <code>git remote add origin</code> with the repository URL:</li>
+</ul>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin https://github.com/your_username/your_repository.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><strong>Python with <code>GitPython</code></strong>:</li>
+</ul>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>origin <span class="op">=</span> repo.create_remote(<span class="st">'origin'</span>, <span class="st">'https://github.com/your_username/your_repository.git'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Pushing Changes</strong></p>
+<p>After committing, you can push changes to GitHub to make them available remotely.</p>
+<ul>
+<li><strong>Command Line</strong>: Use <code>git push</code> to upload changes:</li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><strong>Python with <code>GitPython</code></strong>:</li>
+</ul>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>origin.push()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Pulling Changes</strong></p>
+<p>To retrieve the latest changes from the remote repository, use the <code>pull</code> command.</p>
+<ul>
+<li><strong>Command Line</strong>:</li>
+</ul>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><strong>Python with <code>GitPython</code></strong>:</li>
+</ul>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>origin.pull()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+<p>These commands form the foundation for using Git effectively. With these basics, you can track, commit, and sync changes locally and remotely, supporting both individual and collaborative workflows.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./20_Web.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Web Scraping</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">STA 2450</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">Fall 2024</div>
+  </div>
+</footer>
+
+
+
+</body></html>
